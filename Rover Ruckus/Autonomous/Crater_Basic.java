@@ -95,9 +95,10 @@ public class Crater_Basic extends LinearOpMode {
             telemetry.addData("Arriving", "Time: %2.5f S Elapsed", runtime.seconds());
         }
         robot.stop();
+
         robot.sample.setPosition(0.5);
 
-        // Add color logic here at a later time
+//// Add color logic here at a later time
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////// Move Towards Depot ///////////////////////////////////////////
@@ -109,17 +110,37 @@ public class Crater_Basic extends LinearOpMode {
             telemetry.addData ("Positioning1", "Time: %2.5f S Elapsed", runtime.seconds());
             telemetry.update ();
         }
+        robot.stop();
+
         robot.spinLeft();
-        while (opModeIsActive ()  &&  (runtime.seconds() <= 0.3)) {
+        while (opModeIsActive ()  &&  (runtime.seconds() <= 0.75)) {
             telemetry.addData("Turning", "Time: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-            
-        robot.left();
+        robot.stop();
+
+        robot.forward();
         while (opModeIsActive ()   &&  (runtime.seconds()   <= 4)) {
             telemetry.addData("Positioning1", "Time: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
+        robot.stop();
+
+        robot.marker.setPosition(0);
+
+        robot.backRight();
+        while (opModeIsActive ()  &&  (runtime.seconds() <= 0.5)) {
+            telemetry.addData("Diagonal to Crater", "Time: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+        robot.stop();
+
+        robot.backward();
+        while (opModeIsActive ()  &&  (runtime.seconds() <= 5)) {
+            telemetry.addData("Back From Crater", "Time: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+        robot.stop();
 
     }
 }
