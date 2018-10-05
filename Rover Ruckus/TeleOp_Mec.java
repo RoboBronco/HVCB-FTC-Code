@@ -34,7 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 @TeleOp(name="Mecanum: Teaching Tele", group="Tele")
-public class TeachingMecTele extends LinearOpMode {
+public class TeleOp_Mec extends LinearOpMode {
 
     /* Declare OpMode members. */
    RoverHardware robot           = new RoverHardware();
