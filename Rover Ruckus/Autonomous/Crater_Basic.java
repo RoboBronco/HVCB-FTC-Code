@@ -37,74 +37,234 @@ public class Crater_Basic extends LinearOpMode {
 
         //WORKS
         // Lower robot to level with playing field
-        robot.lift.setPower(1);
+        /////////CORRECT DIRECTION (UP)//////////////
+        robot.lift.setPower(-1);
         runtime.reset();
-        while(opModeIsActive() && (runtime.seconds() <= 3.1)){
+        while(opModeIsActive() && (runtime.seconds() <= 3.4)){
             telemetry.addData("Unfolding:", "Time: %2.5f S Elapsed", runtime.seconds());
         }
         robot.lift.setPower(0);
 
-        sleep(500);
+        sleep(1000);
         
         //WORKS
         // Detach from lander
         robot.right();
         runtime.reset();
-        while(opModeIsActive() && (runtime.seconds() <= 0.35)){
-            telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        while(opModeIsActive() && (runtime.seconds() <= 0.1)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
         }robot.stop();
         
-             robot.lift.setPower(1);
+        sleep(1000);
+        
+          robot.backward();
         runtime.reset();
-        while(opModeIsActive() && (runtime.seconds() <= 0.25)){ //1 
-            telemetry.addData("Unfolding:", "Time: %2.5f S Elapsed", runtime.seconds());
-        }
-
-        robot.backward();
-        runtime.reset();
-        while(opModeIsActive() && (runtime.seconds() <= 0.35)){
-            telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-        }
-        robot.stop();
+        while(opModeIsActive() && (runtime.seconds() <= 0.03)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }robot.stop();
+        
+        sleep(1000);
         
         robot.forward();
         runtime.reset();
-        while(opModeIsActive() && (runtime.seconds() <= 0.4)){
-            telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        while(opModeIsActive() && (runtime.seconds() <= 0.61)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
+            robot.backward();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
+         sleep (1000);
+        
+        robot.right();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <= 0.52)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
+            robot.left();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
         }
         robot.stop();
         
         sleep (1000);
         
+      // // add color sensor servo
+        
+        
+        /////////////////////////////////////
+        //sampling logic/////////////////////
+        /////////////////////////////////////
+    
+    
+        // from postion 1 to 2
+         robot.left();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.65)){
+             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
+         
+         robot.right();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
+        sleep (1000);
+        
+        // from position 2 to 3
+        robot.left();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <= 0.65)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
         robot.right();
         runtime.reset();
-        while(opModeIsActive() && (runtime.seconds() <= 0.35)){
+        while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+    
+          sleep (1000);
+    
+        //after sampling p0sition 3  
+        //       robot.left();
+        // runtime.reset();
+        // while(opModeIsActive() && (runtime.seconds() <= 0.5)){
+        //     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        // }
+        // robot.stop();
+        
+
+        
+        
+        //starting at blue tape
+        robot.left();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <=1.21)){
             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
         }
         robot.stop();
         
-        robot.lift.setPower(-1);
+        robot.right();
         runtime.reset();
-        while(opModeIsActive() && (runtime.seconds() <= 4.5)){ 
-            telemetry.addData("Unfolding:", "Time: %2.5f S Elapsed", runtime.seconds());
+        while(opModeIsActive() && (runtime.seconds() <=0.02)){
+            telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
         }
         robot.stop();
+        
+        robot.spinRight();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <=0.37)){
+            telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
+         robot.spinLeft();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+            telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
+         robot.backward();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <=1.28)){
+            telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
+         robot.forward();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <=0.02)){
+            telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
+        
+        robot.spinLeft();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <=0.06)){
+            telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
+          robot.spinRight();
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() <=0.005)){
+            telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+        }
+        robot.stop();
+        
+        
+              robot.marker.setPosition(0.75);
+        
+        
         
         sleep (2000);
         
-        
-        //Samplling Reposition
-              robot.left();
+          robot.forward();
         runtime.reset();
-        while(opModeIsActive() && (runtime.seconds() <= 0.5)){
+        while(opModeIsActive() && (runtime.seconds() <=2)){
             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
         }
         robot.stop();
+        
+        
+        robot.marker.setPosition(0);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////// SAMPLING //////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        // hsvValues is an array that will hold the hue, saturation, and value information.
+        float hsvValues[] = {0F, 0F, 0F};
+
+        // values is a reference to the hsvValues array.
+        final float values[] = hsvValues;
+
+        // sometimes it helps to multiply the raw RGB values with a scale factor
+        // to amplify/attentuate the measured values.
+        final double SCALE_FACTOR = 255;
+
+        boolean goldColor = false;
+        if(hsvValues[0] < 40){
+            goldColor = true;
+            telemetry.addData("Bannana color", goldColor);
+            telemetry.addData("Hue", hsvValues[0]);
+        }else if (hsvValues[0] > 120){
+            goldColor = false;
+            telemetry.addData("Not Bannana Color", goldColor);
+            telemetry.addData("Hue", hsvValues[0]);
+        } else {
+            goldColor = false;
+            telemetry.addData("Neither", goldColor);
+            telemetry.addData("Hue", hsvValues[0]);
+        }
+        telemetry.update();
+            
+            
+            sleep(10000);
+            
+        // if (boolean goldColor = true); {
+        //     while (opModeIsActive(); && runtime.seconds()  <  1); {
+        //     robot.forward();
+         
+            
+        // }
+            
 //         // Drive towards to sample
 //         robot.forward();
 //         runtime.reset();
@@ -159,6 +319,13 @@ public class Crater_Basic extends LinearOpMode {
 //             telemetry.update();
 //         }
         robot.stop();
+                     // send the info back to driver station using telemetry function.
+            // telemetry.addData("Alpha", robot.sensorColor.alpha());
+            // telemetry.addData("Red  ", robot.sensorColor.red());
+            // telemetry.addData("Green", robot.sensorColor.green());
+            // telemetry.addData("Blue ", robot.sensorColor.blue());
+            
+            
 
     }
 }
