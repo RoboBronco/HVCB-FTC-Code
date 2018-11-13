@@ -308,4 +308,5 @@ robot.marker.setPosition(0);
 ////UNCOMMENT FOR SAMPLING
 //// robot.sample.setPosition(0.5);
 //// Add color logic here at a later time
-
+ }
+}
