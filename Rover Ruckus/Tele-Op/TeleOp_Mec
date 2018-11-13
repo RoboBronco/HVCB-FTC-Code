@@ -60,16 +60,21 @@ public class TeleOp_Mec extends LinearOpMode {
             }else if(gamepad1.right_bumper){ //Spin Right
                 robot.spinRight(0.5);
             }
-            else{ // Stop
+            else if(gamepad1.y){ // Stop
             //   robot.fl.setPower(gamepad1.left_stick_x - gamepad1.left_stick_y + gamepad1.right_stick_x);
             //   robot.fr.setPower(-gamepad1.left_stick_x - gamepad1.left_stick_y - gamepad1.right_stick_x);
             //   robot.bl.setPower(-gamepad1.left_stick_x - gamepad1.left_stick_y + gamepad1.right_stick_x);
             //   robot.br.setPower(gamepad1.left_stick_x - gamepad1.left_stick_y - gamepad1.right_stick_x);
             
-             robot.fl.setPower(-gamepad1.left_stick_x + gamepad1.left_stick_y + gamepad1.right_stick_x);
-               robot.fr.setPower(gamepad1.left_stick_x + gamepad1.left_stick_y - gamepad1.right_stick_x);
-               robot.bl.setPower(gamepad1.left_stick_x + gamepad1.left_stick_y + gamepad1.right_stick_x);
-               robot.br.setPower(-gamepad1.left_stick_x + gamepad1.left_stick_y - gamepad1.right_stick_x);
+                robot.fl.setPower(-gamepad1.left_stick_x/2 + gamepad1.left_stick_y/2 + gamepad1.right_stick_x/2);
+                robot.fr.setPower(gamepad1.left_stick_x/2 + gamepad1.left_stick_y/2 - gamepad1.right_stick_x/2);
+                robot.bl.setPower(gamepad1.left_stick_x/2 + gamepad1.left_stick_y/2 + gamepad1.right_stick_x/2);
+                robot.br.setPower(-gamepad1.left_stick_x/2 + gamepad1.left_stick_y/2 - gamepad1.right_stick_x/2);
+            }else{
+                robot.fl.setPower(-gamepad1.left_stick_x + gamepad1.left_stick_y + gamepad1.right_stick_x);
+                robot.fr.setPower(gamepad1.left_stick_x + gamepad1.left_stick_y - gamepad1.right_stick_x);
+                robot.bl.setPower(gamepad1.left_stick_x + gamepad1.left_stick_y + gamepad1.right_stick_x);
+                robot.br.setPower(-gamepad1.left_stick_x + gamepad1.left_stick_y - gamepad1.right_stick_x);
             }
              
             //////////////////////////// DRIVER 2 ------------------ DRIVER 2 //////////////////////
