@@ -93,14 +93,14 @@ public class Crater_Basic extends LinearOpMode {
      ////STEP 5: Move right to position robot at mineral sample 1
      robot.right();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 0.55)){
+     while(opModeIsActive() && (runtime.seconds() <= 0.45)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
      ////STEP 5A: Reverse move (left) to stop the movement above
      robot.left();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+     while(opModeIsActive() && (runtime.seconds() <= 0.01)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
@@ -177,7 +177,27 @@ public class Crater_Basic extends LinearOpMode {
      }
      robot.stop();
      sleep (1000);
+     
+     
+      robot.forward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+      robot.stop();
       
+      robot.backward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     } 
+     robot.stop();
+      robot.forward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     } 
+     robot.stop();
      ///////////////////////////////////////////////
      ///// Robot is now at sample mineral 3 //////
      ///////////////////////////////////////////////
@@ -195,7 +215,7 @@ public class Crater_Basic extends LinearOpMode {
      //// STEP 8: Move left toward depot wall at ~45 degrees to wall
      robot.left();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 1.2)){
+     while(opModeIsActive() && (runtime.seconds() <= 1.36)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
@@ -210,7 +230,7 @@ public class Crater_Basic extends LinearOpMode {
      //// STEP 9: Spin right to square the robot to the wall before depot move
      robot.spinRight();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 0.37)){
+     while(opModeIsActive() && (runtime.seconds() <= 0.43)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
@@ -221,11 +241,20 @@ public class Crater_Basic extends LinearOpMode {
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
+     
+     ////STEP 9B:  Reverse move (spin left) to stop the movement above
+     robot.left();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.08)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();
+     
       
      ////STEP 10: Move backward toward depot to drop the marker
      robot.backward();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 1.28)){
+     while(opModeIsActive() && (runtime.seconds() <= 1.54)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      ////STEP 10A: Reverse move (forward) to stop movement above
@@ -241,20 +270,20 @@ public class Crater_Basic extends LinearOpMode {
      //// Robot is now in depot ////
      /////////////////////////////////////////////
       
-     //// STEP 11: Spin left to make sure the marker drops in the center of the depot
-     robot.spinLeft();
-     runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <=0.16)){
-     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-     }
-     robot.stop();
-     //// STEP 11A:  Reverse move (Spin right) to stop movement above
-     robot.spinRight();
-     runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <=0.01)){
-     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-     }
-     robot.stop();
+     // //// STEP 11: Spin left to make sure the marker drops in the center of the depot
+     // robot.spinLeft();
+     // runtime.reset();
+     // while(opModeIsActive() && (runtime.seconds() <=0.16)){
+     // telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     // }
+     // robot.stop();
+     // //// STEP 11A:  Reverse move (Spin right) to stop movement above
+     // robot.spinRight();
+     // runtime.reset();
+     // while(opModeIsActive() && (runtime.seconds() <=0.01)){
+     // telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     // }
+     // robot.stop();
       
      //////////////////////////////////////////////
      //// Drop the marker ////
@@ -263,23 +292,32 @@ public class Crater_Basic extends LinearOpMode {
      //// STEP 12: Rotate marker servo to drop servo
      robot.marker.setPosition(0.75);
       
-     ////STEP 13 Sleep robot for enough time to drop marker SUPER IMPORTANT SLEEP!!!
+     ////STEP 13 Sleep robot for enough time to drop marker SUPER IMPORTANT SLEEP!!!!!!!!!
      sleep (2000);
-      
-     //// STEP 14: Spin right to aim the robot back at the crater before moving there (spin above +.01)
-     robot.spinRight();
-     runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <=0.17)){
-     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-     }
-     robot.stop();
-     //// STEP 14A:  Reverse move (Spin Left) to stop movement above
+     
+     // 2 or 3 degree turn before move back to crater to avoid cratrer minerals
      robot.spinLeft();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <=0.01)){
+     while(opModeIsActive() && (runtime.seconds() <=0.03)){
      telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
+     
+      
+     // //// STEP 14: Spin right to aim the robot back at the crater before moving there (spin above +.01)
+     // robot.spinRight();
+     // runtime.reset();
+     // while(opModeIsActive() && (runtime.seconds() <=0.17)){
+     // telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     // }
+     // robot.stop();
+     // //// STEP 14A:  Reverse move (Spin Left) to stop movement above
+     // robot.spinLeft();
+     // runtime.reset();
+     // while(opModeIsActive() && (runtime.seconds() <=0.01)){
+     // telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     // }
+     // robot.stop();
      
      
      
@@ -287,12 +325,16 @@ public class Crater_Basic extends LinearOpMode {
      //// STEP 15: Move forward from depot toward crater
      robot.forward();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <=2)){
+     while(opModeIsActive() && (runtime.seconds() <=2.38)){
      telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
       
      robot.marker.setPosition(0);
+     robot.sensorArm.setPosition(0.365);
+     
+     sleep (2000);
+     robot.stop();
       
      ////////////////////////////////////////////////////
      ///// Robot is now touching crater /////
