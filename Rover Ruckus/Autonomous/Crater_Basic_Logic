@@ -57,7 +57,7 @@ public class Crater_Basic_Logic extends LinearOpMode {
      ////  STEP 2: Move right to detach the hook from the lander ring
      robot.right();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 0.1)){
+     while(opModeIsActive() && (runtime.seconds() <= 0.13)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }robot.stop();
      sleep(1000);
@@ -134,12 +134,15 @@ public class Crater_Basic_Logic extends LinearOpMode {
      ///// If not gold continue to next step////////
      ///////////////////////////////////////////////
 
-     telemetry.addData("Hue", hsvValues[0]);
- 
-
-      sleep (10000);
+     Color.RGBToHSV((int) (robot.sensorColor.red()), (int) (robot.sensorColor.green()),
+                    (int) (robot.sensorColor.blue()), hsvValues);
     
-     if (hsvValues[0] < 50){
+     while(opModeIsActive() && (runtime.seconds() <= 2.5)){
+         telemetry.addData("Hue", hsvValues[0]);
+         telemetry.update();
+     }
+    
+     if (hsvValues[0] < 60){
       
      
       
@@ -150,7 +153,7 @@ public class Crater_Basic_Logic extends LinearOpMode {
          }
          robot.backward();
          runtime.reset();
-         while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+         while(opModeIsActive() && (runtime.seconds() <= 0.34)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
          robot.forward();
@@ -174,7 +177,7 @@ public class Crater_Basic_Logic extends LinearOpMode {
          ////STEP 6: Move left from mineral sample 1 to mineral sample 2
          robot.left();
          runtime.reset();
-         while(opModeIsActive() && (runtime.seconds() <= 0.69)){
+         while(opModeIsActive() && (runtime.seconds() <= 0.72)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
          robot.stop();
@@ -190,8 +193,18 @@ public class Crater_Basic_Logic extends LinearOpMode {
         ///////////////////////////////////////////////
         ///// Robot is now at sample mineral 2 //////
         ///////////////////////////////////////////////
+         sleep (1000);
          
-         if (hsvValues[0] < 50){
+         
+          Color.RGBToHSV((int) (robot.sensorColor.red()), (int) (robot.sensorColor.green()),
+                    (int) (robot.sensorColor.blue()), hsvValues);
+         
+         while(opModeIsActive() && (runtime.seconds() <= 2.5)){
+         telemetry.addData("Hue", hsvValues[0]);
+         telemetry.update();
+         }
+         
+         if (hsvValues[0] < 60){
              robot.forward();
              runtime.reset();
              while(opModeIsActive() && (runtime.seconds() <= 0.32)){
