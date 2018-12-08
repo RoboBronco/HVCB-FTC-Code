@@ -1,0 +1,347 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import android.graphics.Color;
+
+
+@Autonomous(name="Depot Basic Logic", group="Auto")
+public class Depot_Basic_Logic extends LinearOpMode {
+
+    /* Declare OpMode members. */
+   RoverHardware robot           = new RoverHardware();
+   private ElapsedTime     runtime = new ElapsedTime();
+
+    @Override
+    public void runOpMode() {
+
+        /*
+         * Initialize the drive system variables.
+         * The init() method of the hardware class does all the work here
+         */
+        robot.init(hardwareMap);
+
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Status: ", "Ready to Deploy!");    //
+        telemetry.update();
+
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+
+        //// hsvValues is an array that will hold the hue, saturation, and value information.
+     float hsvValues[] = {0F, 0F, 0F};
+      
+
+     //// values is a reference to the hsvValues array.
+     final float values[] = hsvValues;
+      
+     //// sometimes it helps to multiply the raw RGB values with a scale factor
+     //// to amplify/attentuate the measured values.
+     final double SCALE_FACTOR = 255;
+     
+     Color.RGBToHSV((int) (robot.sensorColor.red()), (int) (robot.sensorColor.green()),
+                    (int) (robot.sensorColor.blue()), hsvValues);
+      
+     ////////////////////////////////////////////////////////////////
+     ///// Begin routine hanging from lander facing CRATER //////
+     ////////////////////////////////////////////////////////////////
+      
+     //// STEP 1: Move lift UP to lower robot from hanging position to playing field 
+     //// Negative lift power = extending
+     robot.lift.setPower(-1);
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 3.4)){
+     telemetry.addData("Unfolding:", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.lift.setPower(0);
+     
+     sleep(1000);
+      
+     ////  STEP 2: Move right to detach the hook from the lander ring
+     robot.right();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.13)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }robot.stop();
+     sleep(1000);
+      
+     
+     //// STEP 3: Move backward to square the robot against the lander
+     robot.backward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.03)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }robot.stop();
+     sleep(1000);
+      
+     //// STEP 4: Move forward away from lander toward mineral samples
+     robot.forward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.61)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+      robot.stop();
+     //// STEP 4A: Reverse move (backward) to stop the forward movement above
+     robot.backward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();
+     sleep (1000);
+     
+      
+     ////STEP 5: Move right to position robot at mineral sample 1
+     robot.right();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.51)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();
+     ////STEP 5A: Reverse move (left) to stop the movement above
+     robot.left();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.01)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();
+     sleep (1000);
+      
+     ///////////////////////////////////////////////
+     ///// Robot is now at mineral sample 1 //////
+     ///////////////////////////////////////////////
+     
+     ///// Servo arm movement/////////
+     robot.sensorArm.setPosition(0.365);
+     
+     ///// Forward to adjust for drift /////
+     robot.forward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.06)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+      robot.stop();
+     //// STEP 4A: Reverse move (backward) to stop the forward movement above
+     robot.backward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();
+     
+     sleep(1500);
+     
+     // conversion from RGB to HSV
+     Color.RGBToHSV((int) (robot.sensorColor.red()), (int) (robot.sensorColor.green()),
+                    (int) (robot.sensorColor.blue()), hsvValues);
+    
+    // begining of sampling logic
+     while(opModeIsActive() && (runtime.seconds() <= 2.5)){
+         telemetry.addData("Hue", hsvValues[0]);
+         telemetry.update();
+     }
+    
+     if (hsvValues[0] < 60){
+      
+     
+      
+         robot.forward();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.backward();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.34)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.forward();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+          robot.left();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 1.34)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.right();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.sensorArm.setPosition(1);
+         
+         }else{
+         ////STEP 6: Move left from mineral sample 1 to mineral sample 2
+         robot.left();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.72)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
+         ////STEP 6A: Reverse move (right) to stop the movement above
+         robot.right();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
+         
+                     
+        ///////////////////////////////////////////////
+        ///// Robot is now at sample mineral 2 //////
+        ///////////////////////////////////////////////
+         sleep (1000);
+         
+         
+          Color.RGBToHSV((int) (robot.sensorColor.red()), (int) (robot.sensorColor.green()),
+                    (int) (robot.sensorColor.blue()), hsvValues);
+         
+         while(opModeIsActive() && (runtime.seconds() <= 2.5)){
+         telemetry.addData("Hue", hsvValues[0]);
+         telemetry.update();
+         }
+         
+         if (hsvValues[0] < 60){
+             robot.forward();
+             runtime.reset();
+             while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+             }
+             robot.backward();
+             runtime.reset();
+             while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+             }
+             robot.forward();
+             runtime.reset();
+             while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+             }
+              robot.left();
+             runtime.reset();
+             while(opModeIsActive() && (runtime.seconds() <= 0.65)){
+             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+             }
+             robot.right();
+             runtime.reset();
+             while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+             }
+             robot.sensorArm.setPosition(1);
+             
+            }else{
+            robot.sensorArm.setPosition(1);
+      
+            //// STEP 7: Move left from mineral sample 2 to mineral sample 3
+            robot.left();
+            runtime.reset();
+            while(opModeIsActive() && (runtime.seconds() <= 0.65)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+            }
+            robot.stop();
+            //// STEP 7A: Reverse move (right) to stop the movement above
+            robot.right();
+            runtime.reset();
+            while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+            }
+            robot.stop();
+            sleep (500);
+            
+                        
+            ///////////////////////////////////////////////
+            ///// Robot is now at sample mineral 3 //////
+            ///////////////////////////////////////////////
+            
+            robot.forward();
+            runtime.reset();
+            while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+            }
+            robot.stop();
+             
+            robot.backward();
+            runtime.reset();
+            while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+            } 
+            robot.stop();
+            
+            robot.forward();
+            runtime.reset();
+            while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+            //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+            } 
+            robot.stop();
+         }
+         
+     }   
+     
+     robot.left();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 1.2)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop(); 
+     
+       robot.right();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();  
+     
+     
+     
+     robot.spinLeft();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 1.07)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();  
+     
+     robot.spinRight();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();  
+     
+     
+     //After sampling
+     robot.backward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 1.6)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     
+     robot.forward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();  
+     
+      
+     robot.marker.setPosition(0.75);
+     
+      sleep (2000);
+     
+     robot.forward();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <=2)){
+     //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();
+     
+     
+     robot.marker.setPosition(0);
+  
+     robot.stop();
+ 
+    }
+}
