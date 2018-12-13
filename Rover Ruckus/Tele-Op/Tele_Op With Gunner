@@ -127,7 +127,7 @@ public class TeleOp_Mec extends LinearOpMode {
                 robot.harvester.setPosition(robot.harvester.getPosition()+0.05);
                 telemetry.addData("Current Position: ", robot.harvester.getPosition());
                 telemetry.update();
-            }else if(gamepad2.left_stick_y>-0.5 && gamepad2.left_stick_y<0.01){
+            }else if(gamepad2.left_stick_y>-0.5 && gamepad2.left_stick_y<-0.01){
                 robot.harvester.setPosition(robot.harvester.getPosition()-0.05);
                 telemetry.addData("Current Position: ", robot.harvester.getPosition());
                 telemetry.update();
