@@ -116,17 +116,14 @@ public class Depot_Basic_Logic extends LinearOpMode {
      ///// Robot is now at mineral sample 1 //////
      ///////////////////////////////////////////////
      
-     ///// Servo arm movement/////////
-     robot.sensorArm.setPosition(0.365);
-     
-     ///// Forward to adjust for drift /////
+     ///// STEP 6: Forward to adjust for drift /////
      robot.forward();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.06)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
       robot.stop();
-     //// STEP 4A: Reverse move (backward) to stop the forward movement above
+     //// STEP 6A: Reverse move (backward) to stop the forward movement above
      robot.backward();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.02)){
@@ -140,7 +137,7 @@ public class Depot_Basic_Logic extends LinearOpMode {
      Color.RGBToHSV((int) (robot.sensorColor.red()), (int) (robot.sensorColor.green()),
                     (int) (robot.sensorColor.blue()), hsvValues);
     
-    // begining of sampling logic
+    // STEP 7: begining of sampling logic
      while(opModeIsActive() && (runtime.seconds() <= 2.5)){
          telemetry.addData("Hue", hsvValues[0]);
          telemetry.update();
@@ -193,14 +190,14 @@ public class Depot_Basic_Logic extends LinearOpMode {
       
           sleep (1000);
       
-         ////STEP 6: Move left from mineral sample 1 to mineral sample 2
+         //// Move left from mineral sample 1 to mineral sample 2
          robot.left();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.78)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
          robot.stop();
-         ////STEP 6A: Reverse move (right) to stop the movement above
+         //// Reverse move (right) to stop the movement above
          robot.right();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.02)){
@@ -209,7 +206,6 @@ public class Depot_Basic_Logic extends LinearOpMode {
          robot.stop();
          
          
-         /////////////////// change as needed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           robot.spinLeft();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.05)){
@@ -282,14 +278,14 @@ public class Depot_Basic_Logic extends LinearOpMode {
           
            
       
-            //// STEP 7: Move left from mineral sample 2 to mineral sample 3
+            ////  Move left from mineral sample 2 to mineral sample 3
             robot.left();
             runtime.reset();
             while(opModeIsActive() && (runtime.seconds() <= 0.77)){
             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
             }
             robot.stop();
-            //// STEP 7A: Reverse move (right) to stop the movement above
+            ////  Reverse move (right) to stop the movement above
             robot.right();
             runtime.reset();
             while(opModeIsActive() && (runtime.seconds() <= 0.02)){
@@ -330,13 +326,14 @@ public class Depot_Basic_Logic extends LinearOpMode {
             ///////////////////Now at blue box///////////////////////////////////
             /////////////////////////////////////////////////////////////////////
 
+     //// STEP 8: 45ish move to the wall
      robot.left();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 1.36)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop(); 
-     
+     ///// 8A: Reverse move (right) to stop the forward movement above
        robot.right();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.02)){
@@ -345,14 +342,14 @@ public class Depot_Basic_Logic extends LinearOpMode {
      robot.stop();  
      
      
-     
+     ///// STEP 9: spin to face the depot
      robot.spinLeft();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 1.17)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();  
-     
+     STEP 9A: Reverse move (spin right) to stop the forward movement above
      robot.spinRight();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.02)){
@@ -360,6 +357,7 @@ public class Depot_Basic_Logic extends LinearOpMode {
      }
      robot.stop();  
      
+     STEP 10: shimmy to push up against a wall
      robot.right();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.28)){
@@ -368,13 +366,13 @@ public class Depot_Basic_Logic extends LinearOpMode {
      robot.stop();   
      
      
-     //After sampling
+     //STEP 11: move into the depot
      robot.backward();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 1.6)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
-     
+     STEP 11A: Reverse move (forward) to stop the forward movement above
      robot.forward();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.02)){
@@ -382,10 +380,11 @@ public class Depot_Basic_Logic extends LinearOpMode {
      }
      robot.stop();  
      
-      
+      ////// rotates servo arm to place marker in depot IMPOTANT SLEEP LEAVE IT ALONE!!!!
      robot.marker.setPosition(0);
       sleep (2000);
      
+     STEP 12: move forward into crater wall thing bump
      robot.forward();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <=2.24)){
