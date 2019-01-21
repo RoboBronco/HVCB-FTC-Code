@@ -24,11 +24,14 @@ public class Depot_Basic_Logic extends LinearOpMode {
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status: ", "Ready to Deploy!");    //
-        telemetry.update();
+       
 
         // Wait for the game to start (driver presses PLAY)
-        waitForStart();
+        
+        while (!opModeIsActive() && !isStopRequested()); {
+         telemetry.addData ("Status", "Waiting for start command...");
+         // telemetry.update();
+        }
 
         //// hsvValues is an array that will hold the hue, saturation, and value information.
      float hsvValues[] = {0F, 0F, 0F};
@@ -62,7 +65,7 @@ public class Depot_Basic_Logic extends LinearOpMode {
      ////  STEP 2: Move right to detach the hook from the lander ring
      robot.right();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 0.13)){
+     while(opModeIsActive() && (runtime.seconds() <= 0.19)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }robot.stop();
      sleep(1000);
@@ -79,7 +82,7 @@ public class Depot_Basic_Logic extends LinearOpMode {
      //// STEP 4: Move forward away from lander toward mineral samples
      robot.forward();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 0.61)){
+     while(opModeIsActive() && (runtime.seconds() <= 0.57)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
       robot.stop();
@@ -96,7 +99,7 @@ public class Depot_Basic_Logic extends LinearOpMode {
      ////STEP 5: Move right to position robot at mineral sample 1
      robot.right();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 0.51)){
+     while(opModeIsActive() && (runtime.seconds() <= 0.59)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
@@ -133,7 +136,7 @@ public class Depot_Basic_Logic extends LinearOpMode {
      
      sleep(1500);
      
-     // conversion from RGB to HSV
+    // conversion from RGB to HSV
      Color.RGBToHSV((int) (robot.sensorColor.red()), (int) (robot.sensorColor.green()),
                     (int) (robot.sensorColor.blue()), hsvValues);
     
@@ -143,18 +146,16 @@ public class Depot_Basic_Logic extends LinearOpMode {
          telemetry.update();
      }
     
-     if (hsvValues[0] < 60){
-      
-     
+     if (hsvValues[0] < 91){
       
          robot.forward();
          runtime.reset();
-         while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+         while(opModeIsActive() && (runtime.seconds() <= 0.36)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
          robot.backward();
          runtime.reset();
-         while(opModeIsActive() && (runtime.seconds() <= 0.34)){
+         while(opModeIsActive() && (runtime.seconds() <= 0.54)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
          robot.forward();
@@ -164,7 +165,7 @@ public class Depot_Basic_Logic extends LinearOpMode {
          }
           robot.left();
          runtime.reset();
-         while(opModeIsActive() && (runtime.seconds() <= 1.34)){
+         while(opModeIsActive() && (runtime.seconds() <= 1.58)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
          robot.right();
@@ -172,13 +173,30 @@ public class Depot_Basic_Logic extends LinearOpMode {
          while(opModeIsActive() && (runtime.seconds() <= 0.02)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
-         robot.sensorArm.setPosition(1);
          
-         }else{
+         
+     }else{
+      
+         robot.backward();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.05)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
+         
+          robot.forward();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.01)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
+      
+          sleep (1000);
+      
          ////STEP 6: Move left from mineral sample 1 to mineral sample 2
          robot.left();
          runtime.reset();
-         while(opModeIsActive() && (runtime.seconds() <= 0.72)){
+         while(opModeIsActive() && (runtime.seconds() <= 0.78)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
          robot.stop();
@@ -190,10 +208,33 @@ public class Depot_Basic_Logic extends LinearOpMode {
          }
          robot.stop();
          
+         
+         /////////////////// change as needed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          robot.spinLeft();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.05)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
+         
+         robot.spinRight();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.01)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
+         
+         robot.forward();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.03)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
                      
         ///////////////////////////////////////////////
         ///// Robot is now at sample mineral 2 //////
         ///////////////////////////////////////////////
+        
          sleep (1000);
          
          
@@ -205,7 +246,8 @@ public class Depot_Basic_Logic extends LinearOpMode {
          telemetry.update();
          }
          
-         if (hsvValues[0] < 60){
+         if (hsvValues[0] < 91){
+          
              robot.forward();
              runtime.reset();
              while(opModeIsActive() && (runtime.seconds() <= 0.32)){
@@ -213,9 +255,12 @@ public class Depot_Basic_Logic extends LinearOpMode {
              }
              robot.backward();
              runtime.reset();
-             while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+             while(opModeIsActive() && (runtime.seconds() <= 0.52)){
              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
              }
+             
+            
+             
              robot.forward();
              runtime.reset();
              while(opModeIsActive() && (runtime.seconds() <= 0.02)){
@@ -223,7 +268,7 @@ public class Depot_Basic_Logic extends LinearOpMode {
              }
               robot.left();
              runtime.reset();
-             while(opModeIsActive() && (runtime.seconds() <= 0.65)){
+             while(opModeIsActive() && (runtime.seconds() <= 1.00)){
              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
              }
              robot.right();
@@ -231,15 +276,16 @@ public class Depot_Basic_Logic extends LinearOpMode {
              while(opModeIsActive() && (runtime.seconds() <= 0.02)){
              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
              }
-             robot.sensorArm.setPosition(1);
+            
              
-            }else{
-            robot.sensorArm.setPosition(1);
+         }else{
+          
+           
       
             //// STEP 7: Move left from mineral sample 2 to mineral sample 3
             robot.left();
             runtime.reset();
-            while(opModeIsActive() && (runtime.seconds() <= 0.65)){
+            while(opModeIsActive() && (runtime.seconds() <= 0.77)){
             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
             }
             robot.stop();
@@ -266,7 +312,7 @@ public class Depot_Basic_Logic extends LinearOpMode {
              
             robot.backward();
             runtime.reset();
-            while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+            while(opModeIsActive() && (runtime.seconds() <= 0.40)){
             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
             } 
             robot.stop();
@@ -280,10 +326,13 @@ public class Depot_Basic_Logic extends LinearOpMode {
          }
          
      }   
-     
+            //////////////////////////////////////////////////////////////////////
+            ///////////////////Now at blue box///////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
+
      robot.left();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 1.2)){
+     while(opModeIsActive() && (runtime.seconds() <= 1.36)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop(); 
@@ -299,7 +348,7 @@ public class Depot_Basic_Logic extends LinearOpMode {
      
      robot.spinLeft();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <= 1.07)){
+     while(opModeIsActive() && (runtime.seconds() <= 1.17)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();  
@@ -310,6 +359,13 @@ public class Depot_Basic_Logic extends LinearOpMode {
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();  
+     
+     robot.right();
+     runtime.reset();
+     while(opModeIsActive() && (runtime.seconds() <= 0.28)){
+         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+     }
+     robot.stop();   
      
      
      //After sampling
@@ -327,19 +383,18 @@ public class Depot_Basic_Logic extends LinearOpMode {
      robot.stop();  
      
       
-     robot.marker.setPosition(0.75);
-     
+     robot.marker.setPosition(0);
       sleep (2000);
      
      robot.forward();
      runtime.reset();
-     while(opModeIsActive() && (runtime.seconds() <=2)){
+     while(opModeIsActive() && (runtime.seconds() <=2.24)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
      
      
-     robot.marker.setPosition(0);
+     robot.marker.setPosition(1);
   
      robot.stop();
  
