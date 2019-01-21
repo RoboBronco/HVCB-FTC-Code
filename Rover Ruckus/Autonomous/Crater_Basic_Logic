@@ -113,14 +113,14 @@ public class Crater_Basic_Logic extends LinearOpMode {
      ///// Robot is now at mineral sample 1 //////
      ///////////////////////////////////////////////
      
-     ///// Forward to adjust for drift /////
+     ///// STEP 6:Forward to adjust for drift /////
      robot.forward();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.19)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
       robot.stop();
-     //// STEP 4A: Reverse move (backward) to stop the forward movement above
+     //// STEP 6A: Reverse move (backward) to stop the forward movement above
      robot.backward();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.01)){
@@ -129,7 +129,7 @@ public class Crater_Basic_Logic extends LinearOpMode {
      robot.stop();
      
       
-      
+      ///STEP 7: gets color sesor on the right angle to read
      // robot.spinLeft();
      // runtime.reset();
      // while(opModeIsActive() && (runtime.seconds() <= 0.07)){
@@ -137,6 +137,7 @@ public class Crater_Basic_Logic extends LinearOpMode {
      // }
      // robot.stop();
      
+     ///STEP 7A:Reverse move (backward) to stop the forward movement above
      // robot.spinRight();
      // runtime.reset();
      // while(opModeIsActive() && (runtime.seconds() <= 0.01)){
@@ -150,34 +151,39 @@ public class Crater_Basic_Logic extends LinearOpMode {
      Color.RGBToHSV((int) (robot.sensorColor.red()), (int) (robot.sensorColor.green()),
                     (int) (robot.sensorColor.blue()), hsvValues);
     
-    // begining of sampling logic
+    //STEP 8: this reads the minerals and samples
      while(opModeIsActive() && (runtime.seconds() <= 2.5)){
          telemetry.addData("Hue", hsvValues[0]);
          telemetry.update();
      }
     
      if (hsvValues[0] < 91){
-      
+           
+          ///  pushes block off tape if reads gold 
          robot.forward();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.36)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
+         ///  move backward off of block position
          robot.backward();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.54)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
+         //// Reverse move (backward) to stop the forward movement above
          robot.forward();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.02)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
+         ////// moves across the rest of the minerals
           robot.left();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 1.46)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
+         //////  Reverse move (backward) to stop the forward movement above
          robot.right();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.02)){
@@ -186,14 +192,14 @@ public class Crater_Basic_Logic extends LinearOpMode {
          
          
      }else{
-      
+          /////  repositions to read clolor correctly
          robot.backward();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.05)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
          robot.stop();
-         
+         ////// : Reverse move (forward) to stop the forward movement above
           robot.forward();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.01)){
@@ -203,14 +209,14 @@ public class Crater_Basic_Logic extends LinearOpMode {
       
           sleep (1000);
       
-         ////STEP 6: Move left from mineral sample 1 to mineral sample 2
+         /// Move left from mineral sample 1 to mineral sample 2
          robot.left();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.78)){
          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
          }
          robot.stop();
-         ////STEP 6A: Reverse move (right) to stop the movement above
+         //// Reverse move (right) to stop the movement above
          robot.right();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.02)){
@@ -219,7 +225,7 @@ public class Crater_Basic_Logic extends LinearOpMode {
          robot.stop();
          
          
-         /////////////////// change as needed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         /////
           robot.spinLeft();
          runtime.reset();
          while(opModeIsActive() && (runtime.seconds() <= 0.05)){
@@ -345,14 +351,14 @@ public class Crater_Basic_Logic extends LinearOpMode {
       
       
       
-     //// STEP 8: Move left toward depot wall at ~45 degrees to wall
+     //// STEP 9: Move left toward depot wall at ~45 degrees to wall
      robot.left();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 1.32)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
-     ////STEP 8A:  Reverse move (right) to stop the movement above
+     ////STEP 9A:  Reverse move (right) to stop the movement above
      robot.right();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.02)){
@@ -360,21 +366,21 @@ public class Crater_Basic_Logic extends LinearOpMode {
      }
      robot.stop();
       
-     //// STEP 9: Spin right to square the robot to the wall before depot move
+     //// STEP 10: Spin right to square the robot to the wall before depot move
      robot.spinRight();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.37)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
-     ////STEP 9A:  Reverse move (spin left) to stop the movement above
+     ////STEP 10A:  Reverse move (spin left) to stop the movement above
      robot.spinLeft();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 0.02)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
-     ////STEP 9B:  move left towards wall
+     ////STEP 10B:  move left towards wall
      robot.left();
      runtime.reset();
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
@@ -382,13 +388,13 @@ public class Crater_Basic_Logic extends LinearOpMode {
      while(opModeIsActive() && (runtime.seconds() <= 0.24)){}
      robot.stop();
 
-     ////STEP 10: Move backward toward depot to drop the marker
+     ////STEP 11: Move backward toward depot to drop the marker
      robot.backward();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <= 1.54)){
      //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
-     ////STEP 10A: Reverse move (forward) to stop movement above
+     ////STEP 11A: Reverse move (forward) to stop movement above
      robot.forward();
      robot.stop();
      runtime.reset();
@@ -404,14 +410,14 @@ public class Crater_Basic_Logic extends LinearOpMode {
      //// Robot is now in depot ////
      /////////////////////////////////////////////
       
-     //// STEP 11: Spin Right to make sure the marker drops in the center of the depot
+     //// STEP 12: Spin Right to make sure the marker drops in the center of the depot
      robot.spinRight();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <=0.32)){
      telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
-     //// STEP 11A:  Reverse move (Spin left) to stop movement above
+     //// STEP 12A:  Reverse move (Spin left) to stop movement above
      robot.spinLeft();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <=0.01)){
@@ -423,29 +429,20 @@ public class Crater_Basic_Logic extends LinearOpMode {
      //// Drop the marker ////
      //////////////////////////////////////////////
       
-     //// STEP 12: Rotate marker servo to drop servo
+     //// STEP 13: Rotate marker servo to drop servo
      robot.marker.setPosition(0);
       
-     ////STEP 13 Sleep robot for enough time to drop marker SUPER IMPORTANT SLEEP!!!!!!!!!
+     ////STEP 14 Sleep robot for enough time to drop marker SUPER IMPORTANT SLEEP!!!!!!!!!
      sleep (2000);
-     
-     // // 2 or 3 degree turn before move back to crater to avoid cratrer minerals
-     // robot.spinLeft();
-     // runtime.reset();
-     // while(opModeIsActive() && (runtime.seconds() <=0.03)){
-     // telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-     // }
-     // robot.stop();
-     
       
-     //// STEP 14: Spin left to aim the robot back at the crater before moving there (spin above +.01)
+     //// STEP 15: Spin left to aim the robot back at the crater before moving there (spin above +.01)
      robot.spinLeft();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <=0.27)){
      telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
      }
      robot.stop();
-     //// STEP 14A:  Reverse move (Spin right) to stop movement above
+     //// STEP 16A:  Reverse move (Spin right) to stop movement above
      robot.spinRight();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <=0.01)){
@@ -456,7 +453,7 @@ public class Crater_Basic_Logic extends LinearOpMode {
      
      
       
-     //// STEP 15: Move forward from depot toward crater
+     //// STEP 17: Move forward from depot toward crater
      robot.forward();
      runtime.reset();
      while(opModeIsActive() && (runtime.seconds() <=2.5)){
@@ -464,7 +461,7 @@ public class Crater_Basic_Logic extends LinearOpMode {
      }
      robot.stop();
       
-      /////// 1 is up
+      /////// STEP 18: 1 is up
      robot.marker.setPosition(1);
      
      
