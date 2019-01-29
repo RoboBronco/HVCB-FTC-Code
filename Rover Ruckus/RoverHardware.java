@@ -1,4 +1,3 @@
-
 package org.firstinspires.ftc.teamcode;
 
 import android.nfc.cardemulation.OffHostApduService;
@@ -20,13 +19,18 @@ public class RoverHardware
     public DcMotor  bl   = null;
     public DcMotor  br  = null;
     public DcMotor  lift    = null;
-    // public DcMotor  tilt = null;
-    public Servo    marker   = null;
-    // public Servo    sensorArm = null;
-    // public Servo    flag   = null;
-    // public Servo    lock   = null;
-    // public Servo    sample = null;
+    public DcMotor  collectorArmExtend   = null;
+    public DcMotor  collectorHarvesterFlip    = null;
+    public DcMotor  verticalDistribution   = null;
     
+    
+    public Servo    marker   = null;
+    public Servo    sensorArm = null;
+    public Servo    collector1 = null;
+    public Servo    collector2 = null;
+    public Servo    cupArm = null;
+    public Servo    selector = null;
+
     ColorSensor sensorColor;
 
     /* local OpMode members. */
@@ -54,12 +58,21 @@ public class RoverHardware
         bl  = hwMap.get(DcMotor.class, "bl");
         br = hwMap.get(DcMotor.class, "br");
         lift = hwMap.get(DcMotor.class, "lift");
+        collectorArmExtend = hwMap.get(DcMotor.class, "collectorArmExtend");
+        collectorHarvesterFlip = hwMap.get(DcMotor.class, "collectorHarvesterFlip");
+        verticalDistribution = hwMap.get(DcMotor.class, "verticalDistribution");
        
-        // tilt = hwMap.get(DcMotor.class, "tilt" );
+        
         fl.setDirection(DcMotor.Direction.REVERSE);
         bl.setDirection(DcMotor.Direction.REVERSE);
         fr.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotor.Direction.FORWARD);
+        collectorArmExtend.setDirection(DcMotor.Direction.FORWARD);
+        collectorHarvesterFlip.setDirection(DcMotor.Direction.FORWARD);
+        verticalDistribution.setDirection(DcMotor.Direction.FORWARD);
+    
+      
 
         // Set all motors to zero power
         fl.setPower(0);
@@ -67,9 +80,12 @@ public class RoverHardware
         bl.setPower(0);
         br.setPower(0);
         lift.setPower(0);
-        
-        
-        // tilt.setPower(0);
+        collectorArmExtend.setPower(0);
+        collectorHarvesterFlip.setPower(0);
+        verticalDistribution.setPower(0);
+
+
+      
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -78,27 +94,38 @@ public class RoverHardware
         bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        // tilt.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        collectorArmExtend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        collectorHarvesterFlip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        verticalDistribution.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+   
 
 
         // Define and initialize ALL installed servos.
         marker  = hwMap.get(Servo.class, "marker");
-        // sensorArm = hwMap.get(Servo.class, "sensorArm");
-        // flag = hwMap.get(Servo.class, "flag");
-        // lock = hwMap.get(Servo.class, "lock");
-        // sample = hwMap.get(Servo.class, "sample");
+        sensorArm = hwMap.get(Servo.class, "sensorArm");
+        collector1 = hwMap.get(Servo.class, "collector1");
+        collector2 = hwMap.get(Servo.class, "collector2");
+        cupArm = hwMap.get(Servo.class, "cupArm");
+        selector = hwMap.get(Servo.class, "selector");
 
 
-        // flag.setPosition(0);
-        marker.setPosition(0);
-        // sensorArm.setPosition(0);
-        // lock.setPosition(0);
-        // sample.setPosition(0);
+    
+        marker.setPosition(1); //// 1 is up
+        collector1.setPosition(0.5);
+        collector2.setPosition(0.5);
+        cupArm.setPosition(0);
+        selector.setPosition(0.5);
         
+        reset();
+        // // 1 = outside the robot for sampling THIS IS A COMMENT
+        // // 0.365 = inside robot for start THIS IS A COMMENT
+        //  sensorArm.setPosition(0);
+         
         // get a reference to the color sensor.
-        sensorColor = hwMap.get(ColorSensor.class, "CD1");
 
+        sensorColor = hwMap.get(ColorSensor.class, "CD1");
     }
+    double cut = 0;
 
     // Methods
 
@@ -274,8 +301,36 @@ public class RoverHardware
         br.setPower(OFF);
     }
     
+    public void reset () {
+    fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    verticalDistribution.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+   
+    fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    verticalDistribution.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+    
+    public int avgencoderval () {
+    return ((Math.abs(fl.getCurrentPosition()) + Math.abs(fr.getCurrentPosition()) +
+           Math.abs(bl.getCurrentPosition()) + Math.abs(br.getCurrentPosition())) / 4);
+    }
+    
+    public int avgencoderright () {
+    return ((fl.getCurrentPosition() + br.getCurrentPosition()) / 2);
+    }
     
     
+    public int avgencoderleft () {
+    return ((fr.getCurrentPosition() + bl.getCurrentPosition()) / 2);
+    }
     
  }
 
