@@ -260,7 +260,7 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                          ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                          robot.backward();
                          runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 0.9)){
+                         while(opModeIsActive() && (runtime.seconds() <= 1.1)){
                          telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }robot.stop();
                          sleep(500);
@@ -456,7 +456,7 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             robot.backward();
                             runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 0.32)){
+                            while(opModeIsActive() && (runtime.seconds() <= 0.28)){
                             telemetry.addData("BACK FROM BLOCK", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.forward();
@@ -486,7 +486,7 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             robot.backward();
                             runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 0.8)){
+                            while(opModeIsActive() && (runtime.seconds() <= 1)){
                             telemetry.addData("FORWARD to WALL", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.forward();
@@ -517,7 +517,7 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                              ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                              robot.right();
                              runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 1.00)){
+                             while(opModeIsActive() && (runtime.seconds() <= 0.88)){
                              telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }
                              robot.left();
@@ -581,9 +581,17 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                              //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                              ///////////////////SAFETY STRAFE TO WALL2///////////////////////////////////////////////////////////////////////////////////////
                              ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             robot.right();
+                            //  robot.right();
+                            //  runtime.reset();
+                            //  while(opModeIsActive() && (runtime.seconds() <= 0.1)){
+                            //  telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+                            //  }
+                            //  robot.stop();
+                            //  sleep(200);
+                             
+                             robot.spinRight();
                              runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 0.1)){
+                             while(opModeIsActive() && (runtime.seconds() <= 0.024)){
                              telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }
                              robot.stop();
@@ -696,7 +704,7 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                         }else{
                           telemetry.addData("Gold Mineral Position", "Left");
                          telemetry.update();
-                     //move forward away from lander to make space to spin 
+                       //move forward away from lander to make space to spin 
                      robot.forward();
                      runtime.reset();
                      while(opModeIsActive() && (runtime.seconds() <= 0.12)){
@@ -821,7 +829,7 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                      robot.backward();
                      runtime.reset();
-                     while(opModeIsActive() && (runtime.seconds() <= 1.38)){
+                     while(opModeIsActive() && (runtime.seconds() <= 1.14)){
                      telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                      }robot.stop();
                      sleep(500);
@@ -914,14 +922,10 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                     while(opModeIsActive() && (runtime.seconds() <= 1)){
                     telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
                     }
+                    robot.collectorHarvesterFlip.setPower(0);
                     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     ///////////////////////////////FLIP HARVESTER//////////////////////////////////////////////////////////////////////////////////////
                     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    robot.collectorHarvesterFlip.setPower(-1.5);
-                    while(opModeIsActive() && (runtime.seconds() <= 1)){
-                    telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                    }
-                    robot.collectorHarvesterFlip.setPower(0);
                     runtime.reset();
                     robot.collectorArmExtend.setPower(-1);
                     while(opModeIsActive() && (runtime.seconds() <= 1.2)){
