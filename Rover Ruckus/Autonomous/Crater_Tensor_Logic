@@ -167,7 +167,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                              // spin right to to aim at depot wall
                               robot.spinRight();
                              runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 0.49)){
+                             while(opModeIsActive() && (runtime.seconds() <= 0.45)){
                              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }robot.stop();
                              robot.spinLeft();
@@ -180,7 +180,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                              // move backward at wall
                              robot.backward();
                              runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 1.77)){
+                             while(opModeIsActive() && (runtime.seconds() <= 1.57)){
                              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }robot.stop();
                              robot.backward();
@@ -237,68 +237,70 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                              sleep(500);
                              
                              
-                               ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
-                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            runtime.reset();
-                            robot.collector1.setPosition(1);
-                            robot.collector2.setPosition(0);
-                            robot.collectorHarvesterFlip.setPower(-1.5);
-                            while(opModeIsActive() && (runtime.seconds() <= 1)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            ///////////////////////////////FLIP HARVESTER//////////////////////////////////////////////////////////////////////////////////////
-                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            robot.collectorHarvesterFlip.setPower(0);
-                            runtime.reset();
-                            robot.collectorArmExtend.setPower(-1);
-                            while(opModeIsActive() && (runtime.seconds() <= 1.2)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            
-                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            ///////////////////////////////VACUUM CLEANER//////////////////////////////////////////////////////////////////////////////////////
-                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            // EXTEND //
-                            robot.collectorArmExtend.setPower(1);
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.2)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            
-                            // CONTRACT //
-                            robot.collectorArmExtend.setPower(-1);
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.2)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            
-                            // EXTEND //
-                            robot.collectorArmExtend.setPower(1);
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.2)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            
-                            // CONTRACT //
-                            robot.collectorArmExtend.setPower(-1);
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.2)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            
-                            // EXTEND //
-                            robot.collectorArmExtend.setPower(1);
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 0.6)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            robot.collector1.setPosition(0.5);
-                            robot.collector2.setPosition(0.5);
-                            robot.stop();
-                            // WAIT //
-                            sleep(5000);
+                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        runtime.reset();
+                        robot.collector1.setPosition(1);
+                        robot.collector2.setPosition(0);
+                        robot.collectorHarvesterFlip.setPower(-1.5);
+                        while(opModeIsActive() && (runtime.seconds() <= 1)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ///////////////////////////////FLIP HARVESTER//////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        robot.collectorHarvesterFlip.setPower(0);
+                        runtime.reset();
+                        robot.collectorArmExtend.setPower(-1);
+                        while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ///////////////////////////////VACUUM CLEANER//////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        // EXTEND //
+                        robot.collectorArmExtend.setPower(1);
+                        runtime.reset();
+                        while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        
+                        // CONTRACT //
+                        robot.collectorArmExtend.setPower(-1);
+                        runtime.reset();
+                        while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        
+                        // EXTEND //
+                        robot.collectorArmExtend.setPower(1);
+                        runtime.reset();
+                        while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        
+                        // CONTRACT //
+                        robot.collectorArmExtend.setPower(-1);
+                        runtime.reset();
+                        while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        
+                        // EXTEND //
+                        robot.collectorArmExtend.setPower(1);
+                        runtime.reset();
+                        while(opModeIsActive() && (runtime.seconds() <= 0.1)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                         robot.collector1.setPosition(0.5);
+                        robot.collector2.setPosition(0.5);
+                        robot.stop();
+                        // WAIT //
+                        sleep(5000);
+
+                          
                             
                             position = 1;
                             telemetry.update();
@@ -313,7 +315,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             robot.forward();
                             runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 0.88)){
+                            while(opModeIsActive() && (runtime.seconds() <= 0.8)){
                             telemetry.addData("KNOCK BLOCK", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.backward();
@@ -328,7 +330,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             robot.backward();
                             runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 0.28)){
+                            while(opModeIsActive() && (runtime.seconds() <= 0.24)){
                             telemetry.addData("BACK FROM BLOCK", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.forward();
@@ -358,7 +360,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             robot.backward();
                             runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.48)){
+                            while(opModeIsActive() && (runtime.seconds() <= 1.36)){
                             telemetry.addData("FORWARD to WALL", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.forward();
@@ -373,7 +375,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             robot.spinLeft();
                             runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 0.34)){
+                            while(opModeIsActive() && (runtime.seconds() <= 0.29)){
                             telemetry.addData("SPIN to WALL", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.spinRight();
@@ -434,81 +436,75 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                             robot.stop();
                             sleep(500);
                             
-                              ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
-                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            runtime.reset();
-                            robot.collector1.setPosition(1);
-                            robot.collector2.setPosition(0);
-                            robot.collectorHarvesterFlip.setPower(-1.5);
-                            while(opModeIsActive() && (runtime.seconds() <= 1)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            ///////////////////////////////FLIP HARVESTER//////////////////////////////////////////////////////////////////////////////////////
-                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            robot.collectorHarvesterFlip.setPower(0);
-                            runtime.reset();
-                            robot.collectorArmExtend.setPower(-1);
-                            while(opModeIsActive() && (runtime.seconds() <= 1.2)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            
-                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            ///////////////////////////////VACUUM CLEANER//////////////////////////////////////////////////////////////////////////////////////
-                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            // EXTEND //
-                            robot.collectorArmExtend.setPower(1);
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.2)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            
-                            // CONTRACT //
-                            robot.collectorArmExtend.setPower(-1);
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.2)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            
-                            // EXTEND //
-                            robot.collectorArmExtend.setPower(1);
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.2)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            
-                            // CONTRACT //
-                            robot.collectorArmExtend.setPower(-1);
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.2)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            
-                            // EXTEND //
-                            robot.collectorArmExtend.setPower(1);
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 0.6)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                              robot.collector1.setPosition(0.5);
-                            robot.collector2.setPosition(0.5);
-                            robot.stop();
-                            // WAIT //
-                            sleep(5000);
+                           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        runtime.reset();
+                        robot.collector1.setPosition(1);
+                        robot.collector2.setPosition(0);
+                        robot.collectorHarvesterFlip.setPower(-1.5);
+                        while(opModeIsActive() && (runtime.seconds() <= 1)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ///////////////////////////////FLIP HARVESTER//////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        robot.collectorHarvesterFlip.setPower(0);
+                        runtime.reset();
+                        robot.collectorArmExtend.setPower(-1);
+                        while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ///////////////////////////////VACUUM CLEANER//////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        // EXTEND //
+                        robot.collectorArmExtend.setPower(1);
+                        runtime.reset();
+                        while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        
+                        // CONTRACT //
+                        robot.collectorArmExtend.setPower(-1);
+                        runtime.reset();
+                        while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        
+                        // EXTEND //
+                        robot.collectorArmExtend.setPower(1);
+                        runtime.reset();
+                        while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        
+                        // CONTRACT //
+                        robot.collectorArmExtend.setPower(-1);
+                        runtime.reset();
+                        while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                        
+                        // EXTEND //
+                        robot.collectorArmExtend.setPower(1);
+                        runtime.reset();
+                        while(opModeIsActive() && (runtime.seconds() <= 0.1)){
+                        telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                        }
+                         robot.collector1.setPosition(0.5);
+                        robot.collector2.setPosition(0.5);
+                        robot.stop();
+                        // WAIT //
+                        sleep(5000);
+
+                          
                         
                             position = 2;
                             telemetry.update();
                           }
-                          
-                          
-                          
-                          
-                          
-                          
-                          
-                          
-                          
+
                           
                         }else{
                           telemetry.addData("Gold Mineral Position", "Left");
