@@ -89,7 +89,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
      
              robot.forward();
              runtime.reset();
-             while(opModeIsActive() && (runtime.seconds() <= 0.2)){
+             while(opModeIsActive() && (runtime.seconds() <= 0.1)){
              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
              }robot.stop();
               robot.backward();
@@ -154,7 +154,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                              // move back after hitting position 1
                                robot.backward();
                              runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 0.4)){
+                             while(opModeIsActive() && (runtime.seconds() <= 0.36)){
                              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }robot.stop();
                                robot.forward();
@@ -303,23 +303,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                             position = 1;
                             telemetry.update();
                             
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+
                             
                           } else if (goldMineralX < silverMineral1X) {
                             telemetry.addData("Gold Mineral Position", "Center");
@@ -418,7 +402,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                             //////////////////////////////FOWARD TO DROP MARKER/////////////////////////////////////////////////////////////
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             robot.backward();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.8)){
+                            while(opModeIsActive() && (runtime.seconds() <= 1.96)){
                             telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.forward();
@@ -440,7 +424,7 @@ public class Crater_Tensor_Logic extends LinearOpMode {
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             robot.forward();
                             runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.72)){
+                            while(opModeIsActive() && (runtime.seconds() <= 1.88)){
                             telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.backward();
