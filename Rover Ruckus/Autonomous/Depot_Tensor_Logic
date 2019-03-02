@@ -14,8 +14,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import android.graphics.Color;
 
-@Autonomous(name="Depot Tensor Logic", group="Auto")
-public class Depot_Tensor_Logic extends LinearOpMode {
+@Autonomous(name="Depot Tensor Color Logic", group="Auto")
+public class Depot_Tensor_Color_Logic extends LinearOpMode {
  
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
@@ -47,6 +47,15 @@ public class Depot_Tensor_Logic extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
+      // hsvValues is an array that will hold the hue, saturation, and value information.
+        float hsvValues[] = {0F, 0F, 0F};
+
+        // values is a reference to the hsvValues array.
+        final float values[] = hsvValues;
+
+        // sometimes it helps to multiply the raw RGB values with a scale factor
+        // to amplify/attentuate the measured values.
+        final double SCALE_FACTOR = 255;
      
             /** Activate Tensor Flow Object Detection. */
             if (robot.tfod != null) {
@@ -258,90 +267,42 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                          ///////////////////MOVE BACK TO DEPOT///////////////////////////////////////////////////////////////////////////////////////
                          ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         robot.backward();
+                         //MOVE BACK AND WAIT FOR RED
+        double hsvVal = 100;
+        robot.backward();
+        sleep(400);
+        while (opModeIsActive() && (runtime.seconds() <= 8) && ((hsvVal > 15) && (hsvVal < 150))){
+             Color.RGBToHSV( (robot.sensorColor.red()),
+             (robot.sensorColor.green()),
+             (robot.sensorColor.blue()),
+             hsvValues); 
+             hsvVal = hsvValues[0];
+    
+        telemetry.addData("Hue", hsvValues[0]);
+        telemetry.update();
+        
+        }
+        
+        sleep(180); 
+      robot.marker.setPosition(0.9);
+      robot.forward();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
+      robot.stop();
+      sleep (1000);
+     robot.stop();
+
+                        robot.forward();
                          runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 1.1)){
-                         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }robot.stop();
-                         sleep(500);
-                         robot.forward();
-                         runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 0.02)){
-                         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }robot.stop();
-                         sleep(500);
-                         
-                         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////MARKER DROP///////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         robot.marker.setPosition(0.365);
-                         sleep(700);
-                         robot.marker.setPosition(1);
-                         
-                         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////SAFETY STRAFE TO WALL1///////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         robot.right();
-                         runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 0.1)){
-                         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }
-                         robot.stop();
-                         sleep(200);
-                         
-                         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////FORWARD TO CRATER1///////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         robot.forward();
-                         runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 1)){
-                         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }
-                         robot.backward();
-                         runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+                         while(opModeIsActive() && (runtime.seconds() <= 2)){
+                            sleep(100);
+                            robot.marker.setPosition(0);
                          telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }
                          robot.stop();
-                         sleep(500);
-                         
-                         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////SAFETY STRAFE TO WALL2///////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         robot.right();
-                         runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 0.1)){
-                         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }
-                         robot.stop();
-                         sleep(200);
-                         
-                         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////FORWARD TO CRATER2///////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         robot.forward();
-                         runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 1.06)){
-                         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }
-                         robot.backward();
-                         runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 0.02)){
-                         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }
-                         robot.stop();
-                         sleep(500);
-                         
-                         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////SAFETY STRAFE TO WALL3///////////////////////////////////////////////////////////////////////////////////////
-                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                         robot.right();
-                         runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 0.1)){
-                         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }
-                         robot.stop();
-                         sleep(200);
                         
                         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
@@ -531,99 +492,42 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                              //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                              ///////////////////MOVE BACK TO DEPOT///////////////////////////////////////////////////////////////////////////////////////
                              ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             robot.backward();
-                             runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 1.06)){
-                             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                             }robot.stop();
-                             sleep(500);
-                             robot.forward();
-                             runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 0.02)){
-                             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                             }robot.stop();
-                             sleep(500);
-                             
-                             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////MARKER DROP///////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             robot.marker.setPosition(0.365);
-                             sleep(700);
-                             robot.marker.setPosition(1);
-                             
-                             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////SAFETY STRAFE TO WALL1///////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             robot.right();
-                             runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 0.1)){
-                             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                             }
-                             robot.stop();
-                             sleep(200);
-                             
-                             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////FORWARD TO CRATER1///////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             robot.forward();
-                             runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 1)){
-                             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                             }
-                             robot.backward();
-                             runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 0.02)){
-                             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                             }
-                             robot.stop();
-                             sleep(500);
-                             
-                             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////SAFETY STRAFE TO WALL2///////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            //  robot.right();
-                            //  runtime.reset();
-                            //  while(opModeIsActive() && (runtime.seconds() <= 0.1)){
-                            //  telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                            //  }
-                            //  robot.stop();
-                            //  sleep(200);
-                             
-                             robot.spinRight();
-                             runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 0.024)){
-                             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                             }
-                             robot.stop();
-                             sleep(200);
-                             
-                             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////FORWARD TO CRATER2///////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             robot.forward();
-                             runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 1.22)){
-                             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                             }
-                             robot.backward();
-                             runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 0.02)){
-                             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                             }
-                             robot.stop();
-                             sleep(500);
-                             
-                             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////SAFETY STRAFE TO WALL3///////////////////////////////////////////////////////////////////////////////////////
-                             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                             robot.right();
-                             runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 0.1)){
-                             telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                             }
-                             robot.stop();
-                             sleep(200);
-                            
+                              //MOVE BACK AND WAIT FOR RED
+        double hsvVal = 100;
+        robot.backward();
+        sleep(400);
+        while (opModeIsActive() && (runtime.seconds() <= 8) && ((hsvVal > 15) && (hsvVal < 150))){
+             Color.RGBToHSV( (robot.sensorColor.red()),
+             (robot.sensorColor.green()),
+             (robot.sensorColor.blue()),
+             hsvValues); 
+             hsvVal = hsvValues[0];
+    
+        telemetry.addData("Hue", hsvValues[0]);
+        telemetry.update();
+        
+        }
+        
+        sleep(180); 
+      robot.marker.setPosition(0.9);
+      robot.forward();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
+      robot.stop();
+      sleep (1000);
+     robot.stop();
+
+                        robot.forward();
+                         runtime.reset();
+                         while(opModeIsActive() && (runtime.seconds() <= 2)){
+                            sleep(100);
+                            robot.marker.setPosition(0);
+                         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+                         }
+                         robot.stop();
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -827,90 +731,42 @@ public class Depot_Tensor_Logic extends LinearOpMode {
                      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                      ///////////////////MOVE BACK TO DEPOT///////////////////////////////////////////////////////////////////////////////////////
                      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     robot.backward();
-                     runtime.reset();
-                     while(opModeIsActive() && (runtime.seconds() <= 1.14)){
-                     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                     }robot.stop();
-                     sleep(500);
-                     robot.forward();
-                     runtime.reset();
-                     while(opModeIsActive() && (runtime.seconds() <= 0.02)){
-                     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                     }robot.stop();
-                     sleep(500);
-                     
-                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////MARKER DROP///////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     robot.marker.setPosition(0.365);
-                     sleep(700);
-                     robot.marker.setPosition(1);
-                     
-                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////SAFETY STRAFE TO WALL1///////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     robot.right();
-                     runtime.reset();
-                     while(opModeIsActive() && (runtime.seconds() <= 0.1)){
-                     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                     }
-                     robot.stop();
-                     sleep(200);
-                     
-                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////FORWARD TO CRATER1///////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     robot.forward();
-                     runtime.reset();
-                     while(opModeIsActive() && (runtime.seconds() <= 1)){
-                     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                     }
-                     robot.backward();
-                     runtime.reset();
-                     while(opModeIsActive() && (runtime.seconds() <= 0.02)){
-                     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                     }
-                     robot.stop();
-                     sleep(500);
-                     
-                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////SAFETY STRAFE TO WALL2///////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     robot.right();
-                     runtime.reset();
-                     while(opModeIsActive() && (runtime.seconds() <= 0.1)){
-                     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                     }
-                     robot.stop();
-                     sleep(200);
-                     
-                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////FORWARD TO CRATER2///////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     robot.forward();
-                     runtime.reset();
-                     while(opModeIsActive() && (runtime.seconds() <= 1.06)){
-                     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                     }
-                     robot.backward();
-                     runtime.reset();
-                     while(opModeIsActive() && (runtime.seconds() <= 0.02)){
-                     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                     }
-                     robot.stop();
-                     sleep(500);
-                     
-                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////SAFETY STRAFE TO WALL3///////////////////////////////////////////////////////////////////////////////////////
-                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                     robot.right();
-                     runtime.reset();
-                     while(opModeIsActive() && (runtime.seconds() <= 0.1)){
-                     telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                     }
-                     robot.stop();
-                     sleep(200);
+                      //MOVE BACK AND WAIT FOR RED
+        double hsvVal = 100;
+        robot.backward();
+        sleep(400);
+        while (opModeIsActive() && (runtime.seconds() <= 8) && ((hsvVal > 15) && (hsvVal < 150))){
+             Color.RGBToHSV( (robot.sensorColor.red()),
+             (robot.sensorColor.green()),
+             (robot.sensorColor.blue()),
+             hsvValues); 
+             hsvVal = hsvValues[0];
+    
+        telemetry.addData("Hue", hsvValues[0]);
+        telemetry.update();
+        
+        }
+        
+        sleep(180); 
+      robot.marker.setPosition(0.9);
+      robot.forward();
+         runtime.reset();
+         while(opModeIsActive() && (runtime.seconds() <= 0.02)){
+         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+         }
+         robot.stop();
+      robot.stop();
+      sleep (1000);
+     robot.stop();
+
+                        robot.forward();
+                         runtime.reset();
+                         while(opModeIsActive() && (runtime.seconds() <= 2)){
+                            sleep(100);
+                            robot.marker.setPosition(0);
+                         telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+                         }
+                         robot.stop();
                     
                     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
