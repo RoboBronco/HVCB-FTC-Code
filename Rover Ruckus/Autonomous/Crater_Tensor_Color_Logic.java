@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import android.graphics.Color;
 
-@Autonomous(name="Crater Tensor Logic", group="Auto")
+@Autonomous(name="Crater Tensor Color Logic", group="Auto")
 public class Crater_Tensor_Color_Logic extends LinearOpMode {
  
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
@@ -178,7 +178,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                              // spin right to to aim at depot wall
                               robot.spinRight();
                              runtime.reset();
-                             while(opModeIsActive() && (runtime.seconds() <= 0.45)){
+                             while(opModeIsActive() && (runtime.seconds() <= 0.52)){
                              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }robot.stop();
                              robot.spinLeft();
@@ -214,21 +214,27 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                              runtime.reset();
                              while(opModeIsActive() && (runtime.seconds() <= 0.33)){
                              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                             }robot.stop();
-                             
+                             }
+                              sleep(250);
+                             runtime.reset();
                              robot.right();
                             while(opModeIsActive() && (runtime.seconds() <= 0.04)){
                             telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
+                             runtime.reset();
+                             robot.left();
+                            while(opModeIsActive() && (runtime.seconds() <= 0.01)){
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
                             robot.stop();
-                            sleep(500);
                         
                         
                              //MOVE BACK AND WAIT FOR RED or Blue
                             double hsvVal = 100;
+                            runtime.reset();
                             robot.backward();
                             sleep(400);
-                            while (opModeIsActive() && (runtime.seconds() <= 1) && ((hsvVal > 15) && (hsvVal < 150))){
+                            while (opModeIsActive() && (runtime.seconds() <= 8) && ((hsvVal > 15) && (hsvVal < 175))){
                                  Color.RGBToHSV( (robot.sensorColor.red()),
                                  (robot.sensorColor.green()),
                                  (robot.sensorColor.blue()),
@@ -248,19 +254,46 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                              telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }
                              robot.stop();
-                          robot.stop();
+                          
                           sleep (1000);
                          robot.stop();
 
+                            runtime.reset();
+                             robot.right();
+                            while(opModeIsActive() && (runtime.seconds() <= 0.06)){
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
+                            robot.stop();
+                             runtime.reset();
+                             robot.left();
+                            while(opModeIsActive() && (runtime.seconds() <= 0.01)){
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
+                            robot.stop();
+
                         robot.forward();
                          runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 2)){
-                            sleep(100);
-                            robot.marker.setPosition(0);
+                         while(opModeIsActive() && (runtime.seconds() <= 1.25)){
+                         
                          telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }
                          robot.stop();
+                         
+                          runtime.reset();
+                             robot.left();
+                            while(opModeIsActive() && (runtime.seconds() <= 0.06)){
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
+                            robot.stop();
                              
+                              runtime.reset();
+                             robot.forward();
+                            while(opModeIsActive() && (runtime.seconds() <= 1.25)){
+                            sleep(100);
+                            robot.marker.setPosition(0);
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
+                            robot.stop();
                              
                              ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
@@ -370,7 +403,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             robot.spinRight();
                             runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 0.76)){
+                            while(opModeIsActive() && (runtime.seconds() <= 0.8)){
                             telemetry.addData("FACE DEPOT", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.spinLeft();
@@ -385,7 +418,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             robot.backward();
                             runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 1.36)){
+                            while(opModeIsActive() && (runtime.seconds() <= 1.57)){
                             telemetry.addData("FORWARD to WALL", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.forward();
@@ -413,26 +446,34 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             //////////////////////////////Strafe to Wall//////////////////////////////////////////////////////////////////////////////
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            robot.left();
-                            runtime.reset();
-                            while(opModeIsActive() && (runtime.seconds() <= 0.40)){
-                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                            }
-                            robot.right();
+                             robot.left();
+                             runtime.reset();
+                             while(opModeIsActive() && (runtime.seconds() <= 0.33)){
+                             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+                             }
+                              sleep(250);
+                             runtime.reset();
+                             robot.right();
                             while(opModeIsActive() && (runtime.seconds() <= 0.04)){
                             telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
+                             runtime.reset();
+                             robot.left();
+                            while(opModeIsActive() && (runtime.seconds() <= 0.01)){
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
                             robot.stop();
-                            sleep(500);
+                        
                             
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             //////////////////////////////FOWARD TO DROP MARKER/////////////////////////////////////////////////////////////
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     //MOVE BACK AND WAIT FOR RED or Blue
                             double hsvVal = 100;
+                            runtime.reset();
                             robot.backward();
                             sleep(400);
-                            while (opModeIsActive() && (runtime.seconds() <= 1) && ((hsvVal > 15) && (hsvVal < 150))){
+                            while (opModeIsActive() && (runtime.seconds() <= 8) && ((hsvVal > 15) && (hsvVal < 175))){
                                  Color.RGBToHSV( (robot.sensorColor.red()),
                                  (robot.sensorColor.green()),
                                  (robot.sensorColor.blue()),
@@ -452,18 +493,34 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                              telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }
                              robot.stop();
-                          robot.stop();
+                         
                           sleep (1000);
                          robot.stop();
 
-                        robot.forward();
+                         robot.forward();
                          runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 2)){
-                            sleep(100);
-                            robot.marker.setPosition(0);
+                         while(opModeIsActive() && (runtime.seconds() <= 1.25)){
+                         
                          telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }
                          robot.stop();
+                         
+                          runtime.reset();
+                             robot.left();
+                            while(opModeIsActive() && (runtime.seconds() <= 0.06)){
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
+                            robot.stop();
+                             
+                              runtime.reset();
+                             robot.forward();
+                            while(opModeIsActive() && (runtime.seconds() <= 1.25)){
+                            sleep(100);
+                            robot.marker.setPosition(0);
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
+                            robot.stop();
+                             
                          
                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
@@ -545,27 +602,29 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                          while(opModeIsActive() && (runtime.seconds() <= 0.12)){
                          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }robot.stop();
-                         sleep(500);
+                         sleep(250);
                          
                          // spin left to face gold mineral
                           robot.spinLeft();
                          runtime.reset();
                          while(opModeIsActive() && (runtime.seconds() <= 0.3)){
                          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }robot.stop();
-                              robot.spinRight();
+                         }
+                         robot.stop();
+                         robot.spinRight();
                          runtime.reset();
                          while(opModeIsActive() && (runtime.seconds() <= 0.02)){
                          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }robot.stop();
-                         sleep(500);
+                         sleep(250);
                          
                           //move forward to knock block off position Left
                          robot.forward();
                          runtime.reset();
                          while(opModeIsActive() && (runtime.seconds() <= 0.86)){
                          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }robot.stop();
+                         }
+                         robot.stop();
                            robot.backward();
                          runtime.reset();
                          while(opModeIsActive() && (runtime.seconds() <= 0.01)){
@@ -577,18 +636,19 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                          runtime.reset();
                          while(opModeIsActive() && (runtime.seconds() <= 0.48)){
                          telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }robot.stop();
+                         }
+                         robot.stop();
                          robot.forward();
                          runtime.reset();
                          while(opModeIsActive() && (runtime.seconds() <= 0.01)){
                          telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }robot.stop();
-                         sleep(500);
+                         sleep(250);
                          
                         // spin right to to aim at depot wall
                           robot.spinRight();
                          runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 0.97)){
+                         while(opModeIsActive() && (runtime.seconds() <= 1.02)){
                          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }robot.stop();
                          robot.spinLeft();
@@ -596,20 +656,20 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                          while(opModeIsActive() && (runtime.seconds() <= 0.01)){
                          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }robot.stop();
-                         sleep(500);
+                         sleep(250);
                          
                          // move backward at wall
                          robot.backward();
                          runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 0.69)){
+                         while(opModeIsActive() && (runtime.seconds() <= 1.09)){
                          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }robot.stop();
-                         robot.backward();
+                         robot.forward();
                          runtime.reset();
                          while(opModeIsActive() && (runtime.seconds() <= 0.01)){
                          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }robot.stop();
-                         sleep(500);
+                         sleep(250);
                          
                          //spin left to parrellel to wall
                          robot.spinLeft();
@@ -617,21 +677,30 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                          while(opModeIsActive() && (runtime.seconds() <= 0.32)){
                          //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }robot.stop();
-                         sleep(500);
+                         sleep(250);
                          
-                          // strafe left into wall
-                          robot.left();
-                         runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 0.80)){
-                         //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
-                         }robot.stop();
-                        
-                        robot.right();
-                        while(opModeIsActive() && (runtime.seconds() <= 0.04)){
+                           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            //////////////////////////////Strafe to Wall//////////////////////////////////////////////////////////////////////////////
+                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                             robot.left();
+                             runtime.reset();
+                             while(opModeIsActive() && (runtime.seconds() <= 0.33)){
+                             //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
+                             }
+                              sleep(250);
+                             runtime.reset();
+                             robot.right();
+                            while(opModeIsActive() && (runtime.seconds() <= 0.04)){
                             telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
-                        }
-                        robot.stop();
-                        
+                            }
+
+                             runtime.reset();
+                             robot.left();
+                            while(opModeIsActive() && (runtime.seconds() <= 0.01)){
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
+                            robot.stop();
+           
                          sleep(500);
                          
                          
@@ -639,7 +708,8 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             double hsvVal = 100;
                             robot.backward();
                             sleep(400);
-                            while (opModeIsActive() && (runtime.seconds() <= 1) && ((hsvVal > 15) && (hsvVal < 150))){
+                            runtime.reset();
+                            while (opModeIsActive() && (runtime.seconds() <= 8) && ((hsvVal > 15) && (hsvVal < 175))){
                                  Color.RGBToHSV( (robot.sensorColor.red()),
                                  (robot.sensorColor.green()),
                                  (robot.sensorColor.blue()),
@@ -658,19 +728,34 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                              while(opModeIsActive() && (runtime.seconds() <= 0.02)){
                              telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }
-                             robot.stop();
+                          
                           robot.stop();
                           sleep (1000);
                          robot.stop();
-
-                        robot.forward();
+                         
+                         robot.forward();
                          runtime.reset();
-                         while(opModeIsActive() && (runtime.seconds() <= 2)){
-                            sleep(100);
-                            robot.marker.setPosition(0);
+                         while(opModeIsActive() && (runtime.seconds() <= 1.25)){
+                         
                          telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                          }
                          robot.stop();
+                         
+                          runtime.reset();
+                             robot.left();
+                            while(opModeIsActive() && (runtime.seconds() <= 0.06)){
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
+                            robot.stop();
+                             
+                              runtime.reset();
+                             robot.forward();
+                            while(opModeIsActive() && (runtime.seconds() <= 1.25)){
+                            sleep(100);
+                            robot.marker.setPosition(0);
+                            telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
+                            }
+                             robot.forward(0.1);
                          
                           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
