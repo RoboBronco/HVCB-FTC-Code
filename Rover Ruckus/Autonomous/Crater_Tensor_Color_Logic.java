@@ -148,7 +148,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                              while(opModeIsActive() && (runtime.seconds() <= 0.02)){
                              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }robot.stop();
-                             sleep(500);
+                             sleep(250);
                              
                              //move forward to knock block off position RIGHT
                              robot.forward();
@@ -173,7 +173,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                              while(opModeIsActive() && (runtime.seconds() <= 0.01)){
                              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }robot.stop();
-                             sleep(500);
+                             sleep(250);
                              
                              // spin right to to aim at depot wall
                               robot.spinRight();
@@ -186,7 +186,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                              while(opModeIsActive() && (runtime.seconds() <= 0.01)){
                              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }robot.stop();
-                             sleep(500);
+                             sleep(250);
                              
                              // move backward at wall
                              robot.backward();
@@ -199,7 +199,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                              while(opModeIsActive() && (runtime.seconds() <= 0.01)){
                              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }robot.stop();
-                             sleep(500);
+                             sleep(250);
                              
                              //spin left to parrellel to wall
                              robot.spinLeft();
@@ -207,7 +207,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                              while(opModeIsActive() && (runtime.seconds() <= 0.32)){
                              //telemetry.addData("Detach", "Time: %2.5f S Elapsed", runtime.seconds());
                              }robot.stop();
-                             sleep(500);
+                             sleep(250);
                              
                              // strafe left into wall
                               robot.left();
@@ -293,7 +293,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             robot.marker.setPosition(0);
                             telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
-                            robot.stop();
+                             robot.forward(0.1);
                              
                              ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         ///////////////////////////////RUN HARVESTERS//////////////////////////////////////////////////////////////////////////////////////
@@ -381,7 +381,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             telemetry.addData("KNOCK BLOCK", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.stop();
-                            sleep(500);
+                            sleep(250);
                             
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             /////////////////////////////////MOVE BACK FROM BLOCK/////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -396,7 +396,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             telemetry.addData("BACK FROM BLOCK", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.stop();
-                            sleep(500);
+                            sleep(250);
                             
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             /////////////////////////////////SPIN TO FACE DEPOT////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -411,7 +411,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             telemetry.addData("FACE DEPOT", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.stop();
-                            sleep(500);
+                            sleep(250);
                             
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             /////////////////////////////////FORWARD TO WALL////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -426,7 +426,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             telemetry.addData("FORWARD to WALL", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.stop();
-                            sleep(500);
+                            sleep(250);
                             
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             /////////////////////////////////SPIN TO FACE WALL////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -441,7 +441,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             telemetry.addData("SPIN to WALL", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
                             robot.stop();
-                            sleep(500);
+                            sleep(250);
                             
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             //////////////////////////////Strafe to Wall//////////////////////////////////////////////////////////////////////////////
@@ -519,7 +519,7 @@ public class Crater_Tensor_Color_Logic extends LinearOpMode {
                             robot.marker.setPosition(0);
                             telemetry.addData("Drop Marker", "Time: %2.5f S Elapsed", runtime.seconds());
                             }
-                            robot.stop();
+                             robot.forward(0.1);
                              
                          
                            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
