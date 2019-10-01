@@ -23,16 +23,27 @@ public class Scrimmage_LZ_Depot_Park extends LinearOpMode{
         
         robot.init(hardwareMap); 
         
-        telemetry.addData("Status: ", "Waiting");
+        telemetry.addData("Status ", "Waiting");
         telemetry.update();
         
         waitForStart();
         
-        telemetry.addData("Status: ", "Running");
+        telemetry.addData("Status ", "Running");
         telemetry.update();
         
-        sleep(2000);
+        //Move into Depot and stop
+        robot.forward();
+        sleep(750);
+        robot.stop();
         
+        //Wait for 23 seconds
+        sleep(23000);
+        
+        //Move to parking line and stop
+        robot.backward();
+        sleep(2000);
+        robot.stop();
+
     }
     
 }
