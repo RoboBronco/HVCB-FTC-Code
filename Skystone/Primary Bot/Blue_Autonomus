@@ -176,75 +176,129 @@ public class Blue_Autonomus extends LinearOpMode {
             robot.stop();
             sleep(100);
             
-            // Spin To Foundation
+            // Spin To Foundation ////// - = right
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(75, 0.25);
+            sleep(100);
             robot.spinLeft();
-            sleep(650);
-            robot.spinRight();
             sleep(1);
             robot.stop();
             sleep(100);
             
             // Move To Foundation
             robot.forward();
-            sleep(2600);
+            sleep(2450);
             robot.backward();
             sleep(1);
             robot.stop();
             sleep(100);
-            
-           
 
             // Spin Towards Blocks
-            robot.spinRight();
-            sleep(700);
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(-80, 0.25);
+            sleep(100);
+            robot.spinLeft();
+            sleep(1);
             robot.stop();
             sleep(100);
             
-          
             // drop  block
-               sleep(1000); 
+            sleep(1000); 
                
-          
-            
-            robot.spinLeft();
-            sleep(700);
+            //Spin In Order To Grab
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(75, 0.25);
+            sleep(100);
             robot.spinRight();
             sleep(1);
-            
+            robot.stop();
+            sleep(100);
              
-            
+            //Move To Foundation
             robot.right();
             sleep(600);
             robot.left();
             sleep(1);
             robot.stop();
             
+            //Grab Foundation
             robot.hook0.setPosition(1);
             robot.hook1.setPosition(-1);
             sleep(2000);
             
+            //Move Foundation Left
             robot.left(0.25);
             sleep(1500);
             
+            //Ensure Grip On Foundation
             robot.hook0.setPosition(1);
             robot.hook1.setPosition(-1);
              sleep(2000);
             
+            //Spin To Score
             robot.spinLeft(1);
-            sleep(1200);         
+            sleep(900);         
           
-          robot.right();
-          sleep(1100);
-          
-           robot.hook0.setPosition(-0.6);
-           robot.hook1.setPosition(0.6);
+            //Move Foundation To Wall
+            robot.right();
+            sleep(1100);
+           
+            //Release Foundation
+            robot.hook0.setPosition(-0.6);
+            robot.hook1.setPosition(0.6);
             
           robot.left();
-          sleep(1900);
+          sleep(500); //was 1900
            
-            robot.right();
+          robot.resetAngle();
+          sleep(100);
+          robot.rotate(80, 0.3);
+          sleep(100);
+          
+          robot.spinRight();
           sleep(1);
+          
+          robot.forward();
+          sleep(700);
            robot.stop();
+            
+            // //Move From Foundation
+            // robot.left();
+            // sleep(1900);
+            // robot.right();
+            // sleep(1);
+            // robot.stop();
+           
+            // //Spin LEFT To Loading Zone
+            // robot.resetAngle();
+            // sleep(100);
+            // robot.rotate(80, 0.25);
+            // sleep(100);
+            // robot.spinLeft();
+            // sleep(1);
+            // robot.stop();
+            // sleep(100);
+            
+            // // Move Back To Loading Zone ***Was 2600***
+            // robot.forward();
+            // sleep(1300);
+            // robot.backward();
+            // sleep(1);
+            // robot.stop();
+            // sleep(100);
+            
+            // //Spin LEFT Towards Blocks
+            // robot.resetAngle();
+            // sleep(100);
+            // robot.rotate(80, 0.25);
+            // sleep(100);
+            // robot.spinLeft();
+            // sleep(1);
+            // robot.stop();
+            // sleep(100);
            
             if (skystoneLocation == 'm'){
                 
