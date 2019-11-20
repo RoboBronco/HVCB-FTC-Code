@@ -1,6 +1,10 @@
 package FTC_2019_2020_Season;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -70,15 +74,28 @@ public class Red_Autonomus extends LinearOpMode {
         char skystoneLocation = 'r';
         boolean position = false;
 
+        telemetry.addData("Mode", "calibrating...");
+        telemetry.update();
+
+        telemetry.addData("Mode", "calibrating2...");
+        telemetry.update();
+
+        while (!isStopRequested() && !robot.imu.isGyroCalibrated())
+        {
+            sleep(50);
+            idle();
+        }
 
 
      
      // Wait for the game to start (driver presses PLAY)
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start tracking");
+        telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
         telemetry.update();
         waitForStart();
-        
+           robot.resetAngle();
+
  
             if (opModeIsActive()) {
             ///////////////////////////////////////////////////////////////
@@ -177,8 +194,16 @@ public class Red_Autonomus extends LinearOpMode {
             sleep(100);
             
             // Spin To Foundation
-            robot.spinRight();
-            sleep(800);
+                robot.resetAngle();
+                sleep(100);
+                robot.rotate(-80, 0.25);
+                sleep(100);
+                robot.spinRight();
+                sleep(10);
+                robot.stop();
+
+            //robot.spinRight();
+            //sleep(800);
             robot.spinLeft();
             sleep(1);
             robot.stop();
@@ -195,21 +220,28 @@ public class Red_Autonomus extends LinearOpMode {
            
 
             // Spin Towards Blocks
-            robot.spinLeft();
-            sleep(550);
-            robot.stop();
+            robot.resetAngle();
             sleep(100);
-            
-          
+            robot.rotate(80,0.25);/// left
+            sleep(100);
+            robot.spinRight();
+            sleep(1);
+             robot.stop();
+              sleep(100);
+              
             // drop  block
                sleep(1000); 
                
           
-            
-            robot.spinLeft();
-            sleep(690);
+            // spin toward foundation
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(80,0.25);/// left
+            sleep(100);
             robot.spinRight();
             sleep(1);
+             robot.stop();
+              sleep(100);
             
              
             
@@ -240,10 +272,18 @@ public class Red_Autonomus extends LinearOpMode {
            robot.hook1.setPosition(0.6);
             
           robot.left();
-          sleep(1900);
+          sleep(500); //was 1900
            
-            robot.right();
+          robot.resetAngle();
+          sleep(100);
+          robot.rotate(-80, 0.3);
+          sleep(100);
+          
+          robot.spinLeft();
           sleep(1);
+          
+          robot.backward();
+          sleep(700);
            robot.stop();
            
             if (skystoneLocation == 'm'){
@@ -363,5 +403,7 @@ public class Red_Autonomus extends LinearOpMode {
                   
  
 }
+
+
 }
     
