@@ -145,7 +145,7 @@ public class Red_Autonomus extends LinearOpMode {
             }   else if (hsvValues1[0] > 105 && hsvValues0[0] < 105){
                     telemetry.addData("Skystone is Middle " , "yeet");
                     robot.right();
-                    sleep(128);
+                    sleep(261);
                     robot.left();
                     sleep(1);
                     robot.stop();
@@ -170,7 +170,7 @@ public class Red_Autonomus extends LinearOpMode {
             } else {
                     telemetry.addData("Skystone is Right " , "yeet");
                     robot.right();
-                    sleep(384);
+                    sleep(616);//**Was 384** Plus 8inches or 232
                     robot.left();
                     sleep(1);
                     robot.stop();
@@ -212,6 +212,216 @@ public class Red_Autonomus extends LinearOpMode {
             // Move To Foundation
             robot.forward();
             sleep(2600);
+            robot.backward();
+            sleep(1);
+            robot.stop();
+            sleep(100);
+            
+           
+
+            // Spin Towards Blocks
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(80,0.25);/// left
+            sleep(100);
+            robot.spinRight();
+            sleep(1);
+             robot.stop();
+              sleep(100);
+              
+            // drop  block
+               sleep(1000); 
+               
+          
+            // spin toward foundation
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(80,0.25);/// left
+            sleep(100);
+            robot.spinRight();
+            sleep(1);
+             robot.stop();
+              sleep(100);
+            
+            robot.right();
+            sleep(600);
+            robot.left();
+            sleep(1);
+            robot.stop();
+            
+            robot.hook0.setPosition(1);
+            robot.hook1.setPosition(-1);
+            sleep(2000);
+            
+            robot.left(0.25);
+            sleep(1500);
+            
+            robot.hook0.setPosition(1);
+            robot.hook1.setPosition(-1);
+             sleep(2000);
+            
+            robot.spinRight(1);
+            sleep(1200);         
+          
+          robot.right();
+          sleep(1100);
+          
+           robot.hook0.setPosition(-0.6);
+           robot.hook1.setPosition(0.6);
+            
+          robot.left();
+          sleep(500); //was 1900
+           
+          robot.resetAngle();
+          sleep(100);
+          robot.rotate(-80, 0.3);
+          sleep(100);
+          
+          robot.spinLeft();
+          sleep(1);
+          
+          robot.backward();
+          sleep(700);
+           robot.stop();
+           
+            }
+           
+            if (skystoneLocation == 'm'){
+                
+                telemetry.addData("Skystone is Middle" , "!");
+                telemetry.update();
+                
+                
+              // Back Up From Blocks
+            robot.backward();
+            sleep(102);
+            robot.stop();
+            sleep(100);
+            
+            // Spin To Foundation
+                robot.resetAngle();
+                sleep(100);
+                robot.rotate(-80, 0.25);
+                sleep(100);
+                robot.spinRight();
+                sleep(10);
+                robot.stop();
+
+            //robot.spinRight();
+            //sleep(800);
+            robot.spinLeft();
+            sleep(1);
+            robot.stop();
+            sleep(100);
+            
+            // Move To Foundation
+            robot.forward();
+            sleep(2285);
+            robot.backward();
+            sleep(1);
+            robot.stop();
+            sleep(100);
+            
+           
+
+            // Spin Towards Blocks
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(80,0.25);/// left
+            sleep(100);
+            robot.spinRight();
+            sleep(1);
+             robot.stop();
+              sleep(100);
+              
+            // drop  block
+               sleep(1000); 
+               
+          
+            // spin toward foundation
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(80,0.25);/// left
+            sleep(100);
+            robot.spinRight();
+            sleep(1);
+             robot.stop();
+              sleep(100);
+            
+             
+            
+            robot.right();
+            sleep(600);
+            robot.left();
+            sleep(1);
+            robot.stop();
+            
+            robot.hook0.setPosition(1);
+            robot.hook1.setPosition(-1);
+            sleep(2000);
+            
+            robot.left(0.25);
+            sleep(1500);
+            
+            robot.hook0.setPosition(1);
+            robot.hook1.setPosition(-1);
+             sleep(2000);
+            
+            robot.spinRight(1);
+            sleep(1200);         
+          
+          robot.right();
+          sleep(1100);
+          
+           robot.hook0.setPosition(-0.6);
+           robot.hook1.setPosition(0.6);
+            
+          robot.left();
+          sleep(500); //was 1900
+           
+          robot.resetAngle();
+          sleep(100);
+          robot.rotate(-80, 0.3);
+          sleep(100);
+          
+          robot.spinLeft();
+          sleep(1);
+          
+          robot.backward();
+          sleep(700);
+           robot.stop();
+            }
+             
+             if (skystoneLocation == 'r'){
+                 
+              telemetry.addData("Skystone is Right" , "!");
+                telemetry.update();
+                
+              // Back Up From Blocks
+            robot.backward();
+            sleep(102);
+            robot.stop();
+            sleep(100);
+            
+            // Spin To Foundation
+                robot.resetAngle();
+                sleep(100);
+                robot.rotate(-80, 0.25);
+                sleep(100);
+                robot.spinRight();
+                sleep(10);
+                robot.stop();
+
+            //robot.spinRight();
+            //sleep(800);
+            robot.spinLeft();
+            sleep(1);
+            robot.stop();
+            sleep(100);
+            
+            // Move To Foundation **Was 2600** Subtract 16inches
+            robot.forward();
+            sleep(2080);
             robot.backward();
             sleep(1);
             robot.stop();
@@ -286,124 +496,22 @@ public class Red_Autonomus extends LinearOpMode {
           sleep(700);
            robot.stop();
            
-            if (skystoneLocation == 'm'){
-                
-                telemetry.addData("Skystone is Middle" , "!");
-                telemetry.update();
-                
-                // Back Up From Blocks
-            robot.backward();
-            sleep(102);
-            robot.stop();
-            sleep(100);
-            
-            // Spin To Foundation
-            robot.spinRight();
-            sleep(690);
-            robot.spinLeft();
-            sleep(1);
-            robot.stop();
-            sleep(100);
-            
-            // Move To Foundation
-            robot.forward();
-            sleep(2278);
-            robot.backward();
-            sleep(1);
-            robot.stop();
-            sleep(100);
-           
-            
-            // represtnt block drop
-             sleep(1000);
-            
-            // Back Up To Blocks
-            robot.backward();
-            sleep(3094);
-            robot.stop();
-            sleep(100);
-            
-            // Spin Towards Blocks
-            robot.spinLeft();
-            sleep(600);
-            robot.stop();
-            sleep(100);
-            
-            // Move To Blocks
-            robot.forward();
-            sleep(102);
-            robot.stop();
-            sleep(100);
-            }
-            }
-            
-            
-            
-            
-            
-             if (skystoneLocation == 'r'){
-                 
-              telemetry.addData("Skystone is Right" , "!");
-                telemetry.update();
-                
-                // Back Up From Blocks
-            robot.backward();
-            sleep(102);
-            robot.stop();
-            sleep(100);
-            
-            // Spin To Foundation
-            robot.spinRight();
-            sleep(690);
-            robot.spinLeft();
-            sleep(1);
-            robot.stop();
-            sleep(100);
-            
-            // Move To Foundation
-            robot.forward();
-            sleep(2278);
-            robot.backward();
-            sleep(1);
-            robot.stop();
-            sleep(100);
-            
-            
-            
-            // represtnt block drop
-             sleep(1000);
-            
-        
-            // Back Up To Blocks
-            robot.backward();
-            sleep(3094);
-            robot.stop();
-            sleep(100);
-            
-            // Spin Towards Blocks
-            robot.spinLeft();
-            sleep(600);
-            robot.stop();
-            sleep(100);
-            
-            // Move To Blocks
-            robot.forward();
-            sleep(102);
-            robot.stop();
-            sleep(100);
-            }
-            }
-            
             
             telemetry.update();
-            
-        }
+            }
             
  
                   
  
 }
+             
+            }
+              
+             }
+             
+            }
+      
+     
+ 
 
-
-}
     
