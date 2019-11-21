@@ -71,11 +71,24 @@ public class Blue_Autonomus extends LinearOpMode {
         boolean position = false;
 
 
+        telemetry.addData("Mode", "calibrating...");
+        telemetry.update();
+
+        telemetry.addData("Mode", "calibrating2...");
+        telemetry.update();
+
+        while (!isStopRequested() && !robot.imu.isGyroCalibrated())
+        {
+            sleep(50);
+            idle();
+        }
+
 
      
      // Wait for the game to start (driver presses PLAY)
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start tracking");
+        telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
         telemetry.update();
         waitForStart();
         
@@ -118,18 +131,18 @@ public class Blue_Autonomus extends LinearOpMode {
             
             if (hsvValues1[0] > 105 && hsvValues0[0] < 105){
                 telemetry.addData("Skystone is Left " , "yeet");
-                    robot.right();
+                    robot.left();
                     sleep(186);
-                     robot.left();
+                     robot.right();
                     sleep(1);
                     robot.stop();
                     skystoneLocation = 'l';
                     position = true;
             }   else if (hsvValues0[0] > 105 && hsvValues1[0] < 105){ 
                     telemetry.addData("Skystone is Middle " , "yeet");
-                    robot.right();
-                    sleep(128);
                     robot.left();
+                    sleep(218);//128
+                    robot.right();
                     sleep(1);
                     robot.stop();
                     skystoneLocation = 'm';
@@ -152,9 +165,9 @@ public class Blue_Autonomus extends LinearOpMode {
                     }robot.stop();
             } else {
                     telemetry.addData("Skystone is Right " , "yeet");
-                    robot.right();
-                    sleep(384);
                     robot.left();
+                    sleep(624);//384+8inches
+                    robot.right();
                     sleep(1);
                     robot.stop();
                     skystoneLocation = 'r';
@@ -170,7 +183,7 @@ public class Blue_Autonomus extends LinearOpMode {
                  telemetry.addData("Skystone is Left" , "!");
                 telemetry.update();
                 
-               // Back Up From Blocks
+            // Back Up From Blocks
             robot.backward();
             sleep(102);
             robot.stop();
@@ -299,21 +312,24 @@ public class Blue_Autonomus extends LinearOpMode {
             // sleep(1);
             // robot.stop();
             // sleep(100);
+            }
            
             if (skystoneLocation == 'm'){
                 
                 telemetry.addData("Skystone is Middle" , "!");
                 telemetry.update();
                 
-                // Back Up From Blocks
+            // Back Up From Blocks
             robot.backward();
             sleep(102);
             robot.stop();
             sleep(100);
             
-            // Spin To Foundation
-            robot.spinRight();
-            sleep(690);
+            // Spin To Foundation ////// - = right
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(75, 0.25);
+            sleep(100);
             robot.spinLeft();
             sleep(1);
             robot.stop();
@@ -321,54 +337,104 @@ public class Blue_Autonomus extends LinearOpMode {
             
             // Move To Foundation
             robot.forward();
-            sleep(2278);
+            sleep(2210);//Was 2450
             robot.backward();
             sleep(1);
             robot.stop();
             sleep(100);
-           
-            
-            // represtnt block drop
-             sleep(1000);
-            
-            // Back Up To Blocks
-            robot.backward();
-            sleep(3094);
-            robot.stop();
-            sleep(100);
-            
+
             // Spin Towards Blocks
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(-80, 0.25);
+            sleep(100);
             robot.spinLeft();
+            sleep(1);
+            robot.stop();
+            sleep(100);
+            
+            // drop  block
+            sleep(1000); 
+               
+            //Spin In Order To Grab
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(75, 0.25);
+            sleep(100);
+            robot.spinRight();
+            sleep(1);
+            robot.stop();
+            sleep(100);
+             
+            //Move To Foundation
+            robot.right();
             sleep(600);
+            robot.left();
+            sleep(1);
             robot.stop();
-            sleep(100);
             
-            // Move To Blocks
-            robot.forward();
-            sleep(102);
-            robot.stop();
-            sleep(100);
+            //Grab Foundation
+            robot.hook0.setPosition(1);
+            robot.hook1.setPosition(-1);
+            sleep(2000);
+            
+            //Move Foundation Left
+            robot.left(0.25);
+            sleep(1500);
+            
+            //Ensure Grip On Foundation
+            robot.hook0.setPosition(1);
+            robot.hook1.setPosition(-1);
+             sleep(2000);
+            
+            //Spin To Score
+            robot.spinLeft(1);
+            sleep(900);         
+          
+            //Move Foundation To Wall
+            robot.right();
+            sleep(1100);
+           
+            //Release Foundation
+            robot.hook0.setPosition(-0.6);
+            robot.hook1.setPosition(0.6);
+            
+          robot.left();
+          sleep(500); //was 1900
+           
+          robot.resetAngle();
+          sleep(100);
+          robot.rotate(80, 0.3);
+          sleep(100);
+          
+          robot.spinRight();
+          sleep(1);
+          
+          robot.forward();
+          sleep(700);
+           robot.stop();
+            
+            
+            
+            
             }
-            }
-            
-            
-            
-            
             
              if (skystoneLocation == 'r'){
                  
               telemetry.addData("Skystone is Right" , "!");
                 telemetry.update();
                 
-                // Back Up From Blocks
+            // Back Up From Blocks
             robot.backward();
             sleep(102);
             robot.stop();
             sleep(100);
             
-            // Spin To Foundation
-            robot.spinRight();
-            sleep(690);
+            // Spin To Foundation ////// - = right
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(75, 0.25);
+            sleep(100);
             robot.spinLeft();
             sleep(1);
             robot.stop();
@@ -376,46 +442,93 @@ public class Blue_Autonomus extends LinearOpMode {
             
             // Move To Foundation
             robot.forward();
-            sleep(2278);
+            sleep(2050);//2450-8*30
             robot.backward();
             sleep(1);
             robot.stop();
             sleep(100);
-            
-            
-            
-            // represtnt block drop
-             sleep(1000);
-            
-        
-            // Back Up To Blocks
-            robot.backward();
-            sleep(3094);
-            robot.stop();
-            sleep(100);
-            
+
             // Spin Towards Blocks
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(-80, 0.25);
+            sleep(100);
             robot.spinLeft();
+            sleep(1);
+            robot.stop();
+            sleep(100);
+            
+            // drop  block
+            sleep(1000); 
+               
+            //Spin In Order To Grab
+            robot.resetAngle();
+            sleep(100);
+            robot.rotate(75, 0.25);
+            sleep(100);
+            robot.spinRight();
+            sleep(1);
+            robot.stop();
+            sleep(100);
+             
+            //Move To Foundation
+            robot.right();
             sleep(600);
+            robot.left();
+            sleep(1);
             robot.stop();
-            sleep(100);
             
-            // Move To Blocks
-            robot.forward();
-            sleep(102);
-            robot.stop();
-            sleep(100);
-            }
-            }
+            //Grab Foundation
+            robot.hook0.setPosition(1);
+            robot.hook1.setPosition(-1);
+            sleep(2000);
             
+            //Move Foundation Left
+            robot.left(0.25);
+            sleep(1500);
             
+            //Ensure Grip On Foundation
+            robot.hook0.setPosition(1);
+            robot.hook1.setPosition(-1);
+             sleep(2000);
+            
+            //Spin To Score
+            robot.spinLeft(1);
+            sleep(900);         
+          
+            //Move Foundation To Wall
+            robot.right();
+            sleep(1100);
+           
+            //Release Foundation
+            robot.hook0.setPosition(-0.6);
+            robot.hook1.setPosition(0.6);
+            
+          robot.left();
+          sleep(500); //was 1900
+           
+          robot.resetAngle();
+          sleep(100);
+          robot.rotate(80, 0.3);
+          sleep(100);
+          
+          robot.spinRight();
+          sleep(1);
+          
+          robot.forward();
+          sleep(700);
+           robot.stop();
+            
+           }
             telemetry.update();
+            }
+            
+            
             
         }
-            
+     }
  
                   
- 
 }
-}
+
     
