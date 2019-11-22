@@ -118,7 +118,7 @@ public class Blue_Autonomus extends LinearOpMode {
              
               robot.ssScrew.setPower(0);
              
-             robot.ssTilt.setPosition(0.75);
+             robot.ssTilt.setPosition(0.85);
              sleep(250);
              
             ///////////////////////////////////////////////////////////////
@@ -129,7 +129,7 @@ public class Blue_Autonomus extends LinearOpMode {
              while(opModeIsActive() && (runtime.seconds() <= .740)){
              }
             
-                  ////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////
             /////////////////////   Reverse Movement  //////////////////second per inch 0.032
             ////////////////////////////////////////////////////////////
              robot.backward();
@@ -213,7 +213,7 @@ public class Blue_Autonomus extends LinearOpMode {
                 
             // Back Up From Blocks
             robot.backward();
-            sleep(102);
+            sleep(72);
             robot.stop();
             sleep(100);
             
@@ -377,7 +377,7 @@ public class Blue_Autonomus extends LinearOpMode {
                 
             // Back Up From Blocks
             robot.backward();
-            sleep(102);
+            sleep(72);
             robot.stop();
             sleep(100);
             
@@ -543,7 +543,7 @@ public class Blue_Autonomus extends LinearOpMode {
                 
             // Back Up From Blocks
             robot.backward();
-            sleep(102);
+            sleep(72);
             robot.stop();
             sleep(100);
             
@@ -564,7 +564,7 @@ public class Blue_Autonomus extends LinearOpMode {
                  sleep(500);
                  
                  ///pull toward robot
-                 while (opModeIsActive() && robot.ssExtend.getCurrentPosition() < -50){
+                 while (opModeIsActive() && robot.ssExtend.getCurrentPosition() < -80){
                  robot.ssExtend.setPower(0.5);
              } 
              robot.ssExtend.setPower(0);
@@ -582,7 +582,7 @@ public class Blue_Autonomus extends LinearOpMode {
             
             // Move To Foundation
             robot.forward();
-            sleep(2050);//2450-8*30
+            sleep(2270);//2450-8*30
             robot.backward();
             sleep(1);
             robot.stop();
