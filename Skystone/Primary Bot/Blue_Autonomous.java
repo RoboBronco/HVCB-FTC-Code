@@ -94,12 +94,39 @@ public class Blue_Autonomus extends LinearOpMode {
         
  
             if (opModeIsActive()) {
+              ///////////////////////////////////////////////////////////////
+            /////////////////////   Move Forward    3 in  //////////////////second per inch 0.032
+            //////////////////////////////////////////////////////////// 
+             robot.forward();
+             runtime.reset();
+             while(opModeIsActive() && (runtime.seconds() <= .09)){
+             }
+            
+                  ////////////////////////////////////////////////////////////
+            /////////////////////   Reverse Movement  //////////////////second per inch 0.032
+            ////////////////////////////////////////////////////////////
+             robot.backward();
+             runtime.reset();
+             while(opModeIsActive() && (runtime.seconds() <= .001)){
+             } robot.stop();
+              
+              sleep(500);
+             
+             while (opModeIsActive() && robot.ssScrew.getCurrentPosition() < 390){
+                 robot.ssScrew.setPower(0.5);
+             }
+             
+              robot.ssScrew.setPower(0);
+             
+             robot.ssTilt.setPosition(0.75);
+             sleep(250);
+             
             ///////////////////////////////////////////////////////////////
-            /////////////////////   Move Forward    27 in  //////////////////second per inch 0.032
+            /////////////////////   Move Forward    24 in  //////////////////second per inch 0.032
             //////////////////////////////////////////////////////////// .768 - .876
              robot.forward();
              runtime.reset();
-             while(opModeIsActive() && (runtime.seconds() <= .833)){
+             while(opModeIsActive() && (runtime.seconds() <= .740)){
              }
             
                   ////////////////////////////////////////////////////////////
@@ -133,7 +160,7 @@ public class Blue_Autonomus extends LinearOpMode {
                 telemetry.addData("Skystone is Left " , "yeet");
                     robot.left();
                     sleep(186);
-                     robot.right();
+                    robot.right();
                     sleep(1);
                     robot.stop();
                     skystoneLocation = 'l';
@@ -176,11 +203,12 @@ public class Blue_Autonomus extends LinearOpMode {
             
             sleep(1000);
             
-
-            
+/////////////////////////////////////////////////////////////////
+///////////////////////  LEFT /////////////////////////////////
+//////////////////////////////////////////////////////////
             if (skystoneLocation == 'l'){
                 
-                 telemetry.addData("Skystone is Left" , "!");
+                telemetry.addData("Skystone is Left" , "!");
                 telemetry.update();
                 
             // Back Up From Blocks
@@ -188,6 +216,32 @@ public class Blue_Autonomus extends LinearOpMode {
             sleep(102);
             robot.stop();
             sleep(100);
+            
+               /// -380 for extension  encoder
+             while (opModeIsActive() && robot.ssExtend.getCurrentPosition() > -230){
+                 robot.ssExtend.setPower(-0.5);
+             } 
+             robot.ssExtend.setPower(0);
+                
+                /// screw to 0 encoder
+             while (opModeIsActive() && robot.ssScrew.getCurrentPosition() > 0){
+                 robot.ssScrew.setPower(-0.5);
+             } robot.ssScrew.setPower(0);
+                
+               sleep(150); 
+                
+                 robot.ssClaw.setPosition(1);
+                 sleep(500);
+                 
+                 ///pull toward robot
+                 while (opModeIsActive() && robot.ssExtend.getCurrentPosition() < -50){
+                 robot.ssExtend.setPower(0.5);
+             } 
+             robot.ssExtend.setPower(0);
+                 sleep(500);
+                
+              
+
             
             // Spin To Foundation ////// - = right
             robot.resetAngle();
@@ -218,7 +272,29 @@ public class Blue_Autonomus extends LinearOpMode {
             sleep(100);
             
             // drop  block
-            sleep(1000); 
+            while (opModeIsActive() && robot.ssScrew.getCurrentPosition() < 390){
+                 robot.ssScrew.setPower(0.5);
+             }robot.ssScrew.setPower(0);
+              
+              
+              
+                /// -430 for extension  encoder
+             while (opModeIsActive() && robot.ssExtend.getCurrentPosition() > -430){
+                 robot.ssExtend.setPower(-0.5);
+             }robot.ssExtend.setPower(0);
+              
+                // drop  block
+              robot.ssClaw.setPosition(0.6);
+               sleep(500); 
+               
+               robot.ssTilt.setPosition(0);
+             sleep(250);
+              
+               /// 0 for extension  encoder
+             while (opModeIsActive() && robot.ssExtend.getCurrentPosition() < 0){
+                 robot.ssExtend.setPower(0.5);
+             }robot.ssExtend.setPower(0);
+              
                
             //Spin In Order To Grab
             robot.resetAngle();
@@ -249,7 +325,7 @@ public class Blue_Autonomus extends LinearOpMode {
             //Ensure Grip On Foundation
             robot.hook0.setPosition(1);
             robot.hook1.setPosition(-1);
-             sleep(2000);
+            sleep(2000);
             
             //Spin To Score
             robot.spinLeft(1);
@@ -274,46 +350,26 @@ public class Blue_Autonomus extends LinearOpMode {
           robot.spinRight();
           sleep(1);
           
-          robot.forward();
-          sleep(700);
+             robot.forward();
+             sleep(30);
+             robot.backward();
+             sleep(1);
+             robot.stop();
+             
+             while (opModeIsActive() && robot.ssScrew.getCurrentPosition() > 0){
+                 robot.ssScrew.setPower(-0.5);
+             }robot.ssScrew.setPower(0);
+             
+             robot.ssTilt.setPosition(0.5);
+             sleep(250);
+             
+            robot.forward();
+          sleep(670);
            robot.stop();
-            
-            // //Move From Foundation
-            // robot.left();
-            // sleep(1900);
-            // robot.right();
-            // sleep(1);
-            // robot.stop();
-           
-            // //Spin LEFT To Loading Zone
-            // robot.resetAngle();
-            // sleep(100);
-            // robot.rotate(80, 0.25);
-            // sleep(100);
-            // robot.spinLeft();
-            // sleep(1);
-            // robot.stop();
-            // sleep(100);
-            
-            // // Move Back To Loading Zone ***Was 2600***
-            // robot.forward();
-            // sleep(1300);
-            // robot.backward();
-            // sleep(1);
-            // robot.stop();
-            // sleep(100);
-            
-            // //Spin LEFT Towards Blocks
-            // robot.resetAngle();
-            // sleep(100);
-            // robot.rotate(80, 0.25);
-            // sleep(100);
-            // robot.spinLeft();
-            // sleep(1);
-            // robot.stop();
-            // sleep(100);
             }
-           
+////////////////////////////////////////////////////////////////          
+////////////////////////// MIDDLE //////////////////////////////            
+////////////////////////////////////////////////////////////////           
             if (skystoneLocation == 'm'){
                 
                 telemetry.addData("Skystone is Middle" , "!");
@@ -324,6 +380,30 @@ public class Blue_Autonomus extends LinearOpMode {
             sleep(102);
             robot.stop();
             sleep(100);
+            
+             /// -380 for extension  encoder
+             while (opModeIsActive() && robot.ssExtend.getCurrentPosition() > -230){
+                 robot.ssExtend.setPower(-0.5);
+             } 
+             robot.ssExtend.setPower(0);
+                
+                /// screw to 0 encoder
+             while (opModeIsActive() && robot.ssScrew.getCurrentPosition() > 0){
+                 robot.ssScrew.setPower(-0.5);
+             } robot.ssScrew.setPower(0);
+                
+               sleep(150); 
+                
+                 robot.ssClaw.setPosition(1);
+                 sleep(500);
+                 
+                 ///pull toward robot
+                 while (opModeIsActive() && robot.ssExtend.getCurrentPosition() < -50){
+                 robot.ssExtend.setPower(0.5);
+             } 
+             robot.ssExtend.setPower(0);
+                 sleep(500);
+                
             
             // Spin To Foundation ////// - = right
             robot.resetAngle();
@@ -353,8 +433,30 @@ public class Blue_Autonomus extends LinearOpMode {
             robot.stop();
             sleep(100);
             
-            // drop  block
-            sleep(1000); 
+           
+             // drop  block
+            while (opModeIsActive() && robot.ssScrew.getCurrentPosition() < 390){
+                 robot.ssScrew.setPower(0.5);
+             }robot.ssScrew.setPower(0);
+              
+              
+              
+                /// -430 for extension  encoder
+             while (opModeIsActive() && robot.ssExtend.getCurrentPosition() > -430){
+                 robot.ssExtend.setPower(-0.5);
+             }robot.ssExtend.setPower(0);
+              
+                // drop  block
+              robot.ssClaw.setPosition(0.6);
+              sleep(500); 
+               
+              robot.ssTilt.setPosition(0);
+              sleep(250);
+              
+               /// 0 for extension  encoder
+             while (opModeIsActive() && robot.ssExtend.getCurrentPosition() < 0){
+                 robot.ssExtend.setPower(0.5);
+             }robot.ssExtend.setPower(0); 
                
             //Spin In Order To Grab
             robot.resetAngle();
@@ -385,7 +487,7 @@ public class Blue_Autonomus extends LinearOpMode {
             //Ensure Grip On Foundation
             robot.hook0.setPosition(1);
             robot.hook1.setPosition(-1);
-             sleep(2000);
+            sleep(2000);
             
             //Spin To Score
             robot.spinLeft(1);
@@ -411,14 +513,29 @@ public class Blue_Autonomus extends LinearOpMode {
           sleep(1);
           
           robot.forward();
-          sleep(700);
+             sleep(30);
+             robot.backward();
+             sleep(1);
+             robot.stop();
+             
+          
+           while (opModeIsActive() && robot.ssScrew.getCurrentPosition() > 0){
+                 robot.ssScrew.setPower(-0.5);
+             }robot.ssScrew.setPower(0);
+             
+             robot.ssTilt.setPosition(0.5);
+             sleep(250);
+             
+            robot.forward();
+          sleep(670);
            robot.stop();
             
             
             
-            
             }
-            
+//////////////////////////////////////////////////////////////////////////////
+///////////////////// RIGHT /////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
              if (skystoneLocation == 'r'){
                  
               telemetry.addData("Skystone is Right" , "!");
@@ -429,6 +546,29 @@ public class Blue_Autonomus extends LinearOpMode {
             sleep(102);
             robot.stop();
             sleep(100);
+            
+            /// -380 for extension  encoder
+             while (opModeIsActive() && robot.ssExtend.getCurrentPosition() > -230){
+                 robot.ssExtend.setPower(-0.5);
+             } 
+             robot.ssExtend.setPower(0);
+                
+                /// screw to 0 encoder
+             while (opModeIsActive() && robot.ssScrew.getCurrentPosition() > 0){
+                 robot.ssScrew.setPower(-0.5);
+             } robot.ssScrew.setPower(0);
+                
+               sleep(150); 
+                
+                 robot.ssClaw.setPosition(1);
+                 sleep(500);
+                 
+                 ///pull toward robot
+                 while (opModeIsActive() && robot.ssExtend.getCurrentPosition() < -50){
+                 robot.ssExtend.setPower(0.5);
+             } 
+             robot.ssExtend.setPower(0);
+                 sleep(500);
             
             // Spin To Foundation ////// - = right
             robot.resetAngle();
@@ -458,8 +598,29 @@ public class Blue_Autonomus extends LinearOpMode {
             robot.stop();
             sleep(100);
             
-            // drop  block
-            sleep(1000); 
+             // drop  block
+            while (opModeIsActive() && robot.ssScrew.getCurrentPosition() < 390){
+                 robot.ssScrew.setPower(0.5);
+             }robot.ssScrew.setPower(0);
+              
+              
+              
+                /// -430 for extension  encoder
+             while (opModeIsActive() && robot.ssExtend.getCurrentPosition() > -430){
+                 robot.ssExtend.setPower(-0.5);
+             }robot.ssExtend.setPower(0);
+              
+                // drop  block
+              robot.ssClaw.setPosition(0.6);
+               sleep(500); 
+               
+               robot.ssTilt.setPosition(0);
+             sleep(250);
+              
+               /// 0 for extension  encoder
+             while (opModeIsActive() && robot.ssExtend.getCurrentPosition() < 0){
+                 robot.ssExtend.setPower(0.5);
+             }robot.ssExtend.setPower(0); 
                
             //Spin In Order To Grab
             robot.resetAngle();
@@ -516,19 +677,30 @@ public class Blue_Autonomus extends LinearOpMode {
           sleep(1);
           
           robot.forward();
-          sleep(700);
+             sleep(30);
+             robot.backward();
+             sleep(1);
+             robot.stop();
+             
+          
+           while (opModeIsActive() && robot.ssScrew.getCurrentPosition() > 0){
+                 robot.ssScrew.setPower(-0.5);
+             }robot.ssScrew.setPower(0);
+             
+             robot.ssTilt.setPosition(0.5);
+             sleep(250);
+             
+            robot.forward();
+          sleep(670);
            robot.stop();
             
            }
             telemetry.update();
+            
+
             }
-            
-            
-            
-        }
+         }
      }
- 
-                  
-}
+  }
 
     
