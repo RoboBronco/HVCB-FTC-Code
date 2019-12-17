@@ -1,14 +1,6 @@
-package FTC_2019_2020_Season;
-//package org.firstinspires.ftc.teamcode.Robot.Drivetrain.Odometry;
+package FTC_2019_2020_Season.Robot.Drivetrain.Odometry;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -118,7 +110,7 @@ public class OdometryCalibration extends LinearOpMode {
         Encoder Difference is calculated by the formula (leftEncoder - rightEncoder)
         Since the left encoder is also mapped to a drive motor, the encoder value needs to be reversed with the negative sign in front
         THIS MAY NEED TO BE CHANGED FOR EACH ROBOT
-       */
+      */
         double encoderDifference = Math.abs(verticalLeft.getCurrentPosition()) + (Math.abs(verticalRight.getCurrentPosition()));
 
         double verticalEncoderTickOffsetPerDegree = encoderDifference/angle;
