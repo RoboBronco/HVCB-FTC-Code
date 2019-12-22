@@ -1,26 +1,50 @@
 package FTC_2019_2020_Season;
 
 import android.nfc.cardemulation.OffHostApduService;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import java.lang.Math;
 import android.graphics.Color;
+import java.util.Locale;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import android.util.Log;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import java.util.List;
+import java.util.Locale;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
 
 public class RobotHardware
 {
+    
+  
     /* Public OpMode members. */
     public DcMotor  fl   = null;
     public DcMotor  fr  = null;
@@ -28,6 +52,7 @@ public class RobotHardware
     public DcMotor  br  = null;
     public DcMotor  ssScrew   = null;
     public DcMotor  ssExtend   = null;
+    
    
     public Servo    hook0 = null;
     public Servo    hook1 = null;
@@ -37,6 +62,13 @@ public class RobotHardware
     
     public ColorSensor sensorColor0 = null;
     public ColorSensor sensorColor1 = null;
+    
+    
+
+    
+    BNO055IMU imu;
+    Orientation lastAngles = new Orientation();
+    double globalAngle, power = .3;
     
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -56,7 +88,7 @@ public class RobotHardware
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map
         hwMap = ahwMap;
-
+        
         // Define and Initialize Motors
         fl  = hwMap.get(DcMotor.class, "fl");
         fr = hwMap.get(DcMotor.class, "fr");
@@ -70,6 +102,14 @@ public class RobotHardware
         fr.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
      
+    //   fl.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE);
+    //   bl.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE);
+    //   fr.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE);
+    //   br.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE);
+     
+    //  ssExtend.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE );
+
+        
       
         // Set all motors to zero power
         fl.setPower(0);
@@ -94,21 +134,49 @@ public class RobotHardware
         ssTwist = hwMap.get(Servo.class, "ssTwist");
         ssClaw = hwMap.get(Servo.class, "ssClaw");
        
-        hook0.setPosition(-1);
-        hook1.setPosition(1);
+        hook0.setPosition(-0.6);
+        hook1.setPosition(0.6);
         ssTwist.setPosition(0.5);
-        ssClaw.setPosition(0.5);
+        ssClaw.setPosition(0.55);
        
         sensorColor0 = hwMap.get(ColorSensor.class, "sensorColor0");
         sensorColor1 = hwMap.get(ColorSensor.class, "sensorColor1");
-     
+        
+        //String verticalLeftEncoderName = br, verticalRightEncoderName = fl, horizontalEncoderName = fr;
+        //String leftYEncoder = br, rightYEncoder = fl, centerXEncoder = fr;
+        
+        // leftYEncoder = hardwareMap.dcMotor.get(br);
+         //rightYEncoder = hardwareMap.dcMotor.get(fl);
+        // centerXEncoder = hardwareMap.dcMotor.get(fr);
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode                = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled      = false;
+        imu = hwMap.get(BNO055IMU.class, "imu0");
+
+        imu.initialize(parameters);
+
         reset();
        
     }
     double cut = 0;
 
     // Methods
-    
+    public void forwardByEncoder(double speed, double distance){
+        while (-bl.getCurrentPosition() < distance){
+        fl.setPower(FORWARD);
+        fr.setPower(FORWARD);
+        bl.setPower(FORWARD);
+        br.setPower(FORWARD);
+        }
+        fl.setPower(OFF);
+        fr.setPower(OFF);
+        bl.setPower(OFF);
+        br.setPower(OFF);
+    }    
   
     
     // Method for driving forwards -- default
@@ -283,6 +351,15 @@ public class RobotHardware
         br.setPower(OFF);
     }
     
+        // Method for not moving
+    public void stopExc() throws InterruptedException{
+        fl.setPower(OFF);
+        fr.setPower(OFF);
+        bl.setPower(OFF);
+        br.setPower(OFF);
+    }
+    
+    
     public void reset () {
         fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -299,11 +376,154 @@ public class RobotHardware
         ssExtend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
     
+    public double getLeftYEncoder(){
+        return -br.getCurrentPosition();
+    }
+    
+    public double getRightYEncoder(){
+        return -bl.getCurrentPosition();
+    }
  
     
-   
+        /*
+     * Resets the cumulative angle tracking to zero.
+     */
+    public void resetAngle()
+    {
+        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        globalAngle = 0;
+    }
+
+    /**
+     * Get current cumulative angle rotation from last reset.
+     * @return Angle in degrees. + = left, - = right.
+     */
+    public double getAngle()
+    {
+        // We experimentally determined the Z axis is the axis we want to use for heading angle.
+        // We have to process the angle because the imu works in euler angles so the Z axis is
+        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
+        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
+
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
+
+        if (deltaAngle < -180)
+            deltaAngle += 360;
+        else if (deltaAngle > 180)
+            deltaAngle -= 360;
+
+        globalAngle += deltaAngle;
+
+        lastAngles = angles;
+
+        return globalAngle;
+    }
+
+    /**
+     * See if we are moving in a straight line and if not return a power correction value.
+     * @return Power adjustment, + is adjust left - is adjust right.
+     */
+    public double checkDirection()
+    {
+        // The gain value determines how sensitive the correction is to direction changes.
+        // You will have to experiment with your robot to get small smooth direction changes
+        // to stay on a straight line.
+        double correction, angle, gain = .10;
+
+        angle = getAngle();
+
+        if (angle == 0)
+            correction = 0;             // no adjustment.
+        else
+            correction = -angle;        // reverse sign of angle for correction.
+
+        correction = correction * gain;
+
+        return correction;
+    }
+
+    /**
+     * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
+     * @param degrees Degrees to turn, + is left - is right
+     */
+    public void rotate(int degrees, double power)
+    {
+        double  turnPower;
+        double angle = getAngle();
+        resetAngle();
+
+
+        // getAngle() returns + when rotating counter clockwise (left) and - when rotating
+        // clockwise (right).
+
+        if (degrees < angle)
+        {   // turn right.
+            turnPower = -power;
+        }
+        else if (degrees > angle)
+        {
+            turnPower = power;
+        }
+        else return;
+
+        // set power to rotate.
+        fl.setPower(-turnPower);
+        bl.setPower(-turnPower);
+        fr.setPower(turnPower);
+        br.setPower(turnPower);
+
+        // rotate until turn is completed.
+        if (degrees < angle)
+        {
+            // On right turn we have to get off zero first.
+            while (getAngle() == angle) {}
+
+            while (getAngle() > degrees) {}
+        }
+        else    // left turn.
+            while (getAngle() < degrees) {}
+
+
+        // rotate until turn is completed.
+        if (degrees < angle)
+        {
+            // On right turn we have to get off zero first.
+            while (getAngle() == angle) {}
+
+            while (getAngle() > degrees) {}
+        }
+        else    // left turn.
+            while (getAngle() < degrees) {}
+
+
+        // turn the motors off.
+        fl.setPower(0);
+        fr.setPower(0);
+        bl.setPower(0);
+        br.setPower(0);
+
+        // wait for rotation to stop.
+    }
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
      
      
 
 } 
- 
