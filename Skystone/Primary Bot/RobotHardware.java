@@ -102,10 +102,10 @@ public class RobotHardware
         fr.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
      
-    //   fl.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE);
-    //   bl.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE);
-    //   fr.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE);
-    //   br.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE);
+       fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
      
     //  ssExtend.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE );
 
@@ -166,11 +166,16 @@ public class RobotHardware
 
     // Methods
     public void forwardByEncoder(double speed, double distance){
-        while (-bl.getCurrentPosition() < distance){
+        // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
+        while (((-bl.getCurrentPosition() < distance))){
         fl.setPower(FORWARD);
         fr.setPower(FORWARD);
         bl.setPower(FORWARD);
         br.setPower(FORWARD);
+        // fl.setPower(speed);
+        // fr.setPower(speed);
+        // bl.setPower(speed);
+        // br.setPower(speed);
         }
         fl.setPower(OFF);
         fr.setPower(OFF);
