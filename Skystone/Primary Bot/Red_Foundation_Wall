@@ -24,7 +24,7 @@ public class Red_Foundation_Wall extends LinearOpMode {
   @Override
   public void runOpMode() {
     
-  //try  {
+  
    
   robot.init(hardwareMap);
 
@@ -42,24 +42,27 @@ public class Red_Foundation_Wall extends LinearOpMode {
   if (opModeIsActive()){
 
   // Backward
-   robot.backwardByEncoder(0.25, -2200);
+   robot.backwardByEncoder(0.25, -4400);
    sleep(100);
 
   // Move to Foundation
-   robot.rightByEncoder(0.5, 9550);
+   robot.rightByEncoder(0.5, 8000);
+   sleep(100);
+
+   robot.rightByEncoder(0.2, 900);
    sleep(100);
 
   // Grab Foundation
    robot.hook0.setPosition(0.43);
    robot.hook1.setPosition(-0.43);
-   sleep(1750);
+   sleep(1000);
 
   // Pull Foundation Away Approx. 18in
-   robot.leftByEncoder(0.5, -6000);
+   robot.leftByEncoder(0.5, -4600);
   
   // Turn Foundation
    robot.resetAngle();
-   robot.rotate(-90, 0.5);
+   robot.rotate(-82, 0.5);
    sleep(100);
     
   // Move to Wall
@@ -73,14 +76,23 @@ public class Red_Foundation_Wall extends LinearOpMode {
    robot.hook1.setPosition(0.6);
    sleep(1000);
    
-  // Move back to wall
-   robot.backward();
-   sleep(700);
-   robot.stop();
+   // Get away from foundation
+   robot.leftByEncoder(0.2 , -1700);
+   sleep(100);
    
-  // Move to navigate
-   robot.leftByEncoder(0.5, -13000);
-   robot.stop();
+   // spin 
+   robot.resetAngle();
+   robot.rotate(-70 , 0.5);
+   sleep(100);
+   
+   // right up to wall
+   robot.right();
+   sleep(1100);
+   
+   // move  to beneath skybridge
+   robot.backwardByEncoder(0.5 , -9900);
+   sleep(100);
+  
   }
   robot.stop();
  }
