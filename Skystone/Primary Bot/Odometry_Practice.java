@@ -1,5 +1,4 @@
-
-  package FTC_2019_2020_Season;
+package FTC_2019_2020_Season;
   
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -61,12 +60,29 @@ public class Odometry_Practice extends LinearOpMode {
 
 
         if (opModeIsActive()) {
-            robot.forwardByEncoder(0.2, 8000);
+            robot.forwardByEncoder(0.5, 8000);
             robot.stop();
-        while(opModeIsActive()){
-            telemetry.addData("Inch Count: ", robot.getLeftYEncoder()/307.699557);
-            telemetry.update();
-        }
+            sleep(100);
+        // while(opModeIsActive()){
+        //     telemetry.addData("Inch Count: ", robot.getLeftYEncoder()/307.699557);
+        //     telemetry.update();
+        // }
+        
+        
+        
+         robot.rightByEncoder(0.5, 5000);
+            robot.stop();
+            sleep(100);
+            
+        robot.backwardByEncoder(0.5, 0);
+            robot.stop();
+            sleep(100);
+            
+        robot.leftByEncoder(0.5, 0);
+            robot.stop();
+            sleep(100);
+        
+        
         }
     }
 }
