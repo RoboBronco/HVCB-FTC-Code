@@ -69,8 +69,9 @@ public class Blue_Foundation_Wall extends LinearOpMode {
     
   // Move to Wall
    //robot.rightByEncoder(0.5, 9000);
+   
    robot.right();
-   sleep(1000);
+   sleep(1300);
    robot.stop();
 
   //Release Foundation
