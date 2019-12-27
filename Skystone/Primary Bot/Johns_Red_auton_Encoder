@@ -1,0 +1,80 @@
+package FTC_2019_2020_Season;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import java.util.List;
+import android.graphics.Color;
+
+@Autonomous(name = " Red Encoder Auton", group = "Auto")
+public class Red_Auton_Encoder extends LinearOpMode {
+
+    /* Declare OpMode members. */
+    RobotHardware robot = new RobotHardware();
+    private ElapsedTime runtime = new ElapsedTime();
+
+    @Override
+    public void runOpMode() {
+        robot.init(hardwareMap);
+
+        while (!isStopRequested() && !robot.imu.isGyroCalibrated()) {
+            sleep(50);
+            idle();
+        }
+
+        // Wait for the game to start (driver presses PLAY)
+        /** Wait for the game to begin */
+        telemetry.addData(">", "Press Play to start tracking");
+        telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
+        telemetry.update();
+        waitForStart();
+        if (opModeIsActive()){
+        // STEPS:
+            // 1. Left          26 in
+               // robot.left();
+                 robot.leftByEncoder(0.5, 26);
+            // 2. Arm
+                
+            // 3. Right         4 
+                robot.rightByEncoder(0.5, 4);
+            // 4. Forward       50
+                robot.forwardByEncoder(0.5, 50);
+            // 5. Arm  
+                
+            // 6. Backward      58
+                robot.backwardByEncoder(0.5, 58);
+            // 7. Left          4
+                robot.leftByEncoder(0.5, 4);
+            // 8. Arm
+                
+            // 9. Right         4
+                robot.rightByEncoder(0.5, 4);
+            // 10. Forward      54
+                robot.forwardByEncoder(0.5, 54);
+            // 11. Arm
+                
+            // 12. Forward      18
+                robot.forwardByEncoder(0.5, 18);
+            // 13. Foundation
+                
+            // 14. Turn         90
+                robot.rotate(-80, 0.5);
+            // 15. Forward      30
+                robot.forwardByEncoder(0.5, 30);
+            // 15.5 Backward    10
+                robot.backwardByEncoder(0.5, 10);
+            // 16. Turn         90
+                robot.rotate(-80, 0.5);
+            // 17. Backward     40
+                robot.backwardByEncoder(0.5, 40);
+        }
+        robot.stop();
+    }
+}
