@@ -1,6 +1,7 @@
 package FTC_2019_2020_Season;
 
 import android.nfc.cardemulation.OffHostApduService;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -44,6 +45,17 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory;
 public class RobotHardware
 {
     
+    
+    
+    static final double INCREMENT   = 0.03;     // amount to ramp motor each CYCLE_MS cycle
+    static final int    CYCLE_MS    =   50;     // period of each cycle
+    static final double MAX_FWD     =  1.0;     // Maximum FWD power applied to motor
+    static final double MAX_REV     = -1.0;     // Maximum REV power applied to motor
+    
+    double  rampUpPower   = 0; ///// for ramp down
+    boolean rampUp  = false; //// for ramp down
+     
+    
   
     /* Public OpMode members. */
     public DcMotor  fl   = null;
@@ -56,9 +68,12 @@ public class RobotHardware
    
     public Servo    hook0 = null;
     public Servo    hook1 = null;
-    public Servo    ssTwist = null;
+    //public Servo    ssTwist = null;
     public Servo    ssTilt = null;
     public Servo    ssClaw = null;
+    public Servo    blockBlue = null;
+    public Servo    blockRed = null;
+
     
     public ColorSensor sensorColor0 = null;
     public ColorSensor sensorColor1 = null;
@@ -131,13 +146,21 @@ public class RobotHardware
         hook0 = hwMap.get(Servo.class, "hook0");
         hook1 = hwMap.get(Servo.class, "hook1");
         ssTilt = hwMap.get(Servo.class, "ssTilt");
-        ssTwist = hwMap.get(Servo.class, "ssTwist");
+        //ssTwist = hwMap.get(Servo.class, "ssTwist");
         ssClaw = hwMap.get(Servo.class, "ssClaw");
+        blockBlue = hwMap.get(Servo.class, "blockBlue");
+        blockRed = hwMap.get(Servo.class, "blockRed");
+
        
         hook0.setPosition(-0.6);
         hook1.setPosition(0.6);
-        ssTwist.setPosition(0.5);
+       // ssTwist.setPosition(0.5);
         ssClaw.setPosition(0.55);
+        blockBlue.setPosition(0.45);
+        blockRed.setPosition(0.55);
+        // blockBlue.setPosition(0);
+        // blockRed.setPosition(1);
+
        
         sensorColor0 = hwMap.get(ColorSensor.class, "sensorColor0");
         sensorColor1 = hwMap.get(ColorSensor.class, "sensorColor1");
@@ -164,18 +187,20 @@ public class RobotHardware
     }
     double cut = 0;
 
-    // Methods
+    // // Methods
     public void forwardByEncoder(double speed, double distance){
         // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
+        reset();
         while (((-bl.getCurrentPosition() < distance))){
-        fl.setPower(FORWARD);
-        fr.setPower(FORWARD);
-        bl.setPower(FORWARD);
-        br.setPower(FORWARD);
-        // fl.setPower(speed);
-        // fr.setPower(speed);
-        // bl.setPower(speed);
-        // br.setPower(speed);
+            
+        //  fl.setPower(FORWARD);
+        //  fr.setPower(FORWARD);
+        //  bl.setPower(FORWARD);
+        //  br.setPower(FORWARD);
+        fl.setPower(speed);
+        fr.setPower(speed);
+        bl.setPower(speed);
+        br.setPower(speed);
         }
         fl.setPower(OFF);
         fr.setPower(OFF);
@@ -183,7 +208,129 @@ public class RobotHardware
         br.setPower(OFF);
     }    
   
+    // Variable speed was FORWARD
     
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////  Ramp Up Test /////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+      public void forwardByEncoderRamp(double speed, double distance){
+        // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
+        while ((-bl.getCurrentPosition() < distance)){
+        fl.setPower(speed);
+        fr.setPower(speed);
+        bl.setPower(speed);
+        br.setPower(speed);
+        
+        if (distance >= 650) { 
+         if (Math.abs(distance) - Math.abs(bl.getCurrentPosition()) <= 400) {
+            //  fl.setPower(OFF);
+            //  fr.setPower(OFF);
+            //  bl.setPower(OFF);
+            //  br.setPower(OFF);
+        // Keep stepping down until we hit the min value.
+                speed -= INCREMENT;
+                if (rampUpPower <= 0 ) {
+                rampUpPower = 0;
+                }
+            }
+        }
+        }
+        fl.setPower(OFF);
+        fr.setPower(OFF);
+        bl.setPower(OFF);
+        br.setPower(OFF);
+      }
+    
+    public void forwardByEncoderV2(double speed, double distance){
+        reset();
+        while(bl.getCurrentPosition()/307.699557 < distance){ // inches
+            double distanceToTarget = distance - -bl.getCurrentPosition()/307.699557; //inches
+            // Uses speed to determine distance to slow down
+            double rampDownTrigger = speed*4; // Ten because 1speed equals 10 inches, .5 = 5, so on and so forth
+            
+            // Uses rampDownTrigger to determine variable to slow down by
+            double rampDownMultiplier = 1/rampDownTrigger;
+            if ((distanceToTarget < rampDownTrigger) && (distanceToTarget > 1)){ //inches
+                double newSpeed = distanceToTarget*speed*rampDownMultiplier; //Determines Ramp Down Speed
+                fl.setPower(newSpeed);
+                fr.setPower(newSpeed);
+                bl.setPower(newSpeed);
+                br.setPower(newSpeed);
+            } else if(distanceToTarget < 1){                    //This sets a minimum speed
+                fl.setPower(0.1);
+                fr.setPower(0.1);
+                bl.setPower(0.1);
+                br.setPower(0.1);
+            } else{                                             // This is driving at normal speed
+                fl.setPower(speed);
+                fr.setPower(speed);
+                bl.setPower(speed);
+                br.setPower(speed);
+            }                                                  // Once we reach our target, we exit the loop
+        }                                                      // This turns the wheels off
+                fl.setPower(OFF);
+                fr.setPower(OFF);
+                bl.setPower(OFF);
+                br.setPower(OFF);
+    }
+    
+    
+    // Method for encoder BACKWARD mpovement
+     public void backwardByEncoder(double speed, double distance){
+         reset();
+         // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
+         while (((-bl.getCurrentPosition() > distance))){
+         fl.setPower(-speed);
+         fr.setPower(-speed);
+         bl.setPower(-speed);
+         br.setPower(-speed);
+         // -speed was BACKWARD
+        
+         }
+         fl.setPower(OFF);
+         fr.setPower(OFF);
+         bl.setPower(OFF);
+         br.setPower(OFF);
+     }    
+    
+    
+    // Method for encoder RIGHT movement
+     public void rightByEncoder(double speed, double distance){
+        reset();
+        while (((fr.getCurrentPosition() < distance))){
+        // Note: +speed was FORWARD, -speed was BACK
+        fl.setPower(speed);
+        fr.setPower(-speed);
+        bl.setPower(-speed);
+        br.setPower(speed);
+        }
+         fl.setPower(OFF);
+         fr.setPower(OFF);
+         bl.setPower(OFF);
+         br.setPower(OFF);
+     }    
+    
+    
+    // Method for encoder LEFT mpovement
+     public void leftByEncoder(double speed, double distance){
+         reset();
+         while (((fr.getCurrentPosition() > distance))){
+            // Note: +speed was FORWARD, -speed was BACK
+            fl.setPower(-speed);
+            fr.setPower(speed);
+            bl.setPower(speed);
+            br.setPower(-speed);
+        // fl.setPower(-Math.abs(speed));
+        // fr.setPower(Math.abs(speed));
+        // bl.setPower(Math.abs(speed));
+        // br.setPower(-Math.abs(speed)); 
+         }
+         fl.setPower(OFF);
+         fr.setPower(OFF);
+         bl.setPower(OFF);
+         br.setPower(OFF);
+     }    
+
     // Method for driving forwards -- default
     public void forward(){
         fl.setPower(FORWARD);
@@ -191,7 +338,7 @@ public class RobotHardware
         bl.setPower(FORWARD);
         br.setPower(FORWARD);
     }
-
+    
     // Method for driving forwards -- select speed
     public void forward(double speed){ 
         fl.setPower(Math.abs(speed));
