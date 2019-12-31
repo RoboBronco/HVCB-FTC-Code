@@ -252,8 +252,56 @@ public class Red_Stone_Bridge extends LinearOpMode {
             }   else {
                     telemetry.addData("Skystone is Right " , "yeet");
                                        
-                    ///////// go back and Slide into Blocks?
+                    robot.backwardByEncoder(0.25, -2400);
+                    Thread.sleep(50);
+                                       
+                    robot.leftByEncoder(0.2, -600);
+                    Thread.sleep(50);
+                    
+                    robot.blockBlue.setPosition(0.1);
+                    Thread.sleep(750);
+                    
+                    robot.rotate(-6, 0.2);
+                     Thread.sleep(100);
+                     
+                    robot.rightByEncoder(0.5, 2100);
+                    robot.rightByEncoder(0.2, 300);
+                    Thread.sleep(50);
+                    
+                    robot.forwardByEncoder(0.3 , 17000);
+                    Thread.sleep(50);
+                    
+                    robot.blockBlue.setPosition(0.45);
+                    Thread.sleep(750);
 
+                    robot.backwardByEncoder(0.3 , -9100);
+                    Thread.sleep(50);
+                    
+                    robot.leftByEncoder(0.3 , -2568);
+                    Thread.sleep(50);
+                    
+                    robot.left(0.2);
+                    Thread.sleep(400);
+                    robot.stop();
+                    
+                    robot.blockBlue.setPosition(0.1);
+                    Thread.sleep(750);
+                    
+                    robot.rightByEncoder(0.3 , 3100);
+                    Thread.sleep(50);
+                    
+                    robot.forwardByEncoder(0.3 , 12000);
+                    Thread.sleep(50);
+                    
+                    robot.blockBlue.setPosition(0.45);
+                    Thread.sleep(750);
+                    
+                    robot.backwardByEncoder(0.3 , -3400);
+                    Thread.sleep(50);
+                        
+                        robot.stop();
+                        
+                        
                     skystoneLocation = 'r';
                     position = true;
             }
