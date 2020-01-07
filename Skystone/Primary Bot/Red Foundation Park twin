@@ -1,0 +1,129 @@
+
+  package FTC_2019_2020_Season;
+  
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import java.util.List;
+
+
+import android.graphics.Color;
+@Disabled
+@Autonomous(name = "Red Foundation Park", group = "Auto")
+public class Red_Foundation_Park_Twin extends LinearOpMode {
+
+
+    /* Declare OpMode members. */
+    RobotHardware robot = new RobotHardware();
+    private ElapsedTime runtime = new ElapsedTime();
+
+
+    @Override
+    public void runOpMode() {
+
+        /*
+         * Initialize the drive system variables.
+         * The init() method of the hardware class does all the work here
+         */
+        robot.init(hardwareMap);
+        telemetry.addData("Mode", "calibrating...");
+        telemetry.update();
+
+        telemetry.addData("Mode", "calibrating2...");
+        telemetry.update();
+
+        while (!isStopRequested() && !robot.imu.isGyroCalibrated()) {
+            sleep(50);
+            idle();
+        }
+
+
+        // Wait for the game to start (driver presses PLAY)
+        /** Wait for the game to begin */
+        telemetry.addData(">", "Press Play to start tracking");
+        telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
+        telemetry.update();
+        waitForStart();
+
+        robot.resetAngle();
+
+
+        if (opModeIsActive()) {
+
+            ////////////////////////////////////////////////////////////
+            /////////////////////   Move right   52 in  //////////////////0.952
+            ////////////////////////////////////////////////////////////
+            robot.right();
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() <= 1.56)) {
+                telemetry.addData("Approaching Blocks", "Time: %2.5f S Elapsed", runtime.seconds());
+                telemetry.update();
+            }
+
+
+            //Grab Foundation
+            robot.hook0.setPosition(1);
+            robot.hook1.setPosition(-1);
+            sleep(1750);
+
+            //Move Foundation Left
+            robot.left(0.25);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() <= 1.50)) {
+                telemetry.addData("Approaching Blocks", "Time: %2.5f S Elapsed", runtime.seconds());
+                telemetry.update();
+            }
+
+
+            //Ensure Grip On Foundation
+            robot.hook0.setPosition(1);
+            robot.hook1.setPosition(-1);
+            sleep(1750);
+
+
+            //Move Foundation Left
+            robot.left();
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() <= 0.667)) {
+                telemetry.addData("Approaching Blocks", "Time: %2.5f S Elapsed", runtime.seconds());
+                telemetry.update();
+            }
+
+            //Release Foundation
+            robot.hook0.setPosition(-0.6);
+            robot.hook1.setPosition(0.6);
+
+            //Move Foundation Left
+            robot.forward();
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() <= 1.44)) {
+                telemetry.addData("Approaching Blocks", "Time: %2.5f S Elapsed", runtime.seconds());
+                telemetry.update();
+            }
+
+            robot.backward();
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() <= 0.01)) {
+                telemetry.addData("Approaching Blocks", "Time: %2.5f S Elapsed", runtime.seconds());
+                telemetry.update();
+            }
+            robot.stop();
+
+
+        }
+    }
+}
+  
