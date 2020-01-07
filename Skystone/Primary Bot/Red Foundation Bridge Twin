@@ -1,0 +1,118 @@
+package FTC_2019_2020_Season;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import java.util.List;
+import android.graphics.Color;
+import java.util.Locale;
+
+@Autonomous(name = "Red Foundation Bridge", group = "Auto")
+public class Red_Foundation_Bridge_Twin extends LinearOpMode {
+
+  /* Declare OpMode members. */
+  RobotHardware robot = new RobotHardware();
+  private ElapsedTime runtime = new ElapsedTime();
+
+  
+
+
+  @Override
+  public void runOpMode() {
+    
+  
+   
+  robot.init(hardwareMap);
+
+  while (!isStopRequested() && !robot.imu.isGyroCalibrated()) {
+      sleep(50);
+      idle();
+  }
+
+  // Wait for the game to start (driver presses PLAY)
+  /** Wait for the game to begin */
+   telemetry.addData(">", "Press Play to start tracking");
+   telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
+   telemetry.update();
+   waitForStart();
+  if (opModeIsActive()){ 
+
+  
+  
+  // Backward
+   robot.backwardByEncoder(0.25, -4400);
+   sleep(100);
+
+  // Move to Foundation
+   robot.rightByEncoder(0.5, 8000);
+   sleep(100);
+
+   robot.rightByEncoder(0.2, 900);
+   sleep(100);
+
+  // Grab Foundation
+   // robot.hook0.setPosition(0.43);
+   // robot.hook1.setPosition(-0.43);
+   robot.hook0.setPosition(0.5);
+   robot.hook0.setPosition(1);
+   sleep(1000);
+
+  // Pull Foundation Away Approx. 18in
+   robot.leftByEncoder(0.5, -4900);
+  
+  // Turn Foundation
+   robot.resetAngle();
+   robot.rotate(-82, 0.5);
+   sleep(100);
+    
+  // Move to Wall
+   //robot.rightByEncoder(0.5, 9000);
+   robot.right();
+   sleep(1000);
+   robot.stop();
+
+  //Release Foundation
+   // robot.hook0.setPosition(-0.6);
+   robot.hook0.setPosition(-0.45);
+   robot.hook1.setPosition(0.6);
+   sleep(1000);
+   
+   // Get away from foundation
+   robot.leftByEncoder(0.2 , -1700);
+   sleep(100);
+   
+   // spin 
+   robot.resetAngle();
+   robot.rotate(-70 , 0.5);
+   sleep(100);
+   
+   // // right up to wall
+   // robot.right();
+   // sleep(1100);
+   
+   /// small correction
+  robot.leftByEncoder(0.5, -300);
+  sleep(100);
+
+   
+   // move  to beneath skybridge
+   robot.backwardByEncoder(0.5 , -9900);
+   sleep(100);
+  
+  }
+  robot.stop();
+ }
+ 
+ 
+}
+
+
+
+
