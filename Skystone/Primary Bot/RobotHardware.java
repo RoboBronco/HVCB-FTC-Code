@@ -1,6 +1,7 @@
 package FTC_2019_2020_Season;
 
 import android.nfc.cardemulation.OffHostApduService;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
@@ -38,7 +39,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-import java.util.List;
 import java.util.Locale;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 
@@ -62,19 +62,30 @@ public class RobotHardware
     public DcMotor  fr  = null;
     public DcMotor  bl   = null;
     public DcMotor  br  = null;
-    public DcMotor  ssScrew   = null;
-    public DcMotor  ssExtend   = null;
+    public DcMotor  Lelevator  = null;
+    public DcMotor  Relevator  = null;
+    public DcMotor  Lintake  = null;
+    public DcMotor  Rintake  = null;
+
+    // public DcMotor  ssScrew   = null;//////////////////////
+    // public DcMotor  ssExtend   = null;///////////////////
     
-   
+    
+    
+    
+    // public Servo    ssTwist = null;/////////////////////
+    // public Servo    ssTilt = null;////////////////////////
+    // public Servo    ssClaw = null;////////////////////////////
+     
     public Servo    hook0 = null;
     public Servo    hook1 = null;
-    //public Servo    ssTwist = null;
-    public Servo    ssTilt = null;
-    public Servo    ssClaw = null;
     public Servo    blockBlue = null;
     public Servo    blockRed = null;
-
-    
+    public Servo    frontGate = null;
+    public Servo    releaseCap = null;
+    public Servo    rearRamp = null;
+    public CRServo    headExtend = null;
+     
     public ColorSensor sensorColor0 = null;
     public ColorSensor sensorColor1 = null;
     
@@ -109,8 +120,144 @@ public class RobotHardware
         fr = hwMap.get(DcMotor.class, "fr");
         bl  = hwMap.get(DcMotor.class, "bl");
         br = hwMap.get(DcMotor.class, "br");
-        ssScrew = hwMap.get(DcMotor.class, "ssScrew");
-        ssExtend = hwMap.get(DcMotor.class, "ssExtend");
+        Lelevator = hwMap.get(DcMotor.class, "Lelevator");
+        Relevator = hwMap.get(DcMotor.class, "Relevator");
+        Lintake = hwMap.get(DcMotor.class, "Lintake");
+        Rintake = hwMap.get(DcMotor.class, "Rintake");
+
+        // ssScrew = hwMap.get(DcMotor.class, "ssScrew");//////////////////////
+        // ssExtend = hwMap.get(DcMotor.class, "ssExtend");//////////////////////
+      
+      
+        fl.setDirection(DcMotor.Direction.REVERSE);
+        bl.setDirection(DcMotor.Direction.REVERSE);
+        fr.setDirection(DcMotor.Direction.FORWARD);
+        br.setDirection(DcMotor.Direction.FORWARD);
+     
+       fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       Lelevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       Relevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+    //  ssExtend.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE );
+
+        
+      
+        // Set all motors to zero power
+        fl.setPower(0);
+        fr.setPower(0);
+        bl.setPower(0);
+        br.setPower(0);
+        Lelevator.setPower(0);
+        Relevator.setPower(0);
+        Lintake.setPower(0);
+        Rintake.setPower(0);
+        
+        // ssScrew.setPower(0);////////////////////
+        // ssExtend.setPower(0);///////////////////
+
+        // Set all motors to run without encoders.
+        // May want to use RUN_USING_ENCODERS if encoders are installed.
+        fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Lelevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Relevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Lintake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Rintake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+        // ssScrew.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);///////////////////////////////////////////////
+        // ssExtend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);//////////////////////////////////////////////
+
+
+
+        // ssTilt = hwMap.get(Servo.class, "ssTilt");//////////////////////////
+        // ssTwist = hwMap.get(Servo.class, "ssTwist");//////////////////////////
+        // ssClaw = hwMap.get(Servo.class, "ssClaw");///////////////////////////////////
+         
+        hook0 = hwMap.get(Servo.class, "hook0");
+        hook1 = hwMap.get(Servo.class, "hook1");
+        blockBlue = hwMap.get(Servo.class, "blockBlue");
+        blockRed = hwMap.get(Servo.class, "blockRed");
+        frontGate = hwMap.get(Servo.class, "frontGate");
+        releaseCap = hwMap.get(Servo.class, "releaseCap");
+        rearRamp = hwMap.get(Servo.class, "rearRamp");
+        headExtend = hwMap.get(CRServo.class, "headExtend");
+       
+     
+       
+    //   ssTwist.setPosition(0.5);////////////////////////
+    //      ssClaw.setPosition(0.55);///////////////////////
+         
+        frontGate.setPosition(0.3);  //////////// open 0.3
+        //frontGate.setPosition(0.5); ////////////close 0.8
+        //frontGate.setPosition(0); /////////// kick = mabey 1
+       // releaseCap.setPosition(0.5); //////// starting point 0.5   /////////////// relrase 1
+        rearRamp.setPosition(0.375); ///////// 0.375 level   ////////// 42 sleight down angle
+        hook0.setPosition(0.6);/// was  6
+        hook1.setPosition(0.6);
+        blockBlue.setPosition(0.45);
+        blockRed.setPosition(0.55);
+        // blockBlue.setPosition(0);
+        // blockRed.setPosition(1);
+        //ssTilt.setPosition(0);//Maybe...???///////////////////
+
+
+        sensorColor0 = hwMap.get(ColorSensor.class, "sensorColor0");
+        sensorColor1 = hwMap.get(ColorSensor.class, "sensorColor1");
+        
+        //String verticalLeftEncoderName = br, verticalRightEncoderName = fl, horizontalEncoderName = fr;
+        //String leftYEncoder = br, rightYEncoder = fl, centerXEncoder = fr;
+        
+        // leftYEncoder = hardwareMap.dcMotor.get(br);
+         //rightYEncoder = hardwareMap.dcMotor.get(fl);
+        // centerXEncoder = hardwareMap.dcMotor.get(fr);
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode                = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled      = false;
+        imu = hwMap.get(BNO055IMU.class, "imu0");
+
+        imu.initialize(parameters);
+
+        reset();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     /* Initialize standard Hardware interfaces */
+    public void initNoInitBecauseISFunAndNoMove(HardwareMap ahwMap) {
+        // Save reference to Hardware map
+        hwMap = ahwMap;
+        
+        // Define and Initialize Motors
+        fl  = hwMap.get(DcMotor.class, "fl");
+        fr = hwMap.get(DcMotor.class, "fr");
+        bl  = hwMap.get(DcMotor.class, "bl");
+        br = hwMap.get(DcMotor.class, "br");
+        // ssScrew = hwMap.get(DcMotor.class, "ssScrew");
+        // ssExtend = hwMap.get(DcMotor.class, "ssExtend");
       
         fl.setDirection(DcMotor.Direction.REVERSE);
         bl.setDirection(DcMotor.Direction.REVERSE);
@@ -131,8 +278,8 @@ public class RobotHardware
         fr.setPower(0);
         bl.setPower(0);
         br.setPower(0);
-        ssScrew.setPower(0);
-        ssExtend.setPower(0);
+        // ssScrew.setPower(0);
+        // ssExtend.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -140,25 +287,25 @@ public class RobotHardware
         fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        ssScrew.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        ssExtend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // ssScrew.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // ssExtend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         hook0 = hwMap.get(Servo.class, "hook0");
         hook1 = hwMap.get(Servo.class, "hook1");
-        ssTilt = hwMap.get(Servo.class, "ssTilt");
-        //ssTwist = hwMap.get(Servo.class, "ssTwist");
-        ssClaw = hwMap.get(Servo.class, "ssClaw");
+        // ssTilt = hwMap.get(Servo.class, "ssTilt");
+        // ssTwist = hwMap.get(Servo.class, "ssTwist");
+        // ssClaw = hwMap.get(Servo.class, "ssClaw");
         blockBlue = hwMap.get(Servo.class, "blockBlue");
         blockRed = hwMap.get(Servo.class, "blockRed");
 
        
-        hook0.setPosition(-0.6);
-        hook1.setPosition(0.6);
-       // ssTwist.setPosition(0.5);
-        ssClaw.setPosition(0.55);
+        hook0.setPosition(0.6);
+        hook1.setPosition(-1);
+        // ssTwist.setPosition(0.5);
+        // ssClaw.setPosition(0.55);
         blockBlue.setPosition(0.45);
         blockRed.setPosition(0.55);
-        // blockBlue.setPosition(0);
+         //blockBlue.setPosition(0);
         // blockRed.setPosition(1);
 
        
@@ -185,6 +332,7 @@ public class RobotHardware
         reset();
        
     }
+    
     double cut = 0;
 
     // // Methods
@@ -517,15 +665,15 @@ public class RobotHardware
         fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        ssScrew.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        ssExtend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        // ssScrew.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        // ssExtend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     
         fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        ssScrew.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        ssExtend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // ssScrew.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // ssExtend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
     
     public double getLeftYEncoder(){
@@ -659,23 +807,4 @@ public class RobotHardware
 
         // wait for rotation to stop.
     }
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-
-} 
+}
