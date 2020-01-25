@@ -19,9 +19,8 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
     @Override
     public void runOpMode() {
     
-       // robot.initNoInitBecauseISFunAndNoMove(hardwareMap);
          robot.init(hardwareMap);
-        
+        sleep(500);
         
         int superPowerReduction = 1;
         int powerReduction = 1;
@@ -47,15 +46,14 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             }
             
             if(gamepad1.b){
-                // robot.hook0.setPosition(-0.45);
-                // robot.hook1.setPosition(0.6);
-                robot.hook0.setPosition(-0.3);
-                robot.hook1.setPosition(0.45);
+                // robot.hook0.setPosition(0.45);
+                // robot.hook1.setPosition(0.45);
+                robot.hook0.setPosition(0.85);
+                robot.hook1.setPosition(0.25); //Was 1
+
             }else if(gamepad1.a){
-                // robot.hook0.setPosition(0.5); // Was 1 
-                // robot.hook1.setPosition(-1);
-                robot.hook0.setPosition(0.6);//Was 0.6 
-                robot.hook1.setPosition(-0.1);// Was -0.8
+                robot.hook0.setPosition(0);//Was 0.6 
+                robot.hook1.setPosition(0.9);// Was -0.8
             }else if(gamepad1.dpad_up) {
                 robot.forward(.25);
             }else if(gamepad1.dpad_down){
@@ -65,20 +63,20 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             }else if(gamepad1.dpad_right){
                 robot.right(.25);
             }else if(gamepad1.left_bumper){
-                robot.spinLeft(0.25);
-            }else if(gamepad1.right_bumper){
                 robot.spinRight(0.25);
+            }else if(gamepad1.right_bumper){
+                robot.spinLeft(0.25);
             }
             else if(gamepad1.y){
-                robot.fl.setPower(gamepad1.left_stick_x/2 - gamepad1.left_stick_y/2 + gamepad1.right_stick_x/2);
-                robot.fr.setPower(-gamepad1.left_stick_x/2 - gamepad1.left_stick_y/2 - gamepad1.right_stick_x/2);
-                robot.bl.setPower(-gamepad1.left_stick_x/2 - gamepad1.left_stick_y/2 + gamepad1.right_stick_x/2);
-                robot.br.setPower(gamepad1.left_stick_x/2 - gamepad1.left_stick_y/2 - gamepad1.right_stick_x/2);
+                robot.fl.setPower(-gamepad1.left_stick_x/2 + gamepad1.left_stick_y/2 - gamepad1.right_stick_x/2);
+                robot.fr.setPower(gamepad1.left_stick_x/2 + gamepad1.left_stick_y/2 + gamepad1.right_stick_x/2);
+                robot.bl.setPower(gamepad1.left_stick_x/2 + gamepad1.left_stick_y/2 - gamepad1.right_stick_x/2);
+                robot.br.setPower(-gamepad1.left_stick_x/2 + gamepad1.left_stick_y/2 + gamepad1.right_stick_x/2);
             }else{
-                robot.fl.setPower(gamepad1.left_stick_x/1.33333 - gamepad1.left_stick_y/1.33333 + gamepad1.right_stick_x/1.33333);
-                robot.fr.setPower(-gamepad1.left_stick_x/1.33333 - gamepad1.left_stick_y/1.33333 - gamepad1.right_stick_x/1.33333);
-                robot.bl.setPower(-gamepad1.left_stick_x/1.33333 - gamepad1.left_stick_y/1.33333 + gamepad1.right_stick_x/1.33333);
-                robot.br.setPower(gamepad1.left_stick_x/1.33333 - gamepad1.left_stick_y/1.33333 - gamepad1.right_stick_x/1.33333);
+                robot.fl.setPower(-gamepad1.left_stick_x/1.33333 + gamepad1.left_stick_y/1.33333 - gamepad1.right_stick_x/1.33333);
+                robot.fr.setPower(gamepad1.left_stick_x/1.33333 + gamepad1.left_stick_y/1.33333 + gamepad1.right_stick_x/1.33333);
+                robot.bl.setPower(gamepad1.left_stick_x/1.33333 + gamepad1.left_stick_y/1.33333 - gamepad1.right_stick_x/1.33333);
+                robot.br.setPower(-gamepad1.left_stick_x/1.33333 + gamepad1.left_stick_y/1.33333 + gamepad1.right_stick_x/1.33333);
             }
             
             telemetry.addData("X:", robot.fr.getCurrentPosition());
@@ -90,29 +88,47 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             //////////////////////////// DRIVER 2 ------------------ DRIVER 2 //////////////////////
                 
             //This is newstuff
-            if (gamepad.left_stick_y > 0)
+           // if (gamepad.left_stick_y > 0)
             
             //this is end of new stuff
-                                                                              
-            if (Math.abs(gamepad2.left_stick_y) > 0.05){
-                  robot.Lelevator.setPower(gamepad2.left_stick_y);
-                  robot.Relevator.setPower(-gamepad2.left_stick_y);
+            
+            // rearRamp.setPosition(0.42); /////////  0.375 level
+             if (gamepad2.left_trigger > 0.01){
+                  robot.rearRamp.setPosition(0.55);
+            }else {
+                robot.rearRamp.setPosition(0.375); ////// was 42 sleigt down
             }
-            else if (Math.abs(gamepad2.right_stick_y) > 0.05){
-                  robot.headExtend.setPower(gamepad2.right_stick_y);
-              }
+            
+            if (Math.abs(gamepad2.right_stick_y) > 0.05){
+                  robot.Lelevator.setPower(-gamepad2.right_stick_y);
+                  robot.Relevator.setPower(gamepad2.right_stick_y);
+            }
+            
+             if (gamepad2.right_trigger > 0.01){
+                  robot.Lelevator.setPower(0.05);
+                  robot.Relevator.setPower(-0.05);
+            }
+            
+            if (gamepad2.left_trigger > 0.01){
+                robot.Rintake.setPower(-1);
+                robot.Lintake.setPower(1);
+            }
+            
+            // else if (Math.abs(gamepad2.right_stick_y) > 0.05){
+            //       robot.headExtend.setPower(gamepad2.right_stick_y);
+            //   }
             
               if (gamepad2.right_bumper){
-                  robot.Lintake.setPower(-0.6);
-                  robot.Rintake.setPower(0.6);
+                  robot.Lintake.setPower(-0.4);
+                  robot.Rintake.setPower(0.4);
                   
-                  //robot.frontGate.setPosition();/// open 
+                  robot.frontGate.setPosition(0.3);/// open 
               }
               if (gamepad2.left_bumper){
                   robot.Lintake.setPower(0);
                   robot.Rintake.setPower(0);
                   
-                 // robot.frontGate.setPosition();/// close 
+                 robot.frontGate.setPosition(0.8);/// close 
               }
               
               if (gamepad2.y){
@@ -120,15 +136,17 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
                         robot.Lelevator.setPower(0.25); //// up
                         robot.Relevator.setPower(-0.25); //// up
                   }
-                 // robot.frontGate.setPosition();/// Kick
-                 // robot.rearRamp.setPosition();/// Dump
+                  
+                  robot.rearRamp.setPosition(0.55);/// Dump
+                  robot.frontGate.setPosition(1);/// Kick
+                  
               }
               
              if (gamepad2.a){
-                 // robot.frontGate.setPosition();/// Open
+                  robot.frontGate.setPosition(0.3);/// Open
             }
               if (gamepad2.x){
-                 //robot.releaseCap.setPosition();///// Release
+                 robot.releaseCap.setPosition(1);///// Release
             }
             
             //  if (gamepad2.b){
@@ -142,14 +160,16 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             //       // robot.rearRamp.setPosition();/// level
                  
             //     /// robot.headExtend = in     /// not sure how
-                
+
             // }
           
             
              if (gamepad2.dpad_up){
-                robot.headExtend.setPower(0.55);
+                robot.headExtend.setPower(0.5);
             } else if (gamepad2.dpad_down){
-                robot.headExtend.setPower(0.45);
+                robot.headExtend.setPower(-0.5);
+            }else {
+                robot.headExtend.setPower(0);
             }
             
     
