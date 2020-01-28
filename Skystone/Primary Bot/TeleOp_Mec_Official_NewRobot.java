@@ -87,10 +87,7 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             
             //////////////////////////// DRIVER 2 ------------------ DRIVER 2 //////////////////////
                 
-            //This is newstuff
-           // if (gamepad.left_stick_y > 0)
-            
-            //this is end of new stuff
+           
             
             // rearRamp.setPosition(0.42); /////////  0.375 level
              if (gamepad2.left_trigger > 0.01){
@@ -131,22 +128,22 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
                  robot.frontGate.setPosition(0.8);/// close 
               }
               
-              if (gamepad2.y){
-                  while (robot.Lelevator.getCurrentPosition() < 1000 && robot.Relevator.getCurrentPosition() < 1000 ){
-                        robot.Lelevator.setPower(0.25); //// up
-                        robot.Relevator.setPower(-0.25); //// up
-                  }
+            //   if (gamepad2.y){
+            //       while (robot.Lelevator.getCurrentPosition() < 1000 && robot.Relevator.getCurrentPosition() < 1000 ){
+            //             robot.Lelevator.setPower(0.25); //// up
+            //             robot.Relevator.setPower(-0.25); //// up
+            //       }
                   
-                  robot.rearRamp.setPosition(0.55);/// Dump
-                  robot.frontGate.setPosition(1);/// Kick
+            //       robot.rearRamp.setPosition(0.55);/// Dump
+            //       robot.frontGate.setPosition(1);/// Kick
                   
-              }
+            //   }
               
              if (gamepad2.a){
                   robot.frontGate.setPosition(0.3);/// Open
             }
               if (gamepad2.x){
-                 robot.releaseCap.setPosition(1);///// Release
+                 robot.releaseCap.setPosition(0);///// Release
             }
             
             //  if (gamepad2.b){
@@ -164,12 +161,19 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             // }
           
             
-             if (gamepad2.dpad_up){
-                robot.headExtend.setPower(0.5);
-            } else if (gamepad2.dpad_down){
-                robot.headExtend.setPower(-0.5);
+            //  if (gamepad2.dpad_up){
+            //     robot.headExtend.setPower(0.5);
+            // } else if (gamepad2.dpad_down){
+            //     robot.headExtend.setPower(-0.5);
+            // }else {
+            //     robot.headExtend.setPower(0);
+            // }
+            
+             if (Math.abs(gamepad2.left_stick_y) > 0.05){
+                  robot.headExtend.setPower(gamepad2.left_stick_y);
             }else {
                 robot.headExtend.setPower(0);
+
             }
             
     
