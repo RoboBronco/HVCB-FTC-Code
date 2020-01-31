@@ -1,3 +1,5 @@
+New Hardware Map
+
 package FTC_2019_2020_Season;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.robot.Robot;
@@ -119,12 +121,16 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             
              if (gamepad2.right_bumper){
                  if (spinIsTrueForward){
-                    robot.Rintake.setPower(0.6);
-                    robot.Lintake.setPower(-0.6);
+                    robot.Rintake.setPower(0.4);
+                    robot.Lintake.setPower(-0.4);
+                    robot.secondaryRintake.setPower(-0.4);
+                    robot.secondaryLintake.setPower(0.4);
                     spinIsTrueForward = false;
                  } else {
                     robot.Rintake.setPower(0);
                     robot.Lintake.setPower(0);
+                    robot.secondaryRintake.setPower(0);
+                    robot.secondaryLintake.setPower(0);
                     spinIsTrueForward = true;
                  }
                  sleep(200);
@@ -133,12 +139,16 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
              
                if (gamepad2.left_bumper){
                  if (spinIsTrueBackward){
-                    robot.Rintake.setPower(-0.6);
-                    robot.Lintake.setPower(0.6);
+                    robot.Rintake.setPower(-0.2);
+                    robot.Lintake.setPower(0.2);
+                    robot.secondaryRintake.setPower(0.2);
+                    robot.secondaryLintake.setPower(-0.2);
                     spinIsTrueBackward = false;
                  } else {
                     robot.Rintake.setPower(0);
                     robot.Lintake.setPower(0);
+                    robot.secondaryRintake.setPower(0);
+                    robot.secondaryLintake.setPower(0);
                     spinIsTrueBackward = true;
                  }
                  sleep(200);
@@ -207,11 +217,13 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             //     robot.headExtend.setPower(0);
             // }
             
+            
              if (Math.abs(gamepad2.left_stick_y) > 0.05){
-                  robot.headExtend.setPower(-gamepad2.left_stick_y);
+                  robot.headExtend.setPower(gamepad2.left_stick_y);
             }else {
                 robot.headExtend.setPower(0);
             }
+            
             // if (gamepad2.right_trigger > 0.01){
             //     if (robot.Lelevator.getCurrentPosition() > 70){
             //       while (robot.Lelevator.getCurrentPosition() < 70){
