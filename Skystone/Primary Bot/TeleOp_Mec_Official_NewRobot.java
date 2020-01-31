@@ -153,14 +153,12 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
                     robot.Lintake.setPower(0.2);
                     robot.secondaryRintake.setPower(0.2);
                     robot.secondaryLintake.setPower(-0.2);
-                    robot.frontGate.setPosition(0.8); //kick
                     spinIsTrueBackward = false;
                  } else {
                     robot.Rintake.setPower(0);
                     robot.Lintake.setPower(0);
                     robot.secondaryRintake.setPower(0);
                     robot.secondaryLintake.setPower(0);
-                    robot.frontGate.setPosition(0.3); //open
                     spinIsTrueBackward = true;
                  }
                  sleep(200);
