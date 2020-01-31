@@ -85,6 +85,9 @@ public class RobotHardware
     public Servo    releaseCap = null;
     public Servo    rearRamp = null;
     public CRServo    headExtend = null;
+    public CRServo    secondaryLintake = null;
+    public CRServo    secondaryRintake = null;
+
      
     public ColorSensor sensorColor0 = null;
     public ColorSensor sensorColor1 = null;
@@ -187,19 +190,26 @@ public class RobotHardware
         releaseCap = hwMap.get(Servo.class, "releaseCap");
         rearRamp = hwMap.get(Servo.class, "rearRamp");
         headExtend = hwMap.get(CRServo.class, "headExtend");
-       
+        secondaryLintake = hwMap.get(CRServo.class, "secondaryLintake");
+        secondaryRintake = hwMap.get(CRServo.class, "secondaryRintake");
+
      
        
-    //   ssTwist.setPosition(0.5);////////////////////////
-    //      ssClaw.setPosition(0.55);///////////////////////
+        //   ssTwist.setPosition(0.5);////////////////////////
+        //      ssClaw.setPosition(0.55);///////////////////////
          
         frontGate.setPosition(0.3);  //////////// open 0.3
-        //frontGate.setPosition(0.5); ////////////close 0.8
-        //frontGate.setPosition(0); /////////// kick = mabey 1
-       // releaseCap.setPosition(0.5); //////// starting point 0.5   /////////////// relrase 1
+        //frontGate.setPosition(); ////////////close 0.8
+        //frontGate.setPosition(); /////////// kick = mabey 1
+        // releaseCap.setPosition(0.5); //////// starting point 0.5   /////////////// relrase 1
         rearRamp.setPosition(0.375); ///////// 0.375 level   ////////// 42 sleight down angle
-        hook0.setPosition(0.6);/// was  6
-        hook1.setPosition(0.6);
+        // hook0.setPosition(0.6);/// was  6
+        // hook1.setPosition(0.6);
+        
+        /////NEW HOOKS
+        hook0.setPosition(0.95); // left 
+        hook1.setPosition(0.25); // right 
+        
         blockBlue.setPosition(0.45);
         blockRed.setPosition(0.55);
         // blockBlue.setPosition(0);
@@ -339,16 +349,16 @@ public class RobotHardware
     public void forwardByEncoder(double speed, double distance){
         // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
         reset();
-        while (((-bl.getCurrentPosition() < distance))){
-            
+        while (((bl.getCurrentPosition() < distance))){
+                // was -
         //  fl.setPower(FORWARD);
         //  fr.setPower(FORWARD);
         //  bl.setPower(FORWARD);
         //  br.setPower(FORWARD);
-        fl.setPower(speed);
-        fr.setPower(speed);
-        bl.setPower(speed);
-        br.setPower(speed);
+        fl.setPower(-speed);
+        fr.setPower(-speed);
+        bl.setPower(-speed);
+        br.setPower(-speed);
         }
         fl.setPower(OFF);
         fr.setPower(OFF);
@@ -427,11 +437,12 @@ public class RobotHardware
      public void backwardByEncoder(double speed, double distance){
          reset();
          // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
-         while (((-bl.getCurrentPosition() > distance))){
-         fl.setPower(-speed);
-         fr.setPower(-speed);
-         bl.setPower(-speed);
-         br.setPower(-speed);
+         while (((bl.getCurrentPosition() > distance))){
+                // was -
+         fl.setPower(speed);
+         fr.setPower(speed);
+         bl.setPower(speed);
+         br.setPower(speed);
          // -speed was BACKWARD
         
          }
@@ -447,10 +458,10 @@ public class RobotHardware
         reset();
         while (((fr.getCurrentPosition() < distance))){
         // Note: +speed was FORWARD, -speed was BACK
-        fl.setPower(speed);
-        fr.setPower(-speed);
-        bl.setPower(-speed);
-        br.setPower(speed);
+        fl.setPower(-speed);
+        fr.setPower(speed);
+        bl.setPower(speed);
+        br.setPower(-speed);
         }
          fl.setPower(OFF);
          fr.setPower(OFF);
@@ -464,10 +475,10 @@ public class RobotHardware
          reset();
          while (((fr.getCurrentPosition() > distance))){
             // Note: +speed was FORWARD, -speed was BACK
-            fl.setPower(-speed);
-            fr.setPower(speed);
-            bl.setPower(speed);
-            br.setPower(-speed);
+            fl.setPower(speed); // was - + + -
+            fr.setPower(-speed);
+            bl.setPower(-speed);
+            br.setPower(speed);
         // fl.setPower(-Math.abs(speed));
         // fr.setPower(Math.abs(speed));
         // bl.setPower(Math.abs(speed));
@@ -760,12 +771,12 @@ public class RobotHardware
         // clockwise (right).
 
         if (degrees < angle)
-        {   // turn right.
-            turnPower = -power;
+        {   // turn right
+            turnPower = power; // was -
         }
         else if (degrees > angle)
-        {
-            turnPower = power;
+        {   // turn left
+            turnPower = -power; // was +
         }
         else return;
 
