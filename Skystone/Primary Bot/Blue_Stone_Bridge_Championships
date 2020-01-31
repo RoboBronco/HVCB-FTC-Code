@@ -1,3 +1,4 @@
+Blue Stone Bridge Cedar
 package FTC_2019_2020_Season;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -21,8 +22,8 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.Locale;
 
-@Autonomous(name="Blue Stone Bridge", group="Auto")
-public class Blue_Stone_Bridge extends LinearOpMode {
+@Autonomous(name="Blue Stone Bridge Cedar", group="Auto")
+public class Blue_Stone_Bridge_Cedar extends LinearOpMode {
  
  
 
@@ -106,8 +107,8 @@ public class Blue_Stone_Bridge extends LinearOpMode {
             //  robot.ssTilt.setPosition(0.65);
             //  Thread.sleep(1000);
              
-            // robot.backwardByEncoder(0.25 , -700);
-             //Thread.sleep(50);
+            robot.backwardByEncoder(0.25 , -300); // was -700
+            Thread.sleep(50);
              
              robot.leftByEncoder(0.6 , -6700);
              robot.leftByEncoder(0.2 , -1874);
@@ -138,13 +139,14 @@ public class Blue_Stone_Bridge extends LinearOpMode {
                 ////////////////// This Is Middle     5     2   !!!!!! ///////////////////////////////////
                 ///////////////////////////////////////////////////////////////////////////
                     
-                     robot.leftByEncoder(0.2, -600);
+                    
+                    robot.leftByEncoder(0.2, -600); 
                     Thread.sleep(50);
                     
                     robot.blockBlue.setPosition(0.1);
                     Thread.sleep(750);
                     
-                    robot.rotate(-6, 0.2);
+                    robot.rotate(2, 0.2); // was 6
                      Thread.sleep(100);
                      
                     robot.rightByEncoder(0.5, 2100);
@@ -165,13 +167,13 @@ public class Blue_Stone_Bridge extends LinearOpMode {
                     robot.forwardByEncoder(0.3 , 10808);
                     Thread.sleep(50);
                     
-                    robot.forward(0.2);
+                    robot.backward(0.2); //was forward
                     Thread.sleep(750);
                     
                     robot.leftByEncoder(0.2 , -3475);
                     Thread.sleep(50);
                     
-                    robot.forward();
+                    robot.backward(); // was forward
                     Thread.sleep(100);
                     robot.stop();
                     
@@ -186,14 +188,25 @@ public class Blue_Stone_Bridge extends LinearOpMode {
                     
                     // robot.ssTilt.setPosition(0.65); 
                     
+                    robot.rightByEncoder(0.3 , 900);
+                    Thread.sleep(50);
+                    
+                    robot.rotate(2, 0.5);
+                    Thread.sleep(50);
+                    
+                    
                     robot.backwardByEncoder(0.3 , -11808);
                     Thread.sleep(50);
                     
                     robot.blockBlue.setPosition(0.45);
                     Thread.sleep(750);
                     
-                    robot.forwardByEncoder(0.3 , 3400);
+                    robot.forwardByEncoder(0.3 , 2500); // was 3400
                     Thread.sleep(50);
+                    
+                    robot.leftByEncoder(0.3 , -900);
+                    Thread.sleep(50);
+   
                         
                         robot.stop();
                         
@@ -214,6 +227,10 @@ public class Blue_Stone_Bridge extends LinearOpMode {
                     
                     robot.leftByEncoder(0.2, -600);
                     Thread.sleep(50);
+
+                    // robot.backwardByEncoder(0.3 , -150);
+                    // Thread.sleep(50);
+
 
                      robot.blockRed.setPosition(0.9);
                     Thread.sleep(750);
@@ -239,20 +256,22 @@ public class Blue_Stone_Bridge extends LinearOpMode {
                     robot.forwardByEncoder(0.3 , 11108);
                     Thread.sleep(50);
                     
-                    robot.forward(0.2);
+                    robot.backward(0.2); // was forward
                     Thread.sleep(750);
                     
                     robot.leftByEncoder(0.3 , -3475);
                     Thread.sleep(50);
                     
-                    robot.forward();
+                    robot.backward(); // was forward
                     Thread.sleep(100);
                     robot.stop();
                     
                     robot.blockRed.setPosition(0.9);
                     Thread.sleep(750);
                     
-                    robot.rightByEncoder(0.3 , 3400);
+                    robot.rotate(2, 0.3);
+                    
+                    robot.rightByEncoder(0.3 , 3500); // was 3400
                     Thread.sleep(50);
                     
                     robot.backwardByEncoder(0.3 , -15300);
@@ -265,9 +284,13 @@ public class Blue_Stone_Bridge extends LinearOpMode {
                     
                    robot.blockRed.setPosition(0.55);
                     Thread.sleep(750);
-
+                    
                     robot.forwardByEncoder(0.3 , 4300);
                     Thread.sleep(50);
+                    
+                    robot.leftByEncoder(0.3 , -300);
+                    Thread.sleep(50);
+
                         
                         robot.stop();
                         
@@ -286,6 +309,8 @@ public class Blue_Stone_Bridge extends LinearOpMode {
                     robot.leftByEncoder(0.2, -600);
                     Thread.sleep(50);
                     
+                    
+                    //First Grab
                     robot.blockRed.setPosition(0.9);
                     Thread.sleep(750);
                     
@@ -296,31 +321,34 @@ public class Blue_Stone_Bridge extends LinearOpMode {
                     robot.rightByEncoder(0.2, 300);
                     Thread.sleep(50);
                     
-                    robot.backwardByEncoder(0.3 , -17000);
+                    robot.backwardByEncoder(0.3 , -17000); // was 17000
                     Thread.sleep(50);
                     
+                    //First Release
                     robot.blockRed.setPosition(0.55);
                     Thread.sleep(750);
 
-                    robot.forwardByEncoder(0.3 , 9800);
+                    robot.forwardByEncoder(0.3 , 9500); // was 9800
                     Thread.sleep(50);
                     
                     robot.leftByEncoder(0.3 , -2568);
                     Thread.sleep(50);
                     
-                    robot.left(0.2);
+                    robot.right(0.2); // was left
                     Thread.sleep(400);
                     robot.stop();
                     
+                    //Second Grab
                     robot.blockRed.setPosition(0.9);
                     Thread.sleep(750);
                     
                     robot.rightByEncoder(0.3 , 3100);
                     Thread.sleep(50);
                     
-                    robot.backwardByEncoder(0.3 , -11000);
+                    robot.backwardByEncoder(0.3 , -11300);
                     Thread.sleep(50);
                     
+                    //Second Release
                     robot.blockRed.setPosition(0.55);
                     Thread.sleep(750);
                     
