@@ -1,0 +1,443 @@
+
+package FTC_2019_2020_Season;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import java.util.List;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import java.util.Locale;
+
+@Autonomous(name="Blue Stone Foundation Bridge", group="Auto")
+public class Blue_Stone_Foundation_Bridge extends LinearOpMode {
+
+ ////////////////////////////////////////|
+ ////////////////////////////////////////|
+ ////////////////////////////////////////|
+ ////////////////////////////////////////| 
+ ////////////////////////////////////////|
+ /////////  MEG'S TEST PROGRAM  /////////|
+ ////////////////////////////////////////|
+ ////////////////////////////////////////|
+ ////////////////////////////////////////|
+ ////////////////////////////////////////|
+ ////////////////////////////////////////| 
+ This program was made for testing purposes to see if it is 
+/*
+possible to grab both sky stones 
+the foundation and park in 30 seconds.
+As of 1/30/20 I have not increased the speed of any of the movements, so it will not be possible
+to complete these tasks until I do that. I have and will take from both Blue_Stone_Bridge_Cedar 
+and Blue_Foundation_Wall_Cedar. I made this program as a copy of Blue_Stone_Bridge_Cedar and
+have not yet added in the Foundation movments yet.
+*/ 
+ 
+ 
+     /* Declare OpMode members. */
+     RobotHardware robot = new RobotHardware();
+     private ElapsedTime runtime = new ElapsedTime();
+     
+    ColorSensor sensorColor0;
+    ColorSensor sensorColor1;
+
+  
+ 
+     @Override
+     public void runOpMode() throws InterruptedException{
+      
+      try  {
+      
+      
+     /*
+     * Initialize the drive system variables.
+     * The init() method of the hardware class does all the work here
+     */
+     robot.init(hardwareMap);
+     
+       // get a reference to the color sensor.
+        sensorColor0 = hardwareMap.get(ColorSensor.class, "sensorColor0");
+        sensorColor1 = hardwareMap.get(ColorSensor.class, "sensorColor1");
+        // get a reference to the distance sensor that shares the same name.
+       // sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
+
+        // hsvValues is an array that will hold the hue, saturation, and value information.
+        float hsvValues0[] = {0F, 0F, 0F};
+        float hsvValues1[] = {0F, 0F, 0F};
+        // values is a reference to the hsvValues array.
+       
+
+        // sometimes it helps to multiply the raw RGB values with a scale factor
+        // to amplify/attentuate the measured values.
+        final double SCALE_FACTOR = 255;
+
+        // get a reference to the RelativeLayout so we can change the background
+        // color of the Robot Controller app to match the hue detected by the RGB sensor.
+        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
+
+
+        char skystoneLocation = 'r';
+        boolean position = false;
+
+
+        telemetry.addData("Mode", "calibrating...");
+        telemetry.update();
+
+        telemetry.addData("Mode", "calibrating2...");
+        telemetry.update();
+
+        while (!isStopRequested() && !robot.imu.isGyroCalibrated())
+        {
+            Thread.sleep(50);
+            idle();
+        }
+
+
+     
+     // Wait for the game to start (driver presses PLAY)
+        /** Wait for the game to begin **/
+        telemetry.addData(">", "Press Play to start tracking");
+        telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
+        telemetry.update();
+        waitForStart();
+        
+ 
+            if (opModeIsActive()) {
+             
+             
+             ///////////////////////////////////////////////////////////////////////////////////////////////////////
+             /////////////////////////// Get to Block here/////////////////////////////////////////////////////////
+             /////////////////////////////////////////////////////////////////////////////////////////////////////
+             
+            //  robot.ssTilt.setPosition(0.65);
+            //  Thread.sleep(1000);
+             
+             //Move away from depot
+            robot.backwardByEncoder(0.25 , -300); // was -700
+            Thread.sleep(50);
+             
+             //Move to blocks
+             robot.leftByEncoder(0.6 , -6700);
+             robot.leftByEncoder(0.2 , -1874);
+             Thread.sleep(50);
+             
+              //Scan
+             while (position != true){
+            Color.RGBToHSV((int) (sensorColor0.red() * SCALE_FACTOR),
+                    (int) (sensorColor0.green() * SCALE_FACTOR),
+                    (int) (sensorColor0.blue() * SCALE_FACTOR),
+                    hsvValues0);
+            Color.RGBToHSV((int) (sensorColor1.red() * SCALE_FACTOR),
+                    (int) (sensorColor1.green() * SCALE_FACTOR),
+                    (int) (sensorColor1.blue() * SCALE_FACTOR),
+                    hsvValues1);
+                    
+            telemetry.addData("Hue for color sensor 0", hsvValues0[0]);
+            telemetry.addData("----First color Sensor ends here" , "----");
+            telemetry.addData("Hue for sensor 1", hsvValues1[0]);
+            telemetry.addData("----Second color Sensor ends here" , "----");
+            telemetry.update();
+            
+            Thread.sleep(100);
+            
+            if (hsvValues1[0] > 105 && hsvValues0[0] < 105){
+                
+                /////////////////////////////////////////////////////////////////////////////
+                ////////////////// This Is Middle     5     2   !!!!!! ///////////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////
+                    
+                    //Move closer to stone
+                    robot.leftByEncoder(0.2, -600); 
+                    Thread.sleep(50);
+                    
+                    //Grab stone
+                    robot.blockBlue.setPosition(0.1);
+                    Thread.sleep(750);
+                    
+                    //Slightly rotate away from stone
+                    robot.rotate(2, 0.2); // was 6
+                    Thread.sleep(100);
+                    
+                    //Move away from stone 
+                    robot.rightByEncoder(0.5, 2100);
+                    robot.rightByEncoder(0.2, 300);
+                    Thread.sleep(50);
+                    
+                    //Go under bridge
+                    robot.backwardByEncoder(0.3 , -15688);
+                    Thread.sleep(50);
+                    
+                    //Release Stone
+                    robot.blockBlue.setPosition(0.45);
+                    Thread.sleep(750);
+                    
+                    //Move back to stones
+                    robot.forwardByEncoder(0.3 , 11000);
+                    robot.forwardByEncoder(0.3 , 10808);
+                    Thread.sleep(50);
+                    
+                    //Slam against wall
+                    robot.backward(0.2); //was forward
+                    Thread.sleep(750);
+                    
+                    //Move to stones
+                    robot.leftByEncoder(0.2 , -3475);
+                    Thread.sleep(50);
+                    
+                    //Harder against wall
+                    robot.backward(); // was forward
+                    Thread.sleep(100);
+                    robot.stop();
+                    
+                    //Grab block
+                    robot.blockBlue.setPosition(0.1);
+                    Thread.sleep(1250);
+                    
+                    //Move away from Stones
+                    robot.rightByEncoder(0.3 , 3000);
+                    Thread.sleep(50);
+                    
+                    //Move towards bridge
+                    robot.backwardByEncoder(0.3 , -11000);
+                    Thread.sleep(50);
+                    
+                    // robot.ssTilt.setPosition(0.65); 
+                    
+                    //Slide away from bridge to avoid collision
+                    robot.rightByEncoder(0.3 , 900);
+                    Thread.sleep(50);
+                    
+                    //Rotate slightly to avoid collision with bridge
+                    robot.rotate(2, 0.5);
+                    Thread.sleep(50);
+                    
+                    //Continue under bridge
+                    robot.backwardByEncoder(0.3 , -11808);
+                    Thread.sleep(50);
+                    
+                    ///////////////////////////////////////////////////////////|||
+                    ////EVERYTHING AFTER THIS POINT HAS BEEN CHANGED OR ADDED//|||
+                    ///////////////////////////////////////////////////////////|||
+                    
+                    //Continue to hold block
+                    //Could potentially drop
+                    
+                    //robot.blockBlue.setPosition(0.45);
+                    //Thread.sleep(750);
+                    
+                    //Move forward to foundation
+                    robot.forwardByEncoder(0.3 , 2160); // was 3400 
+                    Thread.sleep(50);
+                    
+                    //Continue moving to foundation
+                    robot.forwardByEncoder(0.3, 1200);
+                    Thread.sleep(50);
+                    
+                    //Rotate to foundation ///////////////////////////////////////||||||
+                    robot.rotate(50, 20); ///////////// change ///////////////////||||||
+                    Thread.sleep(50);     ////////////////////////////////////////||||||
+                    
+                    //Move forward to foundation
+                    robot.forwardByEncoder(0.3, 2500);
+                    Thread.sleep(50);
+                    
+                    // Grab Foundation
+                    robot.hook0.setPosition(0.3);// was -0.4 //was -0.3   ////////////////////left
+                    robot.hook1.setPosition(0.9);//was 0.8 //was 0.45   ///////////////////right
+                    Thread.sleep(1000);
+                    
+                    robot.stop();
+                    
+                    Thread.sleep(3000);
+                    
+            }   else if (hsvValues0[0] > 105 && hsvValues1[0] < 105){ 
+
+                    //////////////////////////////////////////////////////////////////
+                    ///////////// skystone is      1     4  /////////////////////////
+                    ////////////////////////////////////////////////////////////////
+                    
+                    
+                    // robot.forwardByEncoder(0.2 , 400);
+                    // Thread.sleep(50);
+                    
+                    //Move closer to stones
+                    robot.leftByEncoder(0.2, -600);
+                    Thread.sleep(50);
+                    
+                    // robot.backwardByEncoder(0.3 , -150);
+                    // Thread.sleep(50);
+                    
+                    //Grab stone
+                     robot.blockRed.setPosition(0.9);
+                    Thread.sleep(750);
+                    
+                    //Move away from stones
+                    robot.rightByEncoder(0.5, 2100);
+                    robot.rightByEncoder(0.2, 300);
+                    Thread.sleep(50);
+                    
+                    //Rotate slightly away from stones
+                    robot.rotate(1, 0.2);
+                    Thread.sleep(100);
+                    
+                    //Move under bridge
+                    robot.backwardByEncoder(0.3 , -15988);
+                    Thread.sleep(50);
+                    
+                    //Release stone
+                    robot.blockRed.setPosition(0.55);
+                    Thread.sleep(750);
+                    
+                    //Move back to stones
+                    robot.forwardByEncoder(0.3 , 11300);
+                    robot.forwardByEncoder(0.3 , 11108);
+                    Thread.sleep(50);
+                    
+                    //Slam into wall
+                    robot.backward(0.2); // was forward
+                    Thread.sleep(750);
+                    
+                    //Move to blocks
+                    robot.leftByEncoder(0.3 , -3475);
+                    Thread.sleep(50);
+                    
+                    //Slam into walls harder
+                    robot.backward(); // was forward
+                    Thread.sleep(100);
+                    robot.stop();
+                    
+                    //Grab stone
+                    robot.blockRed.setPosition(0.9);
+                    Thread.sleep(750);
+                    
+                    //Rotate slightly away from stone
+                    robot.rotate(2, 0.3);
+                    
+                    //Slide away from stones
+                    robot.rightByEncoder(0.3 , 3500); // was 3400
+                    Thread.sleep(50);
+                    
+                    //go back under bridge
+                    robot.backwardByEncoder(0.3 , -15300);
+                    robot.backwardByEncoder(0.3 , -8600);
+                    Thread.sleep(50);
+                    
+                    //Release stone
+                   robot.blockRed.setPosition(0.55);
+                    Thread.sleep(750);
+                    
+                    //Move under bridge
+                    robot.forwardByEncoder(0.3 , 4300);
+                    Thread.sleep(50);
+                    
+                    //Push against bridge
+                    robot.leftByEncoder(0.3 , -300);
+                    Thread.sleep(50);
+                    
+                        
+                        robot.stop();
+                        
+                     Thread.sleep(30000);
+
+                    
+            }   else {
+                    
+                    //////////////////////////////////////////////////////////////////////////////////////////////
+                    ////////////  Skystone position 3  6 /////////////////////////////////////////////////////////
+                    //////////////////////////////////////////////////////////////////////////////////////////////
+                                       
+                    robot.forwardByEncoder(0.25, 1800);
+                    Thread.sleep(50);
+                                       
+                    robot.leftByEncoder(0.2, -600);
+                    Thread.sleep(50);
+                    
+                    
+                    //First Grab
+                    robot.blockRed.setPosition(0.9);
+                    Thread.sleep(750);
+                    
+                    robot.rotate(1, 0.2);
+                     Thread.sleep(100);
+                     
+                    robot.rightByEncoder(0.5, 2100);
+                    robot.rightByEncoder(0.2, 300);
+                    Thread.sleep(50);
+                    
+                    robot.backwardByEncoder(0.3 , -17000); // was 17000
+                    Thread.sleep(50);
+                    
+                    //First Release
+                    robot.blockRed.setPosition(0.55);
+                    Thread.sleep(750);
+
+                    robot.forwardByEncoder(0.3 , 9500); // was 9800
+                    Thread.sleep(50);
+                    
+                    robot.leftByEncoder(0.3 , -2568);
+                    Thread.sleep(50);
+                    
+                    robot.right(0.2); // was left
+                    Thread.sleep(400);
+                    robot.stop();
+                    
+                    //Second Grab
+                    robot.blockRed.setPosition(0.9);
+                    Thread.sleep(750);
+                    
+                    robot.rightByEncoder(0.3 , 3100);
+                    Thread.sleep(50);
+                    
+                    robot.backwardByEncoder(0.3 , -11300);
+                    Thread.sleep(50);
+                    
+                    //Second Release
+                    robot.blockRed.setPosition(0.55);
+                    Thread.sleep(750);
+                    
+                    robot.forwardByEncoder(0.3 , 4000);
+                    Thread.sleep(50);
+                        
+                        robot.stop();
+                        
+                     Thread.sleep(30000);
+                        
+                  
+            }
+            
+            Thread.sleep(500);
+            
+
+
+            telemetry.update();
+            
+
+            }
+         }
+         
+       
+      } catch(InterruptedException e){
+ telemetry.addLine("Hey Caught Interruption");
+ telemetry.update();
+ robot.stop();
+//  robot.ssExtend.setPower(0);
+//  robot.ssScrew.setPower(0);
+ Thread.sleep(500);
+}
+       
+     }
+  }
