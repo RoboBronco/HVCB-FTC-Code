@@ -1,5 +1,3 @@
-New Hardware Map
-
 package FTC_2019_2020_Season;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.robot.Robot;
@@ -100,10 +98,21 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
                 robot.rearRamp.setPosition(0.375); ////// was 42 sleigt down
             }
             
-            if (Math.abs(gamepad2.right_stick_y) > 0.05){
-                  robot.Lelevator.setPower(-gamepad2.right_stick_y);
-                  robot.Relevator.setPower(gamepad2.right_stick_y);
-            }
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////SAMMIE UPDATED - Lift will completely follow stick, -100% to 100%//////////////
+            ///////////////////////If it is too fast just divide each by a constant//////////////////////
+            //////////////(i.e. gamepad2.right_stick_y/2 for 50%) - Deadzone not needed//////////////////
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            robot.Lelevator.setPower(-gamepad2.right_stick_y);
+            robot.Relevator.setPower(gamepad2.right_stick_y);
+            
+            // if (Math.abs(gamepad2.right_stick_y) > 0.5){ // was 0.05
+            //     robot.Lelevator.setPower(-gamepad2.right_stick_y);
+            //     robot.Relevator.setPower(gamepad2.right_stick_y);
+            // }else{
+            //     robot.Lelevator.setPower(0);
+            //     robot.Relevator.setPower(0);
+            // }
             
             
              if (gamepad2.a){
@@ -118,7 +127,7 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
              }
             
             
-            
+            //Intake
              if (gamepad2.right_bumper){
                  if (spinIsTrueForward){
                     robot.Rintake.setPower(0.4);
@@ -137,18 +146,21 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
              }
              
              
+            ////Left bumper ejects blocks out the back
                if (gamepad2.left_bumper){
                  if (spinIsTrueBackward){
                     robot.Rintake.setPower(-0.2);
                     robot.Lintake.setPower(0.2);
                     robot.secondaryRintake.setPower(0.2);
                     robot.secondaryLintake.setPower(-0.2);
+                    robot.frontGate.setPosition(0.8); //kick
                     spinIsTrueBackward = false;
                  } else {
                     robot.Rintake.setPower(0);
                     robot.Lintake.setPower(0);
                     robot.secondaryRintake.setPower(0);
                     robot.secondaryLintake.setPower(0);
+                    robot.frontGate.setPosition(0.3); //open
                     spinIsTrueBackward = true;
                  }
                  sleep(200);
@@ -190,9 +202,9 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             //  if (gamepad2.a){
             //       robot.frontGate.setPosition(0.3);/// Open
             // }
-              if (gamepad2.x){
-                 robot.releaseCap.setPosition(1);///// Release
-            }
+            //   if (gamepad2.x){
+            //      robot.releaseCap.setPosition(1);///// Release
+            // }
             
             //  if (gamepad2.b){
             //      while (robot.Lelevator.getCurrentPosition() < 20 && robot.Relevator.getCurrentPosition() < 20 ){
