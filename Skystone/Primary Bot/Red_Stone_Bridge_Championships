@@ -1,5 +1,3 @@
-Red Stone Bridge Cedar
-
 package FTC_2019_2020_Season;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -108,6 +106,9 @@ public class Red_Stone_Bridge_Cedar extends LinearOpMode {
              robot.forwardByEncoder(0.25 , 700);
              Thread.sleep(50);
              
+             robot.backwardByEncoder(0.25 , -700);
+             Thread.sleep(50);
+             
              robot.leftByEncoder(0.6 , -7700);
              robot.leftByEncoder(0.2 , -874);
              Thread.sleep(50);
@@ -131,7 +132,9 @@ public class Red_Stone_Bridge_Cedar extends LinearOpMode {
             
             Thread.sleep(100);
             
-            ////LEFT////
+            ////LEFT////////////////////
+            ////////////////////////////
+            ////////////////////////////
             if (hsvValues1[0] > 105 && hsvValues0[0] < 105){
                 telemetry.addData("Skystone is Left " , "yeet");
                     
@@ -277,6 +280,7 @@ public class Red_Stone_Bridge_Cedar extends LinearOpMode {
                     skystoneLocation = 'm';
                     position = true;
             }   else {
+             ///////////////////MID/////////////////
                     telemetry.addData("Skystone is Right " , "yeet");
                                        
                     robot.backwardByEncoder(0.25, -2400);
