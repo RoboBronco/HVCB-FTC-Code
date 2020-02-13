@@ -86,17 +86,16 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             telemetry.addData("X:", robot.fr.getCurrentPosition());
             telemetry.addData("leftY", robot.getLeftYEncoder());
             telemetry.addData("rightY", robot.getRightYEncoder());
-            telemetry.update();
             
             
             //////////////////////////// DRIVER 2 ------------------ DRIVER 2 //////////////////////
                 
             // rearRamp.setPosition(0.42); /////////  0.375 level
-             if (gamepad2.left_trigger > 0.01){
-                  robot.rearRamp.setPosition(0.55);
-            }else {
-                robot.rearRamp.setPosition(0.375); ////// was 42 sleigt down
-            }
+            //  if (gamepad2.left_trigger > 0.01){
+            //       robot.rearRamp.setPosition(0.55);
+            // }else {
+            //     robot.rearRamp.setPosition(0.375); ////// was 42 sleigt down
+            // }
             
             /////////////////////////////////////////////////////////////////////////////////////////////
             //////////////SAMMIE UPDATED - Lift will completely follow stick, -100% to 100%//////////////
@@ -130,48 +129,66 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             //Intake
              if (gamepad2.right_bumper){
                  if (spinIsTrueForward){
-                    robot.Rintake.setPower(0.4);
-                    robot.Lintake.setPower(-0.4);
-                    robot.secondaryRintake.setPower(-0.4);
-                    robot.secondaryLintake.setPower(0.4);
+                   robot.frontGate.setPosition(0.33);
+                    robot.rearRamp.setPosition(0.8); 
+                    robot.Rintake.setPower(-0.6);
+                    robot.Lintake.setPower(-0.6);
                     spinIsTrueForward = false;
                  } else {
+                    robot.rearRamp.setPosition(0.8);
+                    robot.frontGate.setPosition(0.8);
                     robot.Rintake.setPower(0);
                     robot.Lintake.setPower(0);
-                    robot.secondaryRintake.setPower(0);
-                    robot.secondaryLintake.setPower(0);
                     spinIsTrueForward = true;
                  }
                  sleep(200);
              }
              
              
+             
+             //// Should add "slow down" method at some point for elevators //// 
+             /*
+             
+             Something like:
+             
+             press Y and release up trigger = slow fall
+             
+             */
+                
+                
+                
             ////Left bumper ejects blocks out the back
                if (gamepad2.left_bumper){
                  if (spinIsTrueBackward){
-                    robot.Rintake.setPower(-0.2);
-                    robot.Lintake.setPower(0.2);
-                    robot.secondaryRintake.setPower(0.2);
-                    robot.secondaryLintake.setPower(-0.2);
+                    robot.frontGate.setPosition(0.33); 
+                    robot.rearRamp.setPosition(0.35);
+                    robot.Rintake.setPower(0.4); //was -0.2
+                    robot.Lintake.setPower(0.4);//was 0.2
                     spinIsTrueBackward = false;
                  } else {
+                    robot.rearRamp.setPosition(0.8);
                     robot.Rintake.setPower(0);
                     robot.Lintake.setPower(0);
-                    robot.secondaryRintake.setPower(0);
-                    robot.secondaryLintake.setPower(0);
+                    
                     spinIsTrueBackward = true;
                  }
                  sleep(200);
              }
+             
+           
             
             // if (gamepad2.left_trigger > 0.01){
             //     robot.Rintake.setPower(-1);
             //     robot.Lintake.setPower(1);
             // }
             
-            // else if (Math.abs(gamepad2.right_stick_y) > 0.05){
-            //       robot.headExtend.setPower(gamepad2.right_stick_y);
-            //   }
+           if (gamepad2.left_stick_y > 0.05) {
+               robot.headExtend.setPosition(0.52);
+           }
+            if (gamepad2.left_stick_y < -0.05) {
+               robot.headExtend.setPosition(0.1);
+           }
+           
             
             //   if (gamepad2.right_bumper){
             //       robot.Lintake.setPower(-0.6);
@@ -219,20 +236,17 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             // }
           
             
-            //  if (gamepad2.dpad_up){
-            //     robot.headExtend.setPower(0.5);
-            // } else if (gamepad2.dpad_down){
-            //     robot.headExtend.setPower(-0.5);
+          
+            
+            ////////////    change to the positon type of servo 
+            //  if (Math.abs(gamepad2.left_stick_y) > 0.05){
+            //       robot.headExtend.setPower(gamepad2.left_stick_y);
             // }else {
             //     robot.headExtend.setPower(0);
             // }
             
             
-             if (Math.abs(gamepad2.left_stick_y) > 0.05){
-                  robot.headExtend.setPower(gamepad2.left_stick_y);
-            }else {
-                robot.headExtend.setPower(0);
-            }
+            
             
             // if (gamepad2.right_trigger > 0.01){
             //     if (robot.Lelevator.getCurrentPosition() > 70){
@@ -249,6 +263,12 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
             //     }
             // }
             
+            // if(gamepad2.x){
+            //         // robot.releaseCap.setPosition(robot.releaseCap.getPosition()-0.1);    
+            //         // sleep(50);
+            //         robot.releaseCap.setPosition(0.4);
+            //     }
+            
             
             telemetry.addData("Left elavator encoder position:", robot.Lelevator.getCurrentPosition()); 
             telemetry.update();
@@ -256,9 +276,13 @@ public class TeleOp_Mec_Official_NewRobot extends LinearOpMode {
                 //////////////////////////// DRIVER 1 &&&&&&&&&&&&&&&&& DRIVER 2 //////////////////////
     
                 if(gamepad1.x && gamepad2.x){
-                    robot.releaseCap.setPosition(-1);    //NUKE
+                    telemetry.addData("Entering Double X", "Captone Release");
+                    robot.releaseCap.setPosition(0.4);    //NUKE was -1
+                } else {
+                    robot.releaseCap.setPosition(1);    //NUKE was -1
                 }
                 
+                telemetry.addData("Position is: ", robot.releaseCap.getPosition());
             
         
        }
