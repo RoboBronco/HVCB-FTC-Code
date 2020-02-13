@@ -1,16 +1,21 @@
 package FTC_2019_2020_Season;
 
 import android.nfc.cardemulation.OffHostApduService;
+
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -21,95 +26,96 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
 import java.util.List;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+
 import java.lang.Math;
+
 import android.graphics.Color;
+
 import java.util.Locale;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
+
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+
 import android.util.Log;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+
 import java.util.Locale;
+
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 
-public class RobotHardware
-{
-    
-    
-    
-    static final double INCREMENT   = 0.03;     // amount to ramp motor each CYCLE_MS cycle
-    static final int    CYCLE_MS    =   50;     // period of each cycle
-    static final double MAX_FWD     =  1.0;     // Maximum FWD power applied to motor
-    static final double MAX_REV     = -1.0;     // Maximum REV power applied to motor
-    
-    double  rampUpPower   = 0; ///// for ramp down
-    boolean rampUp  = false; //// for ramp down
-     
-    
-  
+public class RobotHardware {
+
+
+    static final double INCREMENT = 0.03;     // amount to ramp motor each CYCLE_MS cycle
+    static final int CYCLE_MS = 50;     // period of each cycle
+    static final double MAX_FWD = 1.0;     // Maximum FWD power applied to motor
+    static final double MAX_REV = -1.0;     // Maximum REV power applied to motor
+
+    double rampUpPower = 0; ///// for ramp down
+    boolean rampUp = false; //// for ramp down
+
+
     /* Public OpMode members. */
-    public DcMotor  fl   = null;
-    public DcMotor  fr  = null;
-    public DcMotor  bl   = null;
-    public DcMotor  br  = null;
-    public DcMotor  Lelevator  = null;
-    public DcMotor  Relevator  = null;
-    public DcMotor  Lintake  = null;
-    public DcMotor  Rintake  = null;
+    public DcMotor fl = null;
+    public DcMotor fr = null;
+    public DcMotor bl = null;
+    public DcMotor br = null;
+    public DcMotor Lelevator = null;
+    public DcMotor Relevator = null;
+    public DcMotor Lintake = null;
+    public DcMotor Rintake = null;
 
-    // public DcMotor  ssScrew   = null;//////////////////////
-    // public DcMotor  ssExtend   = null;///////////////////
-    
-    
-    
-    
-    // public Servo    ssTwist = null;/////////////////////
-    // public Servo    ssTilt = null;////////////////////////
-    // public Servo    ssClaw = null;////////////////////////////
-     
-    public Servo    hook0 = null;
-    public Servo    hook1 = null;
-    public Servo    blockBlue = null;
-    public Servo    blockRed = null;
-    public Servo    frontGate = null;
-    public Servo    releaseCap = null;
-    public Servo    rearRamp = null;
-    public CRServo    headExtend = null;
-    public CRServo    secondaryLintake = null;
-    public CRServo    secondaryRintake = null;
 
-     
+    public Servo hook0 = null;
+    public Servo hook1 = null;
+    public Servo blockBlue = null;
+    public Servo blockRed = null;
+    public Servo grabBlue = null;
+    public Servo grabRed = null;
+    public Servo frontGate = null;
+    public Servo releaseCap = null;
+    public Servo rearRamp = null;
+    public Servo headExtend = null;
+    // public CRServo    secondaryLintake = null;
+    // public CRServo    secondaryRintake = null;
+
+
     public ColorSensor sensorColor0 = null;
     public ColorSensor sensorColor1 = null;
-    
-    
 
-    
+
     BNO055IMU imu;
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .3;
-    
+
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
+    private ElapsedTime period = new ElapsedTime();
 
     // Variables for Drive Speed
     final double FORWARD = 0.5;
-    final double BACK    = -0.5;
-    final int OFF        = 0;
+    final double BACK = -0.5;
+    final int OFF = 0;
 
     /* Constructor */
-    public RobotHardware(){
+    public RobotHardware() {
 
     }
 
@@ -117,37 +123,31 @@ public class RobotHardware
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map
         hwMap = ahwMap;
-        
+
         // Define and Initialize Motors
-        fl  = hwMap.get(DcMotor.class, "fl");
+        fl = hwMap.get(DcMotor.class, "fl");
         fr = hwMap.get(DcMotor.class, "fr");
-        bl  = hwMap.get(DcMotor.class, "bl");
+        bl = hwMap.get(DcMotor.class, "bl");
         br = hwMap.get(DcMotor.class, "br");
         Lelevator = hwMap.get(DcMotor.class, "Lelevator");
         Relevator = hwMap.get(DcMotor.class, "Relevator");
         Lintake = hwMap.get(DcMotor.class, "Lintake");
         Rintake = hwMap.get(DcMotor.class, "Rintake");
 
-        // ssScrew = hwMap.get(DcMotor.class, "ssScrew");//////////////////////
-        // ssExtend = hwMap.get(DcMotor.class, "ssExtend");//////////////////////
-      
-      
+
         fl.setDirection(DcMotor.Direction.REVERSE);
         bl.setDirection(DcMotor.Direction.REVERSE);
         fr.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
-     
-       fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       Lelevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       Relevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-    //  ssExtend.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE );
+        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Lelevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Relevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        
-      
+
         // Set all motors to zero power
         fl.setPower(0);
         fr.setPower(0);
@@ -157,12 +157,9 @@ public class RobotHardware
         Relevator.setPower(0);
         Lintake.setPower(0);
         Rintake.setPower(0);
-        
-        // ssScrew.setPower(0);////////////////////
-        // ssExtend.setPower(0);///////////////////
+
 
         // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
         fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -173,72 +170,58 @@ public class RobotHardware
         Rintake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
-        // ssScrew.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);///////////////////////////////////////////////
-        // ssExtend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);//////////////////////////////////////////////
-
-
-
-        // ssTilt = hwMap.get(Servo.class, "ssTilt");//////////////////////////
-        // ssTwist = hwMap.get(Servo.class, "ssTwist");//////////////////////////
-        // ssClaw = hwMap.get(Servo.class, "ssClaw");///////////////////////////////////
-         
         hook0 = hwMap.get(Servo.class, "hook0");
-        hook1 = hwMap.get(Servo.class, "hook1");
+        hook1 = hwMap.get(Servo.class, "hook1"); 
         blockBlue = hwMap.get(Servo.class, "blockBlue");
         blockRed = hwMap.get(Servo.class, "blockRed");
+        grabBlue = hwMap.get(Servo.class, "grabBlue");
+        grabRed = hwMap.get(Servo.class, "grabRed");
         frontGate = hwMap.get(Servo.class, "frontGate");
         releaseCap = hwMap.get(Servo.class, "releaseCap");
         rearRamp = hwMap.get(Servo.class, "rearRamp");
-        headExtend = hwMap.get(CRServo.class, "headExtend");
-        secondaryLintake = hwMap.get(CRServo.class, "secondaryLintake");
-        secondaryRintake = hwMap.get(CRServo.class, "secondaryRintake");
+        headExtend = hwMap.get(Servo.class, "headExtend");
+        // secondaryLintake = hwMap.get(CRServo.class, "secondaryLintake");
+        // secondaryRintake = hwMap.get(CRServo.class, "secondaryRintake");
 
-     
-       
-        //   ssTwist.setPosition(0.5);////////////////////////
-        //      ssClaw.setPosition(0.55);///////////////////////
-         
-        frontGate.setPosition(0.3);  //////////// open 0.3
-        //frontGate.setPosition(); ////////////close 0.8
-        //frontGate.setPosition(); /////////// kick = mabey 1
-        // releaseCap.setPosition(0.5); //////// starting point 0.5   /////////////// relrase 1
-        rearRamp.setPosition(0.375); ///////// 0.375 level   ////////// 42 sleight down angle
-        // hook0.setPosition(0.6);/// was  6
-        // hook1.setPosition(0.6);
+        frontGate.setPosition(0.33);  //////////// open 0.33////////////close 0.8/////////// kick = mabey 1
+        releaseCap.setPosition(1);  /// starting point 0.5
+        headExtend.setPosition(0.52); //////// 0 is full out //////// 0.52 full in
+        rearRamp.setPosition(0.8); //////// 0.8 init ////////// 0.4 kick
+        
         
         /////NEW HOOKS
-        hook0.setPosition(0.95); // left 
-        hook1.setPosition(0.25); // right 
-        
-        blockBlue.setPosition(0.45);
-        blockRed.setPosition(0.55);
-        // blockBlue.setPosition(0);
-        // blockRed.setPosition(1);
-        //ssTilt.setPosition(0);//Maybe...???///////////////////
+        hook0.setPosition(0.95); // left
+        hook1.setPosition(0.25); // right
 
+        blockBlue.setPosition(0.48);
+        grabBlue.setPosition(.3);////// 1 is closed /////
+        blockRed.setPosition(0.52);
+        grabRed.setPosition(1);
 
         sensorColor0 = hwMap.get(ColorSensor.class, "sensorColor0");
         sensorColor1 = hwMap.get(ColorSensor.class, "sensorColor1");
-        
+
         //String verticalLeftEncoderName = br, verticalRightEncoderName = fl, horizontalEncoderName = fr;
         //String leftYEncoder = br, rightYEncoder = fl, centerXEncoder = fr;
-        
+
         // leftYEncoder = hardwareMap.dcMotor.get(br);
-         //rightYEncoder = hardwareMap.dcMotor.get(fl);
+        //rightYEncoder = hardwareMap.dcMotor.get(fl);
         // centerXEncoder = hardwareMap.dcMotor.get(fr);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
-        parameters.mode                = BNO055IMU.SensorMode.IMU;
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled      = false;
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
         imu = hwMap.get(BNO055IMU.class, "imu0");
 
         imu.initialize(parameters);
 
         reset();
     }
+
+
     
     
     
@@ -250,39 +233,32 @@ public class RobotHardware
     
     
     
-    
-    
-    
-    
-    
-    
-     /* Initialize standard Hardware interfaces */
+    /* Initialize standard Hardware interfaces */
     public void initNoInitBecauseISFunAndNoMove(HardwareMap ahwMap) {
         // Save reference to Hardware map
         hwMap = ahwMap;
-        
+
         // Define and Initialize Motors
-        fl  = hwMap.get(DcMotor.class, "fl");
+        fl = hwMap.get(DcMotor.class, "fl");
         fr = hwMap.get(DcMotor.class, "fr");
-        bl  = hwMap.get(DcMotor.class, "bl");
+        bl = hwMap.get(DcMotor.class, "bl");
         br = hwMap.get(DcMotor.class, "br");
         // ssScrew = hwMap.get(DcMotor.class, "ssScrew");
         // ssExtend = hwMap.get(DcMotor.class, "ssExtend");
-      
+
         fl.setDirection(DcMotor.Direction.REVERSE);
         bl.setDirection(DcMotor.Direction.REVERSE);
         fr.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
-     
-       fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-       br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-     
-    //  ssExtend.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE );
 
-        
-      
+        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        //  ssExtend.setZeroPowerBehavior( DcMotor.ZeroPowerBehavior.BRAKE );
+
+
         // Set all motors to zero power
         fl.setPower(0);
         fr.setPower(0);
@@ -308,198 +284,198 @@ public class RobotHardware
         blockBlue = hwMap.get(Servo.class, "blockBlue");
         blockRed = hwMap.get(Servo.class, "blockRed");
 
-       
+
         hook0.setPosition(0.6);
         hook1.setPosition(-1);
         // ssTwist.setPosition(0.5);
         // ssClaw.setPosition(0.55);
         blockBlue.setPosition(0.45);
         blockRed.setPosition(0.55);
-         //blockBlue.setPosition(0);
+        //blockBlue.setPosition(0);
         // blockRed.setPosition(1);
 
-       
+
         sensorColor0 = hwMap.get(ColorSensor.class, "sensorColor0");
         sensorColor1 = hwMap.get(ColorSensor.class, "sensorColor1");
-        
+
         //String verticalLeftEncoderName = br, verticalRightEncoderName = fl, horizontalEncoderName = fr;
         //String leftYEncoder = br, rightYEncoder = fl, centerXEncoder = fr;
-        
+
         // leftYEncoder = hardwareMap.dcMotor.get(br);
-         //rightYEncoder = hardwareMap.dcMotor.get(fl);
+        //rightYEncoder = hardwareMap.dcMotor.get(fl);
         // centerXEncoder = hardwareMap.dcMotor.get(fr);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
-        parameters.mode                = BNO055IMU.SensorMode.IMU;
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled      = false;
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
         imu = hwMap.get(BNO055IMU.class, "imu0");
 
         imu.initialize(parameters);
 
         reset();
-       
+
     }
-    
+
     double cut = 0;
 
     // // Methods
-    public void forwardByEncoder(double speed, double distance){
+    public void forwardByEncoder(double speed, double distance) {
         // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
         reset();
-        while (((bl.getCurrentPosition() < distance))){
-                // was -
-        //  fl.setPower(FORWARD);
-        //  fr.setPower(FORWARD);
-        //  bl.setPower(FORWARD);
-        //  br.setPower(FORWARD);
-        fl.setPower(-speed);
-        fr.setPower(-speed);
-        bl.setPower(-speed);
-        br.setPower(-speed);
+        while (((bl.getCurrentPosition() < distance))) {
+            // was -
+            //  fl.setPower(FORWARD);
+            //  fr.setPower(FORWARD);
+            //  bl.setPower(FORWARD);
+            //  br.setPower(FORWARD);
+            fl.setPower(-speed);
+            fr.setPower(-speed);
+            bl.setPower(-speed);
+            br.setPower(-speed);
         }
         fl.setPower(OFF);
         fr.setPower(OFF);
         bl.setPower(OFF);
         br.setPower(OFF);
-    }    
-  
+    }
+
     // Variable speed was FORWARD
-    
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////  Ramp Up Test /////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-      public void forwardByEncoderRamp(double speed, double distance){
+    public void forwardByEncoderRamp(double speed, double distance) {
         // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
-        while ((-bl.getCurrentPosition() < distance)){
-        fl.setPower(speed);
-        fr.setPower(speed);
-        bl.setPower(speed);
-        br.setPower(speed);
-        
-        if (distance >= 650) { 
-         if (Math.abs(distance) - Math.abs(bl.getCurrentPosition()) <= 400) {
-            //  fl.setPower(OFF);
-            //  fr.setPower(OFF);
-            //  bl.setPower(OFF);
-            //  br.setPower(OFF);
-        // Keep stepping down until we hit the min value.
-                speed -= INCREMENT;
-                if (rampUpPower <= 0 ) {
-                rampUpPower = 0;
+        while ((-bl.getCurrentPosition() < distance)) {
+            fl.setPower(speed);
+            fr.setPower(speed);
+            bl.setPower(speed);
+            br.setPower(speed);
+
+            if (distance >= 650) {
+                if (Math.abs(distance) - Math.abs(bl.getCurrentPosition()) <= 400) {
+                    //  fl.setPower(OFF);
+                    //  fr.setPower(OFF);
+                    //  bl.setPower(OFF);
+                    //  br.setPower(OFF);
+                    // Keep stepping down until we hit the min value.
+                    speed -= INCREMENT;
+                    if (rampUpPower <= 0) {
+                        rampUpPower = 0;
+                    }
                 }
             }
-        }
         }
         fl.setPower(OFF);
         fr.setPower(OFF);
         bl.setPower(OFF);
         br.setPower(OFF);
-      }
-    
-    public void forwardByEncoderV2(double speed, double distance){
+    }
+
+    public void forwardByEncoderV2(double speed, double distance) {
         reset();
-        while(bl.getCurrentPosition()/307.699557 < distance){ // inches
-            double distanceToTarget = distance - -bl.getCurrentPosition()/307.699557; //inches
+        while (bl.getCurrentPosition() / 307.699557 < distance) { // inches
+            double distanceToTarget = distance - -bl.getCurrentPosition() / 307.699557; //inches
             // Uses speed to determine distance to slow down
-            double rampDownTrigger = speed*4; // Ten because 1speed equals 10 inches, .5 = 5, so on and so forth
-            
+            double rampDownTrigger = speed * 4; // Ten because 1speed equals 10 inches, .5 = 5, so on and so forth
+
             // Uses rampDownTrigger to determine variable to slow down by
-            double rampDownMultiplier = 1/rampDownTrigger;
-            if ((distanceToTarget < rampDownTrigger) && (distanceToTarget > 1)){ //inches
-                double newSpeed = distanceToTarget*speed*rampDownMultiplier; //Determines Ramp Down Speed
+            double rampDownMultiplier = 1 / rampDownTrigger;
+            if ((distanceToTarget < rampDownTrigger) && (distanceToTarget > 1)) { //inches
+                double newSpeed = distanceToTarget * speed * rampDownMultiplier; //Determines Ramp Down Speed
                 fl.setPower(newSpeed);
                 fr.setPower(newSpeed);
                 bl.setPower(newSpeed);
                 br.setPower(newSpeed);
-            } else if(distanceToTarget < 1){                    //This sets a minimum speed
+            } else if (distanceToTarget < 1) {                    //This sets a minimum speed
                 fl.setPower(0.1);
                 fr.setPower(0.1);
                 bl.setPower(0.1);
                 br.setPower(0.1);
-            } else{                                             // This is driving at normal speed
+            } else {                                             // This is driving at normal speed
                 fl.setPower(speed);
                 fr.setPower(speed);
                 bl.setPower(speed);
                 br.setPower(speed);
             }                                                  // Once we reach our target, we exit the loop
         }                                                      // This turns the wheels off
-                fl.setPower(OFF);
-                fr.setPower(OFF);
-                bl.setPower(OFF);
-                br.setPower(OFF);
+        fl.setPower(OFF);
+        fr.setPower(OFF);
+        bl.setPower(OFF);
+        br.setPower(OFF);
     }
-    
-    
+
+
     // Method for encoder BACKWARD mpovement
-     public void backwardByEncoder(double speed, double distance){
-         reset();
-         // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
-         while (((bl.getCurrentPosition() > distance))){
-                // was -
-         fl.setPower(speed);
-         fr.setPower(speed);
-         bl.setPower(speed);
-         br.setPower(speed);
-         // -speed was BACKWARD
-        
-         }
-         fl.setPower(OFF);
-         fr.setPower(OFF);
-         bl.setPower(OFF);
-         br.setPower(OFF);
-     }    
-    
-    
-    // Method for encoder RIGHT movement
-     public void rightByEncoder(double speed, double distance){
+    public void backwardByEncoder(double speed, double distance) {
         reset();
-        while (((fr.getCurrentPosition() < distance))){
-        // Note: +speed was FORWARD, -speed was BACK
-        fl.setPower(-speed);
-        fr.setPower(speed);
-        bl.setPower(speed);
-        br.setPower(-speed);
+        // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
+        while (((bl.getCurrentPosition() > distance))) {
+            // was -
+            fl.setPower(speed);
+            fr.setPower(speed);
+            bl.setPower(speed);
+            br.setPower(speed);
+            // -speed was BACKWARD
+
         }
-         fl.setPower(OFF);
-         fr.setPower(OFF);
-         bl.setPower(OFF);
-         br.setPower(OFF);
-     }    
-    
-    
+        fl.setPower(OFF);
+        fr.setPower(OFF);
+        bl.setPower(OFF);
+        br.setPower(OFF);
+    }
+
+
+    // Method for encoder RIGHT movement
+    public void rightByEncoder(double speed, double distance) {
+        reset();
+        while (((fr.getCurrentPosition() < distance))) {
+            // Note: +speed was FORWARD, -speed was BACK
+            fl.setPower(-speed);
+            fr.setPower(speed);
+            bl.setPower(speed);
+            br.setPower(-speed);
+        }
+        fl.setPower(OFF);
+        fr.setPower(OFF);
+        bl.setPower(OFF);
+        br.setPower(OFF);
+    }
+
+
     // Method for encoder LEFT mpovement
-     public void leftByEncoder(double speed, double distance){
-         reset();
-         while (((fr.getCurrentPosition() > distance))){
+    public void leftByEncoder(double speed, double distance) {
+        reset();
+        while (((fr.getCurrentPosition() > distance))) {
             // Note: +speed was FORWARD, -speed was BACK
             fl.setPower(speed); // was - + + -
             fr.setPower(-speed);
             bl.setPower(-speed);
             br.setPower(speed);
-        // fl.setPower(-Math.abs(speed));
-        // fr.setPower(Math.abs(speed));
-        // bl.setPower(Math.abs(speed));
-        // br.setPower(-Math.abs(speed)); 
-         }
-         fl.setPower(OFF);
-         fr.setPower(OFF);
-         bl.setPower(OFF);
-         br.setPower(OFF);
-     }    
+            // fl.setPower(-Math.abs(speed));
+            // fr.setPower(Math.abs(speed));
+            // bl.setPower(Math.abs(speed));
+            // br.setPower(-Math.abs(speed));
+        }
+        fl.setPower(OFF);
+        fr.setPower(OFF);
+        bl.setPower(OFF);
+        br.setPower(OFF);
+    }
 
     // Method for driving forwards -- default
-    public void forward(){
+    public void forward() {
         fl.setPower(FORWARD);
         fr.setPower(FORWARD);
         bl.setPower(FORWARD);
         br.setPower(FORWARD);
     }
-    
+
     // Method for driving forwards -- select speed
-    public void forward(double speed){ 
+    public void forward(double speed) {
         fl.setPower(Math.abs(speed));
         fr.setPower(Math.abs(speed));
         bl.setPower(Math.abs(speed));
@@ -507,7 +483,7 @@ public class RobotHardware
     }
 
     // Method for driving backwards -- default
-    public void backward(){
+    public void backward() {
         fl.setPower(BACK);
         fr.setPower(BACK);
         bl.setPower(BACK);
@@ -515,7 +491,7 @@ public class RobotHardware
     }
 
     // Method for driving backwards -- select speed
-    public void backward(double speed){
+    public void backward(double speed) {
         fl.setPower(-Math.abs(speed));
         fr.setPower(-Math.abs(speed));
         bl.setPower(-Math.abs(speed));
@@ -523,7 +499,7 @@ public class RobotHardware
     }
 
     // Method for driving left -- default
-    public void left(){
+    public void left() {
         fl.setPower(BACK);
         fr.setPower(FORWARD);
         bl.setPower(FORWARD);
@@ -531,7 +507,7 @@ public class RobotHardware
     }
 
     // Method for driving left -- select speed
-    public void left(double speed){
+    public void left(double speed) {
         fl.setPower(-Math.abs(speed));
         fr.setPower(Math.abs(speed));
         bl.setPower(Math.abs(speed));
@@ -539,7 +515,7 @@ public class RobotHardware
     }
 
     // Method for driving right -- default
-    public void right(){
+    public void right() {
         fl.setPower(FORWARD);
         fr.setPower(BACK);
         bl.setPower(BACK);
@@ -547,7 +523,7 @@ public class RobotHardware
     }
 
     // Method for driving right -- select speed
-    public void right(double speed){
+    public void right(double speed) {
         fl.setPower(Math.abs(speed));
         fr.setPower(-Math.abs(speed));
         bl.setPower(-Math.abs(speed));
@@ -555,7 +531,7 @@ public class RobotHardware
     }
 
     // Method for driving diagonal forward left -- default
-    public void forwardLeft(){
+    public void forwardLeft() {
         fl.setPower(FORWARD);
         fr.setPower(OFF);
         bl.setPower(OFF);
@@ -563,7 +539,7 @@ public class RobotHardware
     }
 
     // Method for driving diagonal forward left -- select speed
-    public void forwardLeft(double speed){
+    public void forwardLeft(double speed) {
         fl.setPower(Math.abs(speed));
         fr.setPower(OFF);
         bl.setPower(OFF);
@@ -571,7 +547,7 @@ public class RobotHardware
     }
 
     // Method for driving diagonal back left -- default
-    public void backLeft(){
+    public void backLeft() {
         fl.setPower(OFF);
         fr.setPower(BACK);
         bl.setPower(BACK);
@@ -579,7 +555,7 @@ public class RobotHardware
     }
 
     // Method for driving diagonal back left -- select speed
-    public void backLeft(double speed){
+    public void backLeft(double speed) {
         fl.setPower(OFF);
         fr.setPower(-Math.abs(speed));
         bl.setPower(-Math.abs(speed));
@@ -588,7 +564,7 @@ public class RobotHardware
 
     // Method for driving diagonal forward right
     // Default
-    public void forwardRight(){
+    public void forwardRight() {
         fl.setPower(OFF);
         fr.setPower(FORWARD);
         bl.setPower(FORWARD);
@@ -597,7 +573,7 @@ public class RobotHardware
 
     // Method for driving diagonal forward right
     // Select Speed
-    public void forwardRight(double speed){
+    public void forwardRight(double speed) {
         fl.setPower(OFF);
         fr.setPower(Math.abs(speed));
         bl.setPower(Math.abs(speed));
@@ -606,7 +582,7 @@ public class RobotHardware
 
     // Method for driving diagonal back right
     // Default
-    public void backRight(){
+    public void backRight() {
         fl.setPower(BACK);
         fr.setPower(OFF);
         bl.setPower(OFF);
@@ -615,7 +591,7 @@ public class RobotHardware
 
     // Method for driving diagonal back right
     // Select Speed
-    public void backRight(double speed){
+    public void backRight(double speed) {
         fl.setPower(-Math.abs(speed));
         fr.setPower(OFF);
         bl.setPower(OFF);
@@ -623,7 +599,7 @@ public class RobotHardware
     }
 
     // Method for spinning left -- default
-    public void spinLeft(){
+    public void spinLeft() {
         fl.setPower(BACK);
         fr.setPower(FORWARD);
         bl.setPower(BACK);
@@ -631,7 +607,7 @@ public class RobotHardware
     }
 
     // Method for spinning left -- select speed
-    public void spinLeft(double speed){
+    public void spinLeft(double speed) {
         fl.setPower(-Math.abs(speed));
         fr.setPower(Math.abs(speed));
         bl.setPower(-Math.abs(speed));
@@ -639,7 +615,7 @@ public class RobotHardware
     }
 
     // Method for spinning right -- default
-    public void spinRight(){
+    public void spinRight() {
         fl.setPower(FORWARD);
         fr.setPower(BACK);
         bl.setPower(FORWARD);
@@ -661,24 +637,24 @@ public class RobotHardware
         bl.setPower(OFF);
         br.setPower(OFF);
     }
-    
-        // Method for not moving
-    public void stopExc() throws InterruptedException{
+
+    // Method for not moving
+    public void stopExc() throws InterruptedException {
         fl.setPower(OFF);
         fr.setPower(OFF);
         bl.setPower(OFF);
         br.setPower(OFF);
     }
-    
-    
-    public void reset () {
+
+
+    public void reset() {
         fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // ssScrew.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // ssExtend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    
+
         fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -686,21 +662,20 @@ public class RobotHardware
         // ssScrew.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // ssExtend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
-    
-    public double getLeftYEncoder(){
+
+    public double getLeftYEncoder() {
         return -br.getCurrentPosition();
     }
-    
-    public double getRightYEncoder(){
+
+    public double getRightYEncoder() {
         return -bl.getCurrentPosition();
     }
- 
-    
-        /*
+
+
+    /*
      * Resets the cumulative angle tracking to zero.
      */
-    public void resetAngle()
-    {
+    public void resetAngle() {
         lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         globalAngle = 0;
@@ -708,10 +683,10 @@ public class RobotHardware
 
     /**
      * Get current cumulative angle rotation from last reset.
+     *
      * @return Angle in degrees. + = left, - = right.
      */
-    public double getAngle()
-    {
+    public double getAngle() {
         // We experimentally determined the Z axis is the axis we want to use for heading angle.
         // We have to process the angle because the imu works in euler angles so the Z axis is
         // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
@@ -735,10 +710,10 @@ public class RobotHardware
 
     /**
      * See if we are moving in a straight line and if not return a power correction value.
+     *
      * @return Power adjustment, + is adjust left - is adjust right.
      */
-    public double checkDirection()
-    {
+    public double checkDirection() {
         // The gain value determines how sensitive the correction is to direction changes.
         // You will have to experiment with your robot to get small smooth direction changes
         // to stay on a straight line.
@@ -758,11 +733,11 @@ public class RobotHardware
 
     /**
      * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
+     *
      * @param degrees Degrees to turn, + is left - is right
      */
-    public void rotate(int degrees, double power)
-    {
-        double  turnPower;
+    public void rotate(int degrees, double power) {
+        double turnPower;
         double angle = getAngle();
         resetAngle();
 
@@ -770,15 +745,11 @@ public class RobotHardware
         // getAngle() returns + when rotating counter clockwise (left) and - when rotating
         // clockwise (right).
 
-        if (degrees < angle)
-        {   // turn right
+        if (degrees < angle) {   // turn right
             turnPower = power; // was -
-        }
-        else if (degrees > angle)
-        {   // turn left
+        } else if (degrees > angle) {   // turn left
             turnPower = -power; // was +
-        }
-        else return;
+        } else return;
 
         // set power to rotate.
         fl.setPower(-turnPower);
@@ -787,27 +758,29 @@ public class RobotHardware
         br.setPower(turnPower);
 
         // rotate until turn is completed.
-        if (degrees < angle)
-        {
+        if (degrees < angle) {
             // On right turn we have to get off zero first.
-            while (getAngle() == angle) {}
+            while (getAngle() == angle) {
+            }
 
-            while (getAngle() > degrees) {}
-        }
-        else    // left turn.
-            while (getAngle() < degrees) {}
+            while (getAngle() > degrees) {
+            }
+        } else    // left turn.
+            while (getAngle() < degrees) {
+            }
 
 
         // rotate until turn is completed.
-        if (degrees < angle)
-        {
+        if (degrees < angle) {
             // On right turn we have to get off zero first.
-            while (getAngle() == angle) {}
+            while (getAngle() == angle) {
+            }
 
-            while (getAngle() > degrees) {}
-        }
-        else    // left turn.
-            while (getAngle() < degrees) {}
+            while (getAngle() > degrees) {
+            }
+        } else    // left turn.
+            while (getAngle() < degrees) {
+            }
 
 
         // turn the motors off.
