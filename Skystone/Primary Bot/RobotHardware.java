@@ -136,8 +136,8 @@ public class RobotHardware {
 
 
         fl.setDirection(DcMotor.Direction.REVERSE);
-        bl.setDirection(DcMotor.Direction.REVERSE);
-        fr.setDirection(DcMotor.Direction.FORWARD);
+        bl.setDirection(DcMotor.Direction.REVERSE); 
+        fr.setDirection(DcMotor.Direction.FORWARD);  
         br.setDirection(DcMotor.Direction.FORWARD);
 
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -185,19 +185,21 @@ public class RobotHardware {
 
         frontGate.setPosition(0.33);  //////////// open 0.33////////////close 0.8/////////// kick = mabey 1
         releaseCap.setPosition(1);  /// starting point 0.5
-        headExtend.setPosition(0.52); //////// 0 is full out //////// 0.52 full in
+        headExtend.setPosition(0.7); //////// 0 is full out //////// 0.52 full in
         rearRamp.setPosition(0.8); //////// 0.8 init ////////// 0.4 kick
         
         
         /////NEW HOOKS
         hook0.setPosition(0.95); // left
         hook1.setPosition(0.25); // right
-
+        
+        /////Auton Block Grabbers/////
         blockBlue.setPosition(0.48);
         grabBlue.setPosition(.3);////// 1 is closed /////
-        blockRed.setPosition(0.52);
-        grabRed.setPosition(1);
-
+        blockRed.setPosition(0.56);
+        grabRed.setPosition(0.8); ///// 1 is opened TOO MUCH ////
+        
+        //Color Sensors
         sensorColor0 = hwMap.get(ColorSensor.class, "sensorColor0");
         sensorColor1 = hwMap.get(ColorSensor.class, "sensorColor1");
 
@@ -247,9 +249,14 @@ public class RobotHardware {
         // ssExtend = hwMap.get(DcMotor.class, "ssExtend");
 
         fl.setDirection(DcMotor.Direction.REVERSE);
-        bl.setDirection(DcMotor.Direction.REVERSE);
+        bl.setDirection(DcMotor.Direction.REVERSE); 
         fr.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
+        
+        // fl.setDirection(DcMotor.Direction.FORWARD);
+        // bl.setDirection(DcMotor.Direction.FORWARD);
+        // fr.setDirection(DcMotor.Direction.REVERSE);
+        // br.setDirection(DcMotor.Direction.REVERSE);
 
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -283,6 +290,9 @@ public class RobotHardware {
         // ssClaw = hwMap.get(Servo.class, "ssClaw");
         blockBlue = hwMap.get(Servo.class, "blockBlue");
         blockRed = hwMap.get(Servo.class, "blockRed");
+        grabBlue = hwMap.get(Servo.class, "grabBlue");
+        grabRed = hwMap.get(Servo.class, "grabRed");
+
 
 
         hook0.setPosition(0.6);
@@ -290,9 +300,12 @@ public class RobotHardware {
         // ssTwist.setPosition(0.5);
         // ssClaw.setPosition(0.55);
         blockBlue.setPosition(0.45);
-        blockRed.setPosition(0.55);
+        blockRed.setPosition(0.53);
         //blockBlue.setPosition(0);
         // blockRed.setPosition(1);
+        grabBlue.setPosition(1);
+        grabRed.setPosition(1);
+
 
 
         sensorColor0 = hwMap.get(ColorSensor.class, "sensorColor0");
@@ -326,15 +339,10 @@ public class RobotHardware {
         // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
         reset();
         while (((bl.getCurrentPosition() < distance))) {
-            // was -
-            //  fl.setPower(FORWARD);
-            //  fr.setPower(FORWARD);
-            //  bl.setPower(FORWARD);
-            //  br.setPower(FORWARD);
-            fl.setPower(-speed);
-            fr.setPower(-speed);
-            bl.setPower(-speed);
-            br.setPower(-speed);
+            fl.setPower(speed); //was positive for all
+            fr.setPower(speed);
+            bl.setPower(speed);
+            br.setPower(speed);
         }
         fl.setPower(OFF);
         fr.setPower(OFF);
@@ -414,11 +422,11 @@ public class RobotHardware {
         reset();
         // while (((-bl.getCurrentPosition() < distance)) && (distance - -bl.getCurrentPosition)){
         while (((bl.getCurrentPosition() > distance))) {
-            // was -
-            fl.setPower(speed);
-            fr.setPower(speed);
-            bl.setPower(speed);
-            br.setPower(speed);
+            // was - 
+            fl.setPower(-speed);
+            fr.setPower(-speed);
+            bl.setPower(-speed);
+            br.setPower(-speed);
             // -speed was BACKWARD
 
         }
@@ -432,12 +440,13 @@ public class RobotHardware {
     // Method for encoder RIGHT movement
     public void rightByEncoder(double speed, double distance) {
         reset();
-        while (((fr.getCurrentPosition() < distance))) {
+        // distance = -distance;
+        while (((-fr.getCurrentPosition() < distance))) {
             // Note: +speed was FORWARD, -speed was BACK
-            fl.setPower(-speed);
-            fr.setPower(speed);
-            bl.setPower(speed);
-            br.setPower(-speed);
+            fl.setPower(speed); //was +
+            fr.setPower(-speed); //was -
+            bl.setPower(-speed); //was -
+            br.setPower(speed); //was +
         }
         fl.setPower(OFF);
         fr.setPower(OFF);
@@ -449,12 +458,13 @@ public class RobotHardware {
     // Method for encoder LEFT mpovement
     public void leftByEncoder(double speed, double distance) {
         reset();
-        while (((fr.getCurrentPosition() > distance))) {
+        // distance = -distance;
+        while (((-fr.getCurrentPosition() > distance))) {
             // Note: +speed was FORWARD, -speed was BACK
-            fl.setPower(speed); // was - + + -
-            fr.setPower(-speed);
-            bl.setPower(-speed);
-            br.setPower(speed);
+            fl.setPower(-speed); //was -
+            fr.setPower(speed); //was +
+            bl.setPower(speed); //was +
+            br.setPower(-speed); //was -
             // fl.setPower(-Math.abs(speed));
             // fr.setPower(Math.abs(speed));
             // bl.setPower(Math.abs(speed));
@@ -752,10 +762,10 @@ public class RobotHardware {
         } else return;
 
         // set power to rotate.
-        fl.setPower(-turnPower);
-        bl.setPower(-turnPower);
-        fr.setPower(turnPower);
-        br.setPower(turnPower);
+        fl.setPower(turnPower);
+        bl.setPower(turnPower);
+        fr.setPower(-turnPower);
+        br.setPower(-turnPower);
 
         // rotate until turn is completed.
         if (degrees < angle) {
