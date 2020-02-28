@@ -183,7 +183,7 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     Thread.sleep(500);
                     
                     //Release Skystone
-                    robot.grabBlue.setPosition(0.1);
+                    robot.grabBlue.setPosition(0.3);
                     Thread.sleep(250);
                     
                     //Lift Arm
@@ -201,12 +201,16 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     robot.backwardByEncoder(0.2 , -1600, this);
                     Thread.sleep(50);
                     
+                    robot.backward(0.2);
+                    Thread.sleep(100);
+                    robot.stop();
+                    
                     //Against stones
-                    robot.leftByEncoder(0.5 , -1500, this);
+                    robot.leftByEncoder(0.5 , -2700, this);
                     Thread.sleep(50);
               
                     //MORE AGAINST STONES!
-                    robot.leftByEncoder(0.2 , -300, this);
+                    robot.leftByEncoder(0.2 , -600, this);
                     Thread.sleep(50);
                     
                     //MORE Away STONES!
@@ -227,14 +231,14 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     sleep(600);
                     
                     //Secure Skystone
-                    robot.grabBlue.setPosition(0.75);
-                    sleep(1100);
+                    robot.grabBlue.setPosition(0.7);
+                    sleep(1000);
                     
                     //Lift Skystone
                     robot.blockBlue.setPosition(0.45);
                     
                     //move away from stones
-                    robot.rightByEncoder(0.3 , 2700, this);
+                    robot.rightByEncoder(0.5 , 3300, this);
                     Thread.sleep(50);
                     
                     
@@ -364,18 +368,18 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     
                     //Hit the wall
                     robot.backward(0.2); // was backward
-                    Thread.sleep(750);
+                    Thread.sleep(500);
                     
                     //Push into stones
-                    robot.leftByEncoder(0.35 , -1875, this);
+                    robot.leftByEncoder(0.35 , -3075, this);
                     Thread.sleep(50);
                     
-                    //Against the wall again
-                    robot.backward(); // was backward
-                    Thread.sleep(100);
-                    robot.stop();
+                    // //Against the wall again
+                    // robot.backward(); // was backward
+                    // Thread.sleep(100);
+                    // robot.stop();
                     
-                    robot.rightByEncoder(0.3 , 580, this);
+                    robot.rightByEncoder(0.3 , 300, this);
                     Thread.sleep(50);
                     
                      //Grab Skystone
@@ -391,7 +395,7 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     sleep(100);
                     
                     //Move away from stones
-                    robot.rightByEncoder(0.3 , 2400, this);
+                    robot.rightByEncoder(0.3 , 2100, this);
                     Thread.sleep(50);
                     
                     robot.resetAngle();
@@ -435,7 +439,7 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     Thread.sleep(1000);
                     
                     //Move away from wall and to bridge
-                    robot.rightByEncoder(0.5 , 3000, this);
+                    robot.rightByEncoder(0.9 , 4500, this);
                     Thread.sleep(50);
                     
                     //Release stone
@@ -447,7 +451,7 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     robot.stop();
                     
                     //Under bridge
-                    robot.forwardByEncoder(0.5 , 10900, this);
+                    robot.forwardByEncoder(0.9 , 10900, this);
                     Thread.sleep(50);
                   
                         
@@ -468,6 +472,8 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     // robot.leftByEncoder(0.3, -1200, this);//was -600
                     // Thread.sleep(50);
                     
+                    
+                   
                     //Grab Skystone
                     robot.blockBlue.setPosition(0.1);
                     sleep(600);
@@ -485,7 +491,7 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     // Thread.sleep(100);
                      
                      //Move away from stones 
-                    robot.rightByEncoder(0.4, 1500, this);
+                    robot.rightByEncoder(0.4, 2400, this);
                     Thread.sleep(50);
                     
                     //Go under bridge
@@ -495,26 +501,26 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                      robot.leftByEncoder(0.3 , -1500, this);
                     Thread.sleep(50);
                     
-                    //Lower Skystone
-                    robot.blockBlue.setPosition(0.1);
-                    Thread.sleep(500);
+                    // //Lower Skystone
+                    // robot.blockBlue.setPosition(0.1);
+                    // Thread.sleep(500);
                     
                     //Release Skystone
                     robot.grabBlue.setPosition(0.3);
-                    Thread.sleep(750);
+                    Thread.sleep(250);
                     
                     //Lift Arm
                     robot.blockBlue.setPosition(0.48);
-                    Thread.sleep(200);
+                    //Thread.sleep(200);
                     
-                    robot.rightByEncoder(0.3 , 1500, this);
+                    robot.rightByEncoder(0.3 , 600, this);
                     Thread.sleep(50);
                     
                     //Back to stones
                     robot.backwardByEncoder(0.55 , -10500, this);
                     Thread.sleep(50);
                     
-                    robot.leftByEncoder(0.3 , -2868, this);
+                    robot.leftByEncoder(0.3 , -3168, this);
                     Thread.sleep(50);
                     
                     
@@ -537,11 +543,11 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     robot.rightByEncoder(0.35 , 2700, this); // was 3100
                     Thread.sleep(50);
                     
-                    robot.forwardByEncoder(0.5 , 20900, this);
+                    robot.forwardByEncoder(0.5 , 19000, this);
                     Thread.sleep(50);
                     
                      //Rotate to foundation
-                    robot.rotate(-82, 0.3, this);
+                    robot.rotate(-87, 0.3, this);
                     sleep(50);
                     
                     //Backup to foundation
@@ -573,7 +579,7 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     Thread.sleep(1000);
                     
                     //Move away from wall and to bridge
-                    robot.rightByEncoder(0.5 , 3000, this);
+                    robot.rightByEncoder(0.9 , 3000, this);
                     Thread.sleep(50);
                     
                     //Release Skystone
@@ -581,11 +587,11 @@ public class Red_Stone_Bridge_Utah extends LinearOpMode {
                     Thread.sleep(250);
                     
                     robot.backward(0.3);
-                    Thread.sleep(400);
+                    Thread.sleep(600);
                     robot.stop();
                     
                     //Under bridge
-                    robot.forwardByEncoder(0.5 , 10900, this);
+                    robot.forwardByEncoder(0.9 , 10900, this);
                     Thread.sleep(50);
                   
                         
